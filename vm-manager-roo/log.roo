@@ -1,0 +1,83 @@
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-13 19:13:25
+project --topLevelPackage com.sjsu.minishare
+hint
+persistence setup --provider HIBERNATE --database HYPERSONIC_IN_MEMORY 
+hint
+// [failed] entity --class ~.model.User --testAutomatically 
+entity --class ~.model.CloudUser --testAutomatically 
+field number --type java.lang.Integer --fieldName userId --notNull 
+field string --fieldName userName --notNull 
+field string --fieldName firstName --notNull 
+field string --fieldName lastName --notNull 
+field boolean --fieldName active
+field string --fieldName password
+field string --fieldName addressLine1
+field string --fieldName addressLine2
+field string --fieldName city
+field string --fieldName zip
+// [failed] field string --fieldName state
+field string --fieldName userState
+field string --fieldName country
+field string --fieldName cardNumber
+field number --type java.lang.Integer --fieldName cardExpirationMonth
+field number --type java.lang.Integer --fieldName cardExpirationYear
+field number --type java.lang.Integer --fieldName cardCvvNumber
+entity --class ~.model.UserCredit --testAutomatically 
+field number --type java.lang.Integer --fieldName creditId --notNull 
+field number --type java.lang.Integer --fieldName userId --notNull 
+field number --type java.lang.Integer --fieldName totalCredits
+hint
+hint fields
+field number --type java.lang.Integer --fieldName totalCreditsUsed
+entity --class ~.model.VirtualMachineDetail --testAutomatically 
+field number --type java.lang.Integer --fieldName machineId
+field string --fieldName machineName --sizeMax 256
+field number --type java.lang.Integer --fieldName userId
+field string --fieldName machineStatus --sizeMax 36
+field number --type java.lang.Integer --fieldName numberCPUs
+field string --fieldName memory --sizeMax 36
+field string --fieldName operatingSystem --sizeMax 100
+field number --type java.lang.Float --fieldName usageInMinutes
+field date --type java.util.Date --fieldName lastLogin
+field date --type java.util.Date --fieldName lastLogout
+hint
+field number --type java.lang.Integer --fieldName creditsUsed
+field number --type java.lang.Float --fieldName totalCost
+hint relationships
+// [failed] field reference --fieldName userId --type ~.model.CloudUser
+field reference --fieldName userId --type ~.model.CloudUser
+help
+entity --class ~.model.VirutalMachineMonitor
+field number --type java.lang.Integer --fieldName monitorId --notNull 
+field number --type java.lang.Integer --fieldName memoryConsumedInBytes
+field number --type java.lang.Float --fieldName cp
+// [failed] field reference --type ~.model.VirtualMachine --fieldName virtualMachine
+// [failed] field reference --fieldName virtualMachine --type ~.model.VirtualMachine
+exit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-13 22:57:17
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-13 22:58:09
+hint
+hint entities
+// [failed] entity --class ~.model.VirtualMachineMonitor
+field reference --fieldName virtualMachine --type ~.model.VirtualMachineDetail
+perform tests
+// [failed] entity --class ~.model.UserCredit
+field reference --fieldName cloudUser --type ~.model.CloudUser
+hint
+quit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-13 23:06:28
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-13 23:06:34
+development mode 
+development mode 
+version
+exit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-13 23:12:34
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-13 23:13:28
+hint
+hint topics
+hint general
+help
+web mvc setup
+web mvc all --package ~.web
+exit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-13 23:29:22

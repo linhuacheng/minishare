@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_sjsu_minishare_model_VirtualMachineMonitor" object="${virtualmachinemonitor}" path="/virtualmachinemonitors" z="rL+7pf4KXupDDWfkUFVRgqTx44I=">
+        <field:display field="monitorId" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_monitorId" object="${virtualmachinemonitor}" z="m7YdyYUujvYYF+sS5REqRG8vbWs="/>
+        <field:display field="memoryConsumedInBytes" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_memoryConsumedInBytes" object="${virtualmachinemonitor}" z="Fx/dkTcNaAQEk34gsDYcaeVeFOE="/>
+        <field:display field="cpuUsageInPercent" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_cpuUsageInPercent" object="${virtualmachinemonitor}" z="zM0BhCpk68F/ymK48CW3RhEZjPE="/>
+        <field:display field="monitorInterval" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_monitorInterval" object="${virtualmachinemonitor}" z="tO+P1IbQopgPrnX3cYzC5I6brjg="/>
+        <field:display field="virtualMachine" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_virtualMachine" object="${virtualmachinemonitor}" z="m3FQ3hxA1jiU9dSHcoLoRY2R+pA="/>
+    </page:show>
+</div>

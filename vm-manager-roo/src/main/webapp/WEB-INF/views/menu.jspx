@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" id="menu" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
+        <menu:category id="c_clouduser" z="S654hv2G7yGF/gjPMDA9oB+knuI=">
+            <menu:item id="i_clouduser_new" messageCode="global_menu_new" url="/cloudusers?form" z="xt3PgixVIu5oStXhMQhz0ulHDlw="/>
+            <menu:item id="i_clouduser_list" messageCode="global_menu_list" url="/cloudusers?page=1&amp;size=${empty param.size ? 10 : param.size}" z="PpyO7LBW7gJnxIfbF8Uf8x1Yne0="/>
+        </menu:category>
+        <menu:category id="c_usercredit" z="3PCLYij+RI5yRvKxvdGMhHtIrOw=">
+            <menu:item id="i_usercredit_new" messageCode="global_menu_new" url="/usercredits?form" z="as6j/DaVUfjwc84t4XyryzRSN3Y="/>
+            <menu:item id="i_usercredit_list" messageCode="global_menu_list" url="/usercredits?page=1&amp;size=${empty param.size ? 10 : param.size}" z="ZaTv0zj8bpDyAXuHo1IZcF9hg9w="/>
+        </menu:category>
+        <menu:category id="c_virtualmachinedetail" z="ZeQGcKratqKihdid9p6IA9zCTF8=">
+            <menu:item id="i_virtualmachinedetail_new" messageCode="global_menu_new" url="/virtualmachinedetails?form" z="+GBIuxdvkjgYVWEn46wc9LbQUrY="/>
+            <menu:item id="i_virtualmachinedetail_list" messageCode="global_menu_list" url="/virtualmachinedetails?page=1&amp;size=${empty param.size ? 10 : param.size}" z="UHqIWlVWObQm55nSnsOsvGbCkeE="/>
+        </menu:category>
+        <menu:category id="c_virtualmachinemonitor" z="tq/6dBXoS1PZUhkaFNC/9nLbQk0=">
+            <menu:item id="i_virtualmachinemonitor_new" messageCode="global_menu_new" url="/virtualmachinemonitors?form" z="MTXFYx5UvLQy13daC1bwuNZuG2w="/>
+            <menu:item id="i_virtualmachinemonitor_list" messageCode="global_menu_list" url="/virtualmachinemonitors?page=1&amp;size=${empty param.size ? 10 : param.size}" z="7imtHUcqo8KUmX8fJFH5gII22/c="/>
+        </menu:category>
+    </menu:menu>
+</div>

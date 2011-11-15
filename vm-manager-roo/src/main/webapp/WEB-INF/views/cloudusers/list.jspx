@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_sjsu_minishare_model_CloudUser" items="${cloudusers}" z="GM4F1e7/lf+G09rQ2WGxl5LF5OY=">
+        <table:table data="${cloudusers}" id="l_com_sjsu_minishare_model_CloudUser" path="/cloudusers" z="EjzcRr6AdwhBUzqAYXZNc52ftnM=">
+            <table:column id="c_com_sjsu_minishare_model_CloudUser_userId" property="userId" z="70zMPUcj5VuaieZ2uFDKdZGnBzk="/>
+            <table:column id="c_com_sjsu_minishare_model_CloudUser_userName" property="userName" z="4F7ygAmRZcQYS7ieHI+aaKhaClU="/>
+            <table:column id="c_com_sjsu_minishare_model_CloudUser_firstName" property="firstName" z="XRH+lyVRp/RXixqfxijjqa3X0wk="/>
+            <table:column id="c_com_sjsu_minishare_model_CloudUser_lastName" property="lastName" z="QG+jTLxv3TB/pm9jFBoqWdHTOOA="/>
+            <table:column id="c_com_sjsu_minishare_model_CloudUser_active" property="active" z="LHfl48ShPLKgltZK6xUxHGALOQk="/>
+            <table:column id="c_com_sjsu_minishare_model_CloudUser_password" property="password" z="lly6GJLu/IGncS2aPGtX90yphIc="/>
+        </table:table>
+    </page:list>
+</div>

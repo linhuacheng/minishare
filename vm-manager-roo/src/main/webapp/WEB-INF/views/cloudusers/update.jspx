@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_sjsu_minishare_model_CloudUser" modelAttribute="cloudUser" path="/cloudusers" versionField="Version" z="QGBjJFbbXiOy1WWqAe0yrNEXWJY=">
+        <field:input field="userId" id="c_com_sjsu_minishare_model_CloudUser_userId" required="true" validationMessageCode="field_invalid_integer" z="pdezZ97jpdZl5Qu8sIhqEl4fyfk="/>
+        <field:input field="userName" id="c_com_sjsu_minishare_model_CloudUser_userName" required="true" z="Wkp7yUNL/6p/tqi9S3MZ/X/EoZM="/>
+        <field:input field="firstName" id="c_com_sjsu_minishare_model_CloudUser_firstName" required="true" z="dnkn+1U/3WOVZz8awzyumXBGuAQ="/>
+        <field:input field="lastName" id="c_com_sjsu_minishare_model_CloudUser_lastName" required="true" z="MUbvX81zd2OmkT3RLX23QTQ1YDE="/>
+        <field:checkbox field="active" id="c_com_sjsu_minishare_model_CloudUser_active" z="SgVBDTaTJDkxCQefGHFnX1ZLigs="/>
+        <field:input field="password" id="c_com_sjsu_minishare_model_CloudUser_password" z="LNjO4/RUweaI5pIbfmstWP/4f0I="/>
+        <field:input field="addressLine1" id="c_com_sjsu_minishare_model_CloudUser_addressLine1" z="bhCz9OK+MGV6/NK2JR7HOkyWluo="/>
+        <field:input field="addressLine2" id="c_com_sjsu_minishare_model_CloudUser_addressLine2" z="jgUDHluXKj2sjTd9VksedgK+xPE="/>
+        <field:input field="city" id="c_com_sjsu_minishare_model_CloudUser_city" z="z0mw9PgInQEvGAgXYSUT4jQSInM="/>
+        <field:input field="zip" id="c_com_sjsu_minishare_model_CloudUser_zip" z="75/PU8oO576mZ6W5YgXIOhhQMoU="/>
+        <field:input field="userState" id="c_com_sjsu_minishare_model_CloudUser_userState" z="K/u6Nt0kyi4raZ6rt5uDBSiPQAs="/>
+        <field:input field="country" id="c_com_sjsu_minishare_model_CloudUser_country" z="alMycFM0CaE7P+BFzZg39LDdvuE="/>
+        <field:input field="cardNumber" id="c_com_sjsu_minishare_model_CloudUser_cardNumber" z="wbV3RJT18ZTX8dno3CvxEXlKGIM="/>
+        <field:input field="cardExpirationMonth" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationMonth" validationMessageCode="field_invalid_integer" z="zwkaWm4NgQx2MhsIgiLdCgP42Wk="/>
+        <field:input field="cardExpirationYear" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationYear" validationMessageCode="field_invalid_integer" z="6JGpYnO86cPz6HdRoTyyDiZ8/TM="/>
+        <field:input field="cardCvvNumber" id="c_com_sjsu_minishare_model_CloudUser_cardCvvNumber" validationMessageCode="field_invalid_integer" z="XEjbqtig+DYu3/FZj4KnRLpS1T4="/>
+    </form:update>
+</div>

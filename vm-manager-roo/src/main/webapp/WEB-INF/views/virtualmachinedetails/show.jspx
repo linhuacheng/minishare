@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_sjsu_minishare_model_VirtualMachineDetail" object="${virtualmachinedetail}" path="/virtualmachinedetails" z="NUdog9bpdUnjZoQTiPdTRdesxOI=">
+        <field:display field="machineId" id="s_com_sjsu_minishare_model_VirtualMachineDetail_machineId" object="${virtualmachinedetail}" z="3yewsmAWranimwTZ4GGbha2kGAc="/>
+        <field:display field="machineName" id="s_com_sjsu_minishare_model_VirtualMachineDetail_machineName" object="${virtualmachinedetail}" z="Dt48/eOGcZhapLeq4qSjDJnkLUM="/>
+        <field:display field="machineStatus" id="s_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" object="${virtualmachinedetail}" z="H63A8+iBSkFp1F0SfCF+63ddwAM="/>
+        <field:display field="numberCPUs" id="s_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" object="${virtualmachinedetail}" z="xFwH21OqDZeusvvLdYqev8iE3nU="/>
+        <field:display field="memory" id="s_com_sjsu_minishare_model_VirtualMachineDetail_memory" object="${virtualmachinedetail}" z="qxEuGA3xOlfScORHABknh9lGDYQ="/>
+        <field:display field="operatingSystem" id="s_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" object="${virtualmachinedetail}" z="3R5lx0hEm0h0b8lYzEAMn41Q4Rk="/>
+        <field:display field="usageInMinutes" id="s_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" object="${virtualmachinedetail}" z="PE+sg1BZVY4+v2YqGsshpMG9UmA="/>
+        <field:display date="true" dateTimePattern="${virtualMachineDetail_lastlogin_date_format}" field="lastLogin" id="s_com_sjsu_minishare_model_VirtualMachineDetail_lastLogin" object="${virtualmachinedetail}" z="N6CQFj1qhIOfFhVIWFl97JXYslc="/>
+        <field:display date="true" dateTimePattern="${virtualMachineDetail_lastlogout_date_format}" field="lastLogout" id="s_com_sjsu_minishare_model_VirtualMachineDetail_lastLogout" object="${virtualmachinedetail}" z="OvruxXKbBOtQyrGx9cBlgr8Bh84="/>
+        <field:display field="creditsUsed" id="s_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" object="${virtualmachinedetail}" z="hnmmrFfoRuxr5JKFHxWVOJ3Nr/Y="/>
+        <field:display field="totalCost" id="s_com_sjsu_minishare_model_VirtualMachineDetail_totalCost" object="${virtualmachinedetail}" z="TLesSkyWBJYn/nLtZ2u4MieanTc="/>
+        <field:display field="userId" id="s_com_sjsu_minishare_model_VirtualMachineDetail_userId" object="${virtualmachinedetail}" z="lu5ES+kkR0IW2wJNGtLhGvpOJkQ="/>
+    </page:show>
+</div>
