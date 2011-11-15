@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_com_sjsu_minishare_model_VirtualMachineDetail" modelAttribute="virtualMachineDetail" path="/virtualmachinedetails" render="${empty dependencies}" z="bTPTtVRBSLuNiA+REwLOvdogG0o=">
+        <field:input field="machineId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineId" validationMessageCode="field_invalid_integer" z="8yeMuvyYt73fmrQJYFMNq/p5YSw="/>
+        <field:textarea field="machineName" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineName" z="vH+bJ9d6FzGBWhuMA/35w4nH4b4="/>
+        <field:textarea field="machineStatus" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" z="znCxnOL20K2QfC01rkhNpEOKdag="/>
+        <field:input field="numberCPUs" id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" validationMessageCode="field_invalid_integer" z="/C2pzvvmMvemHPMuYZS/4b0YrNY="/>
+        <field:textarea field="memory" id="c_com_sjsu_minishare_model_VirtualMachineDetail_memory" z="Qx/3ZGJ2vE7Pj4o/CYE89um6rqc="/>
+        <field:textarea field="operatingSystem" id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" z="PedpGgExJ5T09zoT+4QxyT8q7UI="/>
+        <field:input field="usageInMinutes" id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" validationMessageCode="field_invalid_number" z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/>
+        <field:datetime dateTimePattern="${virtualMachineDetail_lastlogin_date_format}" field="lastLogin" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogin" z="HMVA3epOYKwKYonG5ttfX8QxHHg="/>
+        <field:datetime dateTimePattern="${virtualMachineDetail_lastlogout_date_format}" field="lastLogout" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogout" z="Rpek0kOrYvWoQEPmsBzAPIOfpmQ="/>
+        <field:input field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" validationMessageCode="field_invalid_integer" z="LaT9PTQ8OHt30w+b6+NAB9gBm8A="/>
+        <field:input field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost" validationMessageCode="field_invalid_number" z="4AMqBgSWEbNhHEwSOIL7aCIsLyo="/>
+        <field:select field="userId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_userId" itemValue="id" items="${cloudusers}" path="/cloudusers" z="7C8BWciFLc7IaLoaLXrQsNaFIcs="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_com_sjsu_minishare_model_VirtualMachineDetail" render="${not empty dependencies}" z="wcmkgyoKTUgRRJkkwAWN0raJQNs="/>
+</div>

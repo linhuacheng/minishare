@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_sjsu_minishare_model_CloudUser" object="${clouduser}" path="/cloudusers" z="zmKzEWThD2tLQploWB0IxgXtOPA=">
+        <field:display field="userId" id="s_com_sjsu_minishare_model_CloudUser_userId" object="${clouduser}" z="dKgvb2eU1xygq8PH+0oVMtXkXug="/>
+        <field:display field="userName" id="s_com_sjsu_minishare_model_CloudUser_userName" object="${clouduser}" z="6tb6458xxZ3h6YO2psoCA001TUA="/>
+        <field:display field="firstName" id="s_com_sjsu_minishare_model_CloudUser_firstName" object="${clouduser}" z="rgaT4Vpv+Gk2wc7PS9wXXC9dwkc="/>
+        <field:display field="lastName" id="s_com_sjsu_minishare_model_CloudUser_lastName" object="${clouduser}" z="FUS3eeMulotePpBVa8Ol8crpj7I="/>
+        <field:display field="active" id="s_com_sjsu_minishare_model_CloudUser_active" object="${clouduser}" z="nh0grLlqGLIzRxM1qJ1Kh3tB89c="/>
+        <field:display field="password" id="s_com_sjsu_minishare_model_CloudUser_password" object="${clouduser}" z="FssH1kLVkCJ3Cc1wWlSYX6+sAdA="/>
+        <field:display field="addressLine1" id="s_com_sjsu_minishare_model_CloudUser_addressLine1" object="${clouduser}" z="qskjC03Wv5O+pZCYIu8U7sSS6dY="/>
+        <field:display field="addressLine2" id="s_com_sjsu_minishare_model_CloudUser_addressLine2" object="${clouduser}" z="fjG0MfploAkbXWyvRKnZFLyw2EA="/>
+        <field:display field="city" id="s_com_sjsu_minishare_model_CloudUser_city" object="${clouduser}" z="JterWMmCojgj9jWxar/YWF1H5e0="/>
+        <field:display field="zip" id="s_com_sjsu_minishare_model_CloudUser_zip" object="${clouduser}" z="/HhhbgLEv4hRcMyh+3Ip+Re2cQA="/>
+        <field:display field="userState" id="s_com_sjsu_minishare_model_CloudUser_userState" object="${clouduser}" z="gChQI2RDcbDV8VP6swjUe8PUwbM="/>
+        <field:display field="country" id="s_com_sjsu_minishare_model_CloudUser_country" object="${clouduser}" z="Lw+BPuANuMC3gWRXqALgJ/VkHyk="/>
+        <field:display field="cardNumber" id="s_com_sjsu_minishare_model_CloudUser_cardNumber" object="${clouduser}" z="xI0Jfn6mOnDXrhxlJ/YKxuQQjbw="/>
+        <field:display field="cardExpirationMonth" id="s_com_sjsu_minishare_model_CloudUser_cardExpirationMonth" object="${clouduser}" z="tLjxS2GUm8UFs+1HR6YPTYicgq4="/>
+        <field:display field="cardExpirationYear" id="s_com_sjsu_minishare_model_CloudUser_cardExpirationYear" object="${clouduser}" z="qYQJnYEif+HKhcJ4vArz30BIw6o="/>
+        <field:display field="cardCvvNumber" id="s_com_sjsu_minishare_model_CloudUser_cardCvvNumber" object="${clouduser}" z="hRQUM1YoezgPGoh6Mr3xpYTG3tA="/>
+    </page:show>
+</div>
