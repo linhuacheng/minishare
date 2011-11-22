@@ -9,6 +9,9 @@
   <jsp:directive.attribute name="create" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'create' link into table (default true)" />
   <jsp:directive.attribute name="update" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'update' link into table (default true)" />
   <jsp:directive.attribute name="delete" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'delete' link into table (default true)" />
+  <jsp:directive.attribute name="start" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'start' link into table (default false)" />
+  <jsp:directive.attribute name="stop" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'stop' link into table (default false)" />
+  <jsp:directive.attribute name="pause" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'pause' link into table (default false)" />
   <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
   <jsp:directive.attribute name="z" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
 
@@ -32,6 +35,18 @@
 
     <c:if test="${empty delete}">
       <c:set var="delete" value="true" />
+    </c:if>
+    
+    <c:if test="${empty start}">
+      <c:set var="start" value="false" />
+    </c:if>
+    
+     <c:if test="${empty stop}">
+      <c:set var="stop" value="false" />
+    </c:if>
+    
+    <c:if test="${empty pause}">
+      <c:set var="pause" value="false" />
     </c:if>
 
     <spring:message var="typeName" code="menu_item_${fn:toLowerCase(fn:split(id,'_')[fn:length(fn:split(id,'_')) - 1])}_new_label" htmlEscape="false" />
@@ -59,6 +74,18 @@
             <th></th>
             <spring:eval var="colCounter" expression="colCounter  + 1" />
           </c:if>
+          <c:if test="${start}">
+            <th></th>
+            <spring:eval var="colCounter" expression="colCounter  + 1" />
+          </c:if>
+          <c:if test="${stop}">
+            <th></th>
+            <spring:eval var="colCounter" expression="colCounter  + 1" />
+          </c:if>
+          <c:if test="${pause}">
+            <th></th>
+            <spring:eval var="colCounter" expression="colCounter  + 1" />
+          </c:if>                              
         </tr>
       </thead>
       <c:forEach items="${data}" var="item">
@@ -130,6 +157,75 @@
                 <c:if test="${not empty param.size}">
                   <input name="size" type="hidden" value="${fn:escapeXml(param.size)}" />
                 </c:if>
+              </form:form>
+            </td>
+          </c:if>
+          <c:if test="${start}">
+            <td class="utilbox">
+              <spring:url value="${path}/${itemId}" var="start_form_url" />
+              <spring:url value="/resources/images/start.png" var="start_image_url" />
+              <form:form action="${fn:escapeXml(start_form_url)}" method="PUT">
+                <spring:message arguments="${typeName}" code="entity_start" var="start_label" htmlEscape="false" />
+                <c:set var="start_confirm_msg">
+                  <spring:escapeBody javaScriptEscape="true">
+                    <spring:message code="entity_start_confirm" />
+                  </spring:escapeBody>
+                </c:set>
+                <input alt="${fn:escapeXml(start_label)}" class="image" src="${fn:escapeXml(start_image_url)}" title="${fn:escapeXml(start_label)}" type="image" value="${fn:escapeXml(start_label)}" onclick="return confirm('${start_confirm_msg}');" />
+                <c:if test="${not empty param.page}">
+                  <input name="page" type="hidden" value="1" />
+                </c:if>
+                <c:if test="${not empty param.size}">
+                  <input name="size" type="hidden" value="${fn:escapeXml(param.size)}" />
+                </c:if>
+                <input name="state" type="hidden" value="start" />
+                  <input name="id" type="hidden" value="${itemId}" />
+              </form:form>
+            </td>
+          </c:if>
+          <c:if test="${stop}">
+            <td class="utilbox">
+              <spring:url value="${path}/${itemId}" var="stop_form_url" />
+              <spring:url value="/resources/images/stop.png" var="stop_image_url" />
+              <form:form action="${fn:escapeXml(stop_form_url)}" method="PUT">
+                <spring:message arguments="${typeName}" code="entity_stop" var="stop_label" htmlEscape="false" />
+                <c:set var="stop_confirm_msg">
+                  <spring:escapeBody javaScriptEscape="true">
+                    <spring:message code="entity_stop_confirm" />
+                  </spring:escapeBody>
+                </c:set>
+                <input alt="${fn:escapeXml(stop_label)}" class="image" src="${fn:escapeXml(stop_image_url)}" title="${fn:escapeXml(stop_label)}" type="image" value="${fn:escapeXml(stop_label)}" onclick="return confirm('${stop_confirm_msg}');" />
+                <c:if test="${not empty param.page}">
+                  <input name="page" type="hidden" value="1" />
+                </c:if>
+                <c:if test="${not empty param.size}">
+                  <input name="size" type="hidden" value="${fn:escapeXml(param.size)}" />
+                </c:if>
+                <input name="state" type="hidden" value="stop" />
+                <input name="id" type="hidden" value="${itemId}" />
+              </form:form>
+            </td>
+          </c:if>
+          <c:if test="${pause}">
+            <td class="utilbox">
+              <spring:url value="${path}/${itemId}" var="pause_form_url" />
+              <spring:url value="/resources/images/pause.png" var="pause_image_url" />
+              <form:form action="${fn:escapeXml(pause_form_url)}" method="PUT">
+                <spring:message arguments="${typeName}" code="entity_pause" var="pause_label" htmlEscape="false" />
+                <c:set var="pause_confirm_msg">
+                  <spring:escapeBody javaScriptEscape="true">
+                    <spring:message code="entity_pause_confirm" />
+                  </spring:escapeBody>
+                </c:set>
+                <input alt="${fn:escapeXml(pause_label)}" class="image" src="${fn:escapeXml(pause_image_url)}" title="${fn:escapeXml(pause_label)}" type="image" value="${fn:escapeXml(pause_label)}" onclick="return confirm('${pause_confirm_msg}');" />
+                <c:if test="${not empty param.page}">
+                  <input name="page" type="hidden" value="1" />
+                </c:if>
+                <c:if test="${not empty param.size}">
+                  <input name="size" type="hidden" value="${fn:escapeXml(param.size)}" />
+                </c:if>
+                <input name="state" type="hidden" value="pause" />
+                  <input name="id" type="hidden" value="${itemId}" />
               </form:form>
             </td>
           </c:if>
