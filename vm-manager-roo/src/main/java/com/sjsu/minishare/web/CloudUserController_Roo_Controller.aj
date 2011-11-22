@@ -6,7 +6,6 @@ package com.sjsu.minishare.web;
 import com.sjsu.minishare.model.CloudUser;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
-import java.lang.Long;
 import java.lang.String;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,7 @@ privileged aspect CloudUserController_Roo_Controller {
         }
         uiModel.asMap().clear();
         cloudUser.persist();
-        return "redirect:/cloudusers/" + encodeUrlPathSegment(cloudUser.getId().toString(), httpServletRequest);
+        return "redirect:/cloudusers/" + encodeUrlPathSegment(cloudUser.getUserId().toString(), httpServletRequest);
     }
     
     @RequestMapping(params = "form", method = RequestMethod.GET)
@@ -40,10 +39,10 @@ privileged aspect CloudUserController_Roo_Controller {
         return "cloudusers/create";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String CloudUserController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("clouduser", CloudUser.findCloudUser(id));
-        uiModel.addAttribute("itemId", id);
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public String CloudUserController.show(@PathVariable("userId") Integer userId, Model uiModel) {
+        uiModel.addAttribute("clouduser", CloudUser.findCloudUser(userId));
+        uiModel.addAttribute("itemId", userId);
         return "cloudusers/show";
     }
     
@@ -68,18 +67,18 @@ privileged aspect CloudUserController_Roo_Controller {
         }
         uiModel.asMap().clear();
         cloudUser.merge();
-        return "redirect:/cloudusers/" + encodeUrlPathSegment(cloudUser.getId().toString(), httpServletRequest);
+        return "redirect:/cloudusers/" + encodeUrlPathSegment(cloudUser.getUserId().toString(), httpServletRequest);
     }
     
-    @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
-    public String CloudUserController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("cloudUser", CloudUser.findCloudUser(id));
+    @RequestMapping(value = "/{userId}", params = "form", method = RequestMethod.GET)
+    public String CloudUserController.updateForm(@PathVariable("userId") Integer userId, Model uiModel) {
+        uiModel.addAttribute("cloudUser", CloudUser.findCloudUser(userId));
         return "cloudusers/update";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String CloudUserController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        CloudUser.findCloudUser(id).remove();
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public String CloudUserController.delete(@PathVariable("userId") Integer userId, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        CloudUser.findCloudUser(userId).remove();
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

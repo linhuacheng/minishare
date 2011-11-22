@@ -38,7 +38,6 @@ privileged aspect VirtualMachineDetailDataOnDemand_Roo_DataOnDemand {
         setCreditsUsed(obj, index);
         setLastLogin(obj, index);
         setLastLogout(obj, index);
-        setMachineId(obj, index);
         setMachineName(obj, index);
         setMachineStatus(obj, index);
         setMemory(obj, index);
@@ -63,11 +62,6 @@ privileged aspect VirtualMachineDetailDataOnDemand_Roo_DataOnDemand {
     public void VirtualMachineDetailDataOnDemand.setLastLogout(VirtualMachineDetail obj, int index) {
         Date lastLogout = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
         obj.setLastLogout(lastLogout);
-    }
-    
-    public void VirtualMachineDetailDataOnDemand.setMachineId(VirtualMachineDetail obj, int index) {
-        Integer machineId = new Integer(index);
-        obj.setMachineId(machineId);
     }
     
     public void VirtualMachineDetailDataOnDemand.setMachineName(VirtualMachineDetail obj, int index) {
@@ -127,13 +121,13 @@ privileged aspect VirtualMachineDetailDataOnDemand_Roo_DataOnDemand {
         if (index < 0) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         VirtualMachineDetail obj = data.get(index);
-        return VirtualMachineDetail.findVirtualMachineDetail(obj.getId());
+        return VirtualMachineDetail.findVirtualMachineDetail(obj.getMachineId());
     }
     
     public VirtualMachineDetail VirtualMachineDetailDataOnDemand.getRandomVirtualMachineDetail() {
         init();
         VirtualMachineDetail obj = data.get(rnd.nextInt(data.size()));
-        return VirtualMachineDetail.findVirtualMachineDetail(obj.getId());
+        return VirtualMachineDetail.findVirtualMachineDetail(obj.getMachineId());
     }
     
     public boolean VirtualMachineDetailDataOnDemand.modifyVirtualMachineDetail(VirtualMachineDetail obj) {

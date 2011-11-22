@@ -3,7 +3,6 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_com_sjsu_minishare_model_CloudUser" modelAttribute="cloudUser" path="/cloudusers" render="${empty dependencies}" z="oI9KFMu4ae5kIwpe0r9pTQmPEfQ=">
-        <field:input field="userId" id="c_com_sjsu_minishare_model_CloudUser_userId" required="true" validationMessageCode="field_invalid_integer" z="pdezZ97jpdZl5Qu8sIhqEl4fyfk="/>
         <field:input field="userName" id="c_com_sjsu_minishare_model_CloudUser_userName" required="true" z="Wkp7yUNL/6p/tqi9S3MZ/X/EoZM="/>
         <field:input field="firstName" id="c_com_sjsu_minishare_model_CloudUser_firstName" required="true" z="dnkn+1U/3WOVZz8awzyumXBGuAQ="/>
         <field:input field="lastName" id="c_com_sjsu_minishare_model_CloudUser_lastName" required="true" z="MUbvX81zd2OmkT3RLX23QTQ1YDE="/>

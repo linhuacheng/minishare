@@ -33,11 +33,11 @@ privileged aspect UserCreditIntegrationTest_Roo_IntegrationTest {
     public void UserCreditIntegrationTest.testFindUserCredit() {
         com.sjsu.minishare.model.UserCredit obj = dod.getRandomUserCredit();
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getCreditId();
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.UserCredit.findUserCredit(id);
         org.junit.Assert.assertNotNull("Find method for 'UserCredit' illegally returned null for id '" + id + "'", obj);
-        org.junit.Assert.assertEquals("Find method for 'UserCredit' returned the incorrect identifier", id, obj.getId());
+        org.junit.Assert.assertEquals("Find method for 'UserCredit' returned the incorrect identifier", id, obj.getCreditId());
     }
     
     @Test
@@ -64,7 +64,7 @@ privileged aspect UserCreditIntegrationTest_Roo_IntegrationTest {
     public void UserCreditIntegrationTest.testFlush() {
         com.sjsu.minishare.model.UserCredit obj = dod.getRandomUserCredit();
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getCreditId();
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.UserCredit.findUserCredit(id);
         org.junit.Assert.assertNotNull("Find method for 'UserCredit' illegally returned null for id '" + id + "'", obj);
@@ -78,14 +78,14 @@ privileged aspect UserCreditIntegrationTest_Roo_IntegrationTest {
     public void UserCreditIntegrationTest.testMerge() {
         com.sjsu.minishare.model.UserCredit obj = dod.getRandomUserCredit();
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getCreditId();
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.UserCredit.findUserCredit(id);
         boolean modified =  dod.modifyUserCredit(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         com.sjsu.minishare.model.UserCredit merged =  obj.merge();
         obj.flush();
-        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
+        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getCreditId(), id);
         org.junit.Assert.assertTrue("Version for 'UserCredit' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
@@ -94,17 +94,17 @@ privileged aspect UserCreditIntegrationTest_Roo_IntegrationTest {
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to initialize correctly", dod.getRandomUserCredit());
         com.sjsu.minishare.model.UserCredit obj = dod.getNewTransientUserCredit(Integer.MAX_VALUE);
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to provide a new transient entity", obj);
-        org.junit.Assert.assertNull("Expected 'UserCredit' identifier to be null", obj.getId());
+        org.junit.Assert.assertNull("Expected 'UserCredit' identifier to be null", obj.getCreditId());
         obj.persist();
         obj.flush();
-        org.junit.Assert.assertNotNull("Expected 'UserCredit' identifier to no longer be null", obj.getId());
+        org.junit.Assert.assertNotNull("Expected 'UserCredit' identifier to no longer be null", obj.getCreditId());
     }
     
     @Test
     public void UserCreditIntegrationTest.testRemove() {
         com.sjsu.minishare.model.UserCredit obj = dod.getRandomUserCredit();
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getCreditId();
         org.junit.Assert.assertNotNull("Data on demand for 'UserCredit' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.UserCredit.findUserCredit(id);
         obj.remove();

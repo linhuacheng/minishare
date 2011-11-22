@@ -81,3 +81,27 @@ web mvc setup
 web mvc all --package ~.web
 exit
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-13 23:29:22
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-21 13:22:41
+hint
+hint
+hint entities
+// [failed] entity --class com.sjsu.minishare.model.CloudUser
+exit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-21 13:41:03
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-21 13:41:49
+entity --class com.sjsu.model.VirtualMachineMonitor
+quit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-21 13:49:08
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-21 13:49:12
+// [failed] entity --class com.sjsu.minishare.model.VirtualMachineDetail
+// [failed] entity --class com.sjsu.minishare.model.VirtualMachineDetail --identifierField machineId
+// [failed] entity --class com.sjsu.minishare.model.VirtualMachineDetail --identifierField machineId
+// [failed] entity --class com.sjsu.minishare.model.VirtualMachineDetail --identifierField machineId
+// [failed] entity --identifierField machineId --class com.sjsu.minishare.model.VirtualMachineDetail
+quit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-21 14:05:02
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-21 14:39:38
+quit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-21 15:08:14
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-21 19:14:30
+entity --class ExampleEntity

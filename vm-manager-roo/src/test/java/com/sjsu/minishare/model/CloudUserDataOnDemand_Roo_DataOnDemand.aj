@@ -38,7 +38,6 @@ privileged aspect CloudUserDataOnDemand_Roo_DataOnDemand {
         setFirstName(obj, index);
         setLastName(obj, index);
         setPassword(obj, index);
-        setUserId(obj, index);
         setUserName(obj, index);
         setUserState(obj, index);
         setZip(obj, index);
@@ -105,11 +104,6 @@ privileged aspect CloudUserDataOnDemand_Roo_DataOnDemand {
         obj.setPassword(password);
     }
     
-    public void CloudUserDataOnDemand.setUserId(CloudUser obj, int index) {
-        Integer userId = new Integer(index);
-        obj.setUserId(userId);
-    }
-    
     public void CloudUserDataOnDemand.setUserName(CloudUser obj, int index) {
         String userName = "userName_" + index;
         obj.setUserName(userName);
@@ -130,13 +124,13 @@ privileged aspect CloudUserDataOnDemand_Roo_DataOnDemand {
         if (index < 0) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         CloudUser obj = data.get(index);
-        return CloudUser.findCloudUser(obj.getId());
+        return CloudUser.findCloudUser(obj.getUserId());
     }
     
     public CloudUser CloudUserDataOnDemand.getRandomCloudUser() {
         init();
         CloudUser obj = data.get(rnd.nextInt(data.size()));
-        return CloudUser.findCloudUser(obj.getId());
+        return CloudUser.findCloudUser(obj.getUserId());
     }
     
     public boolean CloudUserDataOnDemand.modifyCloudUser(CloudUser obj) {

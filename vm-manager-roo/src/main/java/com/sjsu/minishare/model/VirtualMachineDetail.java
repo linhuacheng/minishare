@@ -3,19 +3,27 @@ package com.sjsu.minishare.model;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Temporal;
+import javax.persistence.ManyToOne;
+import javax.persistence.TemporalType;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import com.sjsu.minishare.model.CloudUser;
-import javax.persistence.ManyToOne;
 
 @RooJavaBean
 @RooToString
 @RooEntity
 public class VirtualMachineDetail {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)    @Column(name="machineId")
     private Integer machineId;
 
     @Size(max = 256)

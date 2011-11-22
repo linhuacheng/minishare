@@ -3,7 +3,6 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_com_sjsu_minishare_model_VirtualMachineDetail" object="${virtualmachinedetail}" path="/virtualmachinedetails" z="NUdog9bpdUnjZoQTiPdTRdesxOI=">
-        <field:display field="machineId" id="s_com_sjsu_minishare_model_VirtualMachineDetail_machineId" object="${virtualmachinedetail}" z="3yewsmAWranimwTZ4GGbha2kGAc="/>
         <field:display field="machineName" id="s_com_sjsu_minishare_model_VirtualMachineDetail_machineName" object="${virtualmachinedetail}" z="Dt48/eOGcZhapLeq4qSjDJnkLUM="/>
         <field:display field="machineStatus" id="s_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" object="${virtualmachinedetail}" z="H63A8+iBSkFp1F0SfCF+63ddwAM="/>
         <field:display field="numberCPUs" id="s_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" object="${virtualmachinedetail}" z="xFwH21OqDZeusvvLdYqev8iE3nU="/>

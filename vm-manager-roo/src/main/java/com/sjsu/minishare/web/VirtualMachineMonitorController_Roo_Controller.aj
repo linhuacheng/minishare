@@ -7,7 +7,6 @@ import com.sjsu.minishare.model.VirtualMachineDetail;
 import com.sjsu.minishare.model.VirtualMachineMonitor;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
-import java.lang.Long;
 import java.lang.String;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +31,7 @@ privileged aspect VirtualMachineMonitorController_Roo_Controller {
         }
         uiModel.asMap().clear();
         virtualMachineMonitor.persist();
-        return "redirect:/virtualmachinemonitors/" + encodeUrlPathSegment(virtualMachineMonitor.getId().toString(), httpServletRequest);
+        return "redirect:/virtualmachinemonitors/" + encodeUrlPathSegment(virtualMachineMonitor.getMonitorId().toString(), httpServletRequest);
     }
     
     @RequestMapping(params = "form", method = RequestMethod.GET)
@@ -41,10 +40,10 @@ privileged aspect VirtualMachineMonitorController_Roo_Controller {
         return "virtualmachinemonitors/create";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String VirtualMachineMonitorController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("virtualmachinemonitor", VirtualMachineMonitor.findVirtualMachineMonitor(id));
-        uiModel.addAttribute("itemId", id);
+    @RequestMapping(value = "/{monitorId}", method = RequestMethod.GET)
+    public String VirtualMachineMonitorController.show(@PathVariable("monitorId") Integer monitorId, Model uiModel) {
+        uiModel.addAttribute("virtualmachinemonitor", VirtualMachineMonitor.findVirtualMachineMonitor(monitorId));
+        uiModel.addAttribute("itemId", monitorId);
         return "virtualmachinemonitors/show";
     }
     
@@ -69,18 +68,18 @@ privileged aspect VirtualMachineMonitorController_Roo_Controller {
         }
         uiModel.asMap().clear();
         virtualMachineMonitor.merge();
-        return "redirect:/virtualmachinemonitors/" + encodeUrlPathSegment(virtualMachineMonitor.getId().toString(), httpServletRequest);
+        return "redirect:/virtualmachinemonitors/" + encodeUrlPathSegment(virtualMachineMonitor.getMonitorId().toString(), httpServletRequest);
     }
     
-    @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
-    public String VirtualMachineMonitorController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("virtualMachineMonitor", VirtualMachineMonitor.findVirtualMachineMonitor(id));
+    @RequestMapping(value = "/{monitorId}", params = "form", method = RequestMethod.GET)
+    public String VirtualMachineMonitorController.updateForm(@PathVariable("monitorId") Integer monitorId, Model uiModel) {
+        uiModel.addAttribute("virtualMachineMonitor", VirtualMachineMonitor.findVirtualMachineMonitor(monitorId));
         return "virtualmachinemonitors/update";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String VirtualMachineMonitorController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        VirtualMachineMonitor.findVirtualMachineMonitor(id).remove();
+    @RequestMapping(value = "/{monitorId}", method = RequestMethod.DELETE)
+    public String VirtualMachineMonitorController.delete(@PathVariable("monitorId") Integer monitorId, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        VirtualMachineMonitor.findVirtualMachineMonitor(monitorId).remove();
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

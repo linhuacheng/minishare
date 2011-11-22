@@ -3,6 +3,11 @@ package com.sjsu.minishare.model;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import javax.annotation.Generated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @RooJavaBean
@@ -10,7 +15,8 @@ import javax.validation.constraints.NotNull;
 @RooEntity
 public class CloudUser {
 
-    @NotNull
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
 
     @NotNull

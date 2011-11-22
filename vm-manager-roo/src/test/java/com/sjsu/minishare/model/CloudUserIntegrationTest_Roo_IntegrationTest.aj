@@ -33,11 +33,11 @@ privileged aspect CloudUserIntegrationTest_Roo_IntegrationTest {
     public void CloudUserIntegrationTest.testFindCloudUser() {
         com.sjsu.minishare.model.CloudUser obj = dod.getRandomCloudUser();
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getUserId();
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.CloudUser.findCloudUser(id);
         org.junit.Assert.assertNotNull("Find method for 'CloudUser' illegally returned null for id '" + id + "'", obj);
-        org.junit.Assert.assertEquals("Find method for 'CloudUser' returned the incorrect identifier", id, obj.getId());
+        org.junit.Assert.assertEquals("Find method for 'CloudUser' returned the incorrect identifier", id, obj.getUserId());
     }
     
     @Test
@@ -64,7 +64,7 @@ privileged aspect CloudUserIntegrationTest_Roo_IntegrationTest {
     public void CloudUserIntegrationTest.testFlush() {
         com.sjsu.minishare.model.CloudUser obj = dod.getRandomCloudUser();
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getUserId();
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.CloudUser.findCloudUser(id);
         org.junit.Assert.assertNotNull("Find method for 'CloudUser' illegally returned null for id '" + id + "'", obj);
@@ -78,14 +78,14 @@ privileged aspect CloudUserIntegrationTest_Roo_IntegrationTest {
     public void CloudUserIntegrationTest.testMerge() {
         com.sjsu.minishare.model.CloudUser obj = dod.getRandomCloudUser();
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getUserId();
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.CloudUser.findCloudUser(id);
         boolean modified =  dod.modifyCloudUser(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         com.sjsu.minishare.model.CloudUser merged =  obj.merge();
         obj.flush();
-        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
+        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getUserId(), id);
         org.junit.Assert.assertTrue("Version for 'CloudUser' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
@@ -94,17 +94,17 @@ privileged aspect CloudUserIntegrationTest_Roo_IntegrationTest {
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to initialize correctly", dod.getRandomCloudUser());
         com.sjsu.minishare.model.CloudUser obj = dod.getNewTransientCloudUser(Integer.MAX_VALUE);
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to provide a new transient entity", obj);
-        org.junit.Assert.assertNull("Expected 'CloudUser' identifier to be null", obj.getId());
+        org.junit.Assert.assertNull("Expected 'CloudUser' identifier to be null", obj.getUserId());
         obj.persist();
         obj.flush();
-        org.junit.Assert.assertNotNull("Expected 'CloudUser' identifier to no longer be null", obj.getId());
+        org.junit.Assert.assertNotNull("Expected 'CloudUser' identifier to no longer be null", obj.getUserId());
     }
     
     @Test
     public void CloudUserIntegrationTest.testRemove() {
         com.sjsu.minishare.model.CloudUser obj = dod.getRandomCloudUser();
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getUserId();
         org.junit.Assert.assertNotNull("Data on demand for 'CloudUser' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.CloudUser.findCloudUser(id);
         obj.remove();

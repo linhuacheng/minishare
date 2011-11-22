@@ -2,8 +2,7 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:update id="fu_com_sjsu_minishare_model_VirtualMachineDetail" modelAttribute="virtualMachineDetail" path="/virtualmachinedetails" versionField="Version" z="2LFXm19guzQ1Khf7HkYDFtnBlps=">
-        <field:input field="machineId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineId" validationMessageCode="field_invalid_integer" z="8yeMuvyYt73fmrQJYFMNq/p5YSw="/>
+    <form:update id="fu_com_sjsu_minishare_model_VirtualMachineDetail" idField="machineId" modelAttribute="virtualMachineDetail" path="/virtualmachinedetails" versionField="Version" z="ATcoDE9hS54J3z20GmDfg5kHjf0=">
         <field:textarea field="machineName" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineName" z="vH+bJ9d6FzGBWhuMA/35w4nH4b4="/>
         <field:textarea field="machineStatus" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" z="znCxnOL20K2QfC01rkhNpEOKdag="/>
         <field:input field="numberCPUs" id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" validationMessageCode="field_invalid_integer" z="/C2pzvvmMvemHPMuYZS/4b0YrNY="/>
@@ -14,6 +13,6 @@
         <field:datetime dateTimePattern="${virtualMachineDetail_lastlogout_date_format}" field="lastLogout" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogout" z="Rpek0kOrYvWoQEPmsBzAPIOfpmQ="/>
         <field:input field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" validationMessageCode="field_invalid_integer" z="LaT9PTQ8OHt30w+b6+NAB9gBm8A="/>
         <field:input field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost" validationMessageCode="field_invalid_number" z="4AMqBgSWEbNhHEwSOIL7aCIsLyo="/>
-        <field:select field="userId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_userId" itemValue="id" items="${cloudusers}" path="/cloudusers" z="7C8BWciFLc7IaLoaLXrQsNaFIcs="/>
+        <field:select field="userId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_userId" itemValue="userId" items="${cloudusers}" path="/cloudusers" z="aqw+qhgFWbKL7n9XnXUoJIkaMZ4="/>
     </form:update>
 </div>

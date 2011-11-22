@@ -31,7 +31,6 @@ privileged aspect UserCreditDataOnDemand_Roo_DataOnDemand {
     public UserCredit UserCreditDataOnDemand.getNewTransientUserCredit(int index) {
         UserCredit obj = new UserCredit();
         setCloudUser(obj, index);
-        setCreditId(obj, index);
         setTotalCredits(obj, index);
         setTotalCreditsUsed(obj, index);
         return obj;
@@ -40,11 +39,6 @@ privileged aspect UserCreditDataOnDemand_Roo_DataOnDemand {
     public void UserCreditDataOnDemand.setCloudUser(UserCredit obj, int index) {
         CloudUser cloudUser = cloudUserDataOnDemand.getRandomCloudUser();
         obj.setCloudUser(cloudUser);
-    }
-    
-    public void UserCreditDataOnDemand.setCreditId(UserCredit obj, int index) {
-        Integer creditId = new Integer(index);
-        obj.setCreditId(creditId);
     }
     
     public void UserCreditDataOnDemand.setTotalCredits(UserCredit obj, int index) {
@@ -62,13 +56,13 @@ privileged aspect UserCreditDataOnDemand_Roo_DataOnDemand {
         if (index < 0) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
         UserCredit obj = data.get(index);
-        return UserCredit.findUserCredit(obj.getId());
+        return UserCredit.findUserCredit(obj.getCreditId());
     }
     
     public UserCredit UserCreditDataOnDemand.getRandomUserCredit() {
         init();
         UserCredit obj = data.get(rnd.nextInt(data.size()));
-        return UserCredit.findUserCredit(obj.getId());
+        return UserCredit.findUserCredit(obj.getCreditId());
     }
     
     public boolean UserCreditDataOnDemand.modifyUserCredit(UserCredit obj) {

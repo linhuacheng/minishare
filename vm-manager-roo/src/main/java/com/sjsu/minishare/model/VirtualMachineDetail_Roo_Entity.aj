@@ -5,14 +5,10 @@ package com.sjsu.minishare.model;
 
 import com.sjsu.minishare.model.VirtualMachineDetail;
 import java.lang.Integer;
-import java.lang.Long;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,22 +20,9 @@ privileged aspect VirtualMachineDetail_Roo_Entity {
     @PersistenceContext
     transient EntityManager VirtualMachineDetail.entityManager;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long VirtualMachineDetail.id;
-    
     @Version
     @Column(name = "version")
     private Integer VirtualMachineDetail.version;
-    
-    public Long VirtualMachineDetail.getId() {
-        return this.id;
-    }
-    
-    public void VirtualMachineDetail.setId(Long id) {
-        this.id = id;
-    }
     
     public Integer VirtualMachineDetail.getVersion() {
         return this.version;
@@ -61,7 +44,7 @@ privileged aspect VirtualMachineDetail_Roo_Entity {
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            VirtualMachineDetail attached = VirtualMachineDetail.findVirtualMachineDetail(this.id);
+            VirtualMachineDetail attached = VirtualMachineDetail.findVirtualMachineDetail(this.machineId);
             this.entityManager.remove(attached);
         }
     }
@@ -100,9 +83,9 @@ privileged aspect VirtualMachineDetail_Roo_Entity {
         return entityManager().createQuery("SELECT o FROM VirtualMachineDetail o", VirtualMachineDetail.class).getResultList();
     }
     
-    public static VirtualMachineDetail VirtualMachineDetail.findVirtualMachineDetail(Long id) {
-        if (id == null) return null;
-        return entityManager().find(VirtualMachineDetail.class, id);
+    public static VirtualMachineDetail VirtualMachineDetail.findVirtualMachineDetail(Integer machineId) {
+        if (machineId == null) return null;
+        return entityManager().find(VirtualMachineDetail.class, machineId);
     }
     
     public static List<VirtualMachineDetail> VirtualMachineDetail.findVirtualMachineDetailEntries(int firstResult, int maxResults) {

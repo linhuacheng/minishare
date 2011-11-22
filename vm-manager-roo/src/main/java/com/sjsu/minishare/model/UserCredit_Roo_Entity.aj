@@ -5,14 +5,10 @@ package com.sjsu.minishare.model;
 
 import com.sjsu.minishare.model.UserCredit;
 import java.lang.Integer;
-import java.lang.Long;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,22 +20,9 @@ privileged aspect UserCredit_Roo_Entity {
     @PersistenceContext
     transient EntityManager UserCredit.entityManager;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long UserCredit.id;
-    
     @Version
     @Column(name = "version")
     private Integer UserCredit.version;
-    
-    public Long UserCredit.getId() {
-        return this.id;
-    }
-    
-    public void UserCredit.setId(Long id) {
-        this.id = id;
-    }
     
     public Integer UserCredit.getVersion() {
         return this.version;
@@ -61,7 +44,7 @@ privileged aspect UserCredit_Roo_Entity {
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            UserCredit attached = UserCredit.findUserCredit(this.id);
+            UserCredit attached = UserCredit.findUserCredit(this.creditId);
             this.entityManager.remove(attached);
         }
     }
@@ -100,9 +83,9 @@ privileged aspect UserCredit_Roo_Entity {
         return entityManager().createQuery("SELECT o FROM UserCredit o", UserCredit.class).getResultList();
     }
     
-    public static UserCredit UserCredit.findUserCredit(Long id) {
-        if (id == null) return null;
-        return entityManager().find(UserCredit.class, id);
+    public static UserCredit UserCredit.findUserCredit(Integer creditId) {
+        if (creditId == null) return null;
+        return entityManager().find(UserCredit.class, creditId);
     }
     
     public static List<UserCredit> UserCredit.findUserCreditEntries(int firstResult, int maxResults) {
