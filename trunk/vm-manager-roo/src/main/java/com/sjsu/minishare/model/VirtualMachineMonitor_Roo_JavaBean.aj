@@ -41,12 +41,12 @@ privileged aspect VirtualMachineMonitor_Roo_JavaBean {
         this.monitorInterval = monitorInterval;
     }
     
-    public VirtualMachineDetail VirtualMachineMonitor.getVirtualMachine() {
-        return this.virtualMachine;
+    public VirtualMachineDetail VirtualMachineMonitor.getVirtualMachineDetail() {
+        return this.virtualMachineDetail;
     }
     
-    public void VirtualMachineMonitor.setVirtualMachine(VirtualMachineDetail virtualMachine) {
-        this.virtualMachine = virtualMachine;
+    public void VirtualMachineMonitor.setVirtualMachineDetail(VirtualMachineDetail virtualMachineDetail) {
+        this.virtualMachineDetail = virtualMachineDetail;
     }
     
 }

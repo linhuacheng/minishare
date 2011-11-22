@@ -3,13 +3,13 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_com_sjsu_minishare_model_VirtualMachineDetail" items="${virtualmachinedetails}" z="LHDv49pDWxqwpT/tuuYe8ZdwPfA=">
-        <table:table data="${virtualmachinedetails}" id="l_com_sjsu_minishare_model_VirtualMachineDetail" path="/virtualmachinedetails" z="MBypyRantbDq4hIBCN9tjROvFD8=">
-            <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineId" property="machineId" z="w24cL+AC9vRPx1rTj0UXu2OlWhc="/>
+        <table:table data="${virtualmachinedetails}" id="l_com_sjsu_minishare_model_VirtualMachineDetail" path="/virtualmachinedetails" typeIdFieldName="machineId" z="srpUi5iERFNnFWwgCZxgyNgo/rk=">
             <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineName" property="machineName" z="a0wYi9N9jZfMlWoWmmCz/3+t9Qk="/>
             <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" property="machineStatus" z="u7FMnnFBMAdwWRSkkj10940uDzw="/>
             <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" property="numberCPUs" z="WfKma3SGGFIRQfHmz/TakZjExDE="/>
             <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_memory" property="memory" z="aEme+nhguqrWBCrQetOLf8SZoDE="/>
             <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" property="operatingSystem" z="m7/KuspCLglRkk9+AX/XYCZLa3I="/>
+            <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" property="usageInMinutes" z="jMg8XDJRdpISvP6yTvL9eFan2xo="/>
         </table:table>
     </page:list>
 </div>

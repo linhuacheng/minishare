@@ -7,7 +7,6 @@ import com.sjsu.minishare.model.CloudUser;
 import com.sjsu.minishare.model.UserCredit;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
-import java.lang.Long;
 import java.lang.String;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +31,7 @@ privileged aspect UserCreditController_Roo_Controller {
         }
         uiModel.asMap().clear();
         userCredit.persist();
-        return "redirect:/usercredits/" + encodeUrlPathSegment(userCredit.getId().toString(), httpServletRequest);
+        return "redirect:/usercredits/" + encodeUrlPathSegment(userCredit.getCreditId().toString(), httpServletRequest);
     }
     
     @RequestMapping(params = "form", method = RequestMethod.GET)
@@ -41,10 +40,10 @@ privileged aspect UserCreditController_Roo_Controller {
         return "usercredits/create";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String UserCreditController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("usercredit", UserCredit.findUserCredit(id));
-        uiModel.addAttribute("itemId", id);
+    @RequestMapping(value = "/{creditId}", method = RequestMethod.GET)
+    public String UserCreditController.show(@PathVariable("creditId") Integer creditId, Model uiModel) {
+        uiModel.addAttribute("usercredit", UserCredit.findUserCredit(creditId));
+        uiModel.addAttribute("itemId", creditId);
         return "usercredits/show";
     }
     
@@ -69,18 +68,18 @@ privileged aspect UserCreditController_Roo_Controller {
         }
         uiModel.asMap().clear();
         userCredit.merge();
-        return "redirect:/usercredits/" + encodeUrlPathSegment(userCredit.getId().toString(), httpServletRequest);
+        return "redirect:/usercredits/" + encodeUrlPathSegment(userCredit.getCreditId().toString(), httpServletRequest);
     }
     
-    @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
-    public String UserCreditController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("userCredit", UserCredit.findUserCredit(id));
+    @RequestMapping(value = "/{creditId}", params = "form", method = RequestMethod.GET)
+    public String UserCreditController.updateForm(@PathVariable("creditId") Integer creditId, Model uiModel) {
+        uiModel.addAttribute("userCredit", UserCredit.findUserCredit(creditId));
         return "usercredits/update";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String UserCreditController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        UserCredit.findUserCredit(id).remove();
+    @RequestMapping(value = "/{creditId}", method = RequestMethod.DELETE)
+    public String UserCreditController.delete(@PathVariable("creditId") Integer creditId, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        UserCredit.findUserCredit(creditId).remove();
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

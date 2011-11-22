@@ -5,14 +5,10 @@ package com.sjsu.minishare.model;
 
 import com.sjsu.minishare.model.CloudUser;
 import java.lang.Integer;
-import java.lang.Long;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,22 +20,9 @@ privileged aspect CloudUser_Roo_Entity {
     @PersistenceContext
     transient EntityManager CloudUser.entityManager;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long CloudUser.id;
-    
     @Version
     @Column(name = "version")
     private Integer CloudUser.version;
-    
-    public Long CloudUser.getId() {
-        return this.id;
-    }
-    
-    public void CloudUser.setId(Long id) {
-        this.id = id;
-    }
     
     public Integer CloudUser.getVersion() {
         return this.version;
@@ -61,7 +44,7 @@ privileged aspect CloudUser_Roo_Entity {
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            CloudUser attached = CloudUser.findCloudUser(this.id);
+            CloudUser attached = CloudUser.findCloudUser(this.userId);
             this.entityManager.remove(attached);
         }
     }
@@ -100,9 +83,9 @@ privileged aspect CloudUser_Roo_Entity {
         return entityManager().createQuery("SELECT o FROM CloudUser o", CloudUser.class).getResultList();
     }
     
-    public static CloudUser CloudUser.findCloudUser(Long id) {
-        if (id == null) return null;
-        return entityManager().find(CloudUser.class, id);
+    public static CloudUser CloudUser.findCloudUser(Integer userId) {
+        if (userId == null) return null;
+        return entityManager().find(CloudUser.class, userId);
     }
     
     public static List<CloudUser> CloudUser.findCloudUserEntries(int firstResult, int maxResults) {

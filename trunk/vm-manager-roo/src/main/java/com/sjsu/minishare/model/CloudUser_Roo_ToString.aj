@@ -19,7 +19,6 @@ privileged aspect CloudUser_Roo_ToString {
         sb.append("City: ").append(getCity()).append(", ");
         sb.append("Country: ").append(getCountry()).append(", ");
         sb.append("FirstName: ").append(getFirstName()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
         sb.append("LastName: ").append(getLastName()).append(", ");
         sb.append("Password: ").append(getPassword()).append(", ");
         sb.append("UserId: ").append(getUserId()).append(", ");

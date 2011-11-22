@@ -3,7 +3,6 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_com_sjsu_minishare_model_UserCredit" object="${usercredit}" path="/usercredits" z="NEIVvC76snj8GsNF9zx5Fv9B+OI=">
-        <field:display field="creditId" id="s_com_sjsu_minishare_model_UserCredit_creditId" object="${usercredit}" z="z+QmaN3VidAWsxU8Q+Vh46CTdF4="/>
         <field:display field="totalCredits" id="s_com_sjsu_minishare_model_UserCredit_totalCredits" object="${usercredit}" z="9xmzuI5m9JMs1RX8mzexZwfeV3o="/>
         <field:display field="totalCreditsUsed" id="s_com_sjsu_minishare_model_UserCredit_totalCreditsUsed" object="${usercredit}" z="TZfo+P5poifOt4wIWLB1KTYCK9Q="/>
         <field:display field="cloudUser" id="s_com_sjsu_minishare_model_UserCredit_cloudUser" object="${usercredit}" z="Mbyfd/9RgrmGfpSGh325hRrolYg="/>

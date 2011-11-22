@@ -10,7 +10,6 @@ privileged aspect VirtualMachineDetail_Roo_ToString {
     public String VirtualMachineDetail.toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("CreditsUsed: ").append(getCreditsUsed()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
         sb.append("LastLogin: ").append(getLastLogin()).append(", ");
         sb.append("LastLogout: ").append(getLastLogout()).append(", ");
         sb.append("MachineId: ").append(getMachineId()).append(", ");

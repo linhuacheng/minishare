@@ -7,7 +7,6 @@ import com.sjsu.minishare.model.CloudUser;
 import com.sjsu.minishare.model.VirtualMachineDetail;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
-import java.lang.Long;
 import java.lang.String;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +34,7 @@ privileged aspect VirtualMachineDetailController_Roo_Controller {
         }
         uiModel.asMap().clear();
         virtualMachineDetail.persist();
-        return "redirect:/virtualmachinedetails/" + encodeUrlPathSegment(virtualMachineDetail.getId().toString(), httpServletRequest);
+        return "redirect:/virtualmachinedetails/" + encodeUrlPathSegment(virtualMachineDetail.getMachineId().toString(), httpServletRequest);
     }
     
     @RequestMapping(params = "form", method = RequestMethod.GET)
@@ -45,11 +44,11 @@ privileged aspect VirtualMachineDetailController_Roo_Controller {
         return "virtualmachinedetails/create";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String VirtualMachineDetailController.show(@PathVariable("id") Long id, Model uiModel) {
+    @RequestMapping(value = "/{machineId}", method = RequestMethod.GET)
+    public String VirtualMachineDetailController.show(@PathVariable("machineId") Integer machineId, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("virtualmachinedetail", VirtualMachineDetail.findVirtualMachineDetail(id));
-        uiModel.addAttribute("itemId", id);
+        uiModel.addAttribute("virtualmachinedetail", VirtualMachineDetail.findVirtualMachineDetail(machineId));
+        uiModel.addAttribute("itemId", machineId);
         return "virtualmachinedetails/show";
     }
     
@@ -76,19 +75,19 @@ privileged aspect VirtualMachineDetailController_Roo_Controller {
         }
         uiModel.asMap().clear();
         virtualMachineDetail.merge();
-        return "redirect:/virtualmachinedetails/" + encodeUrlPathSegment(virtualMachineDetail.getId().toString(), httpServletRequest);
+        return "redirect:/virtualmachinedetails/" + encodeUrlPathSegment(virtualMachineDetail.getMachineId().toString(), httpServletRequest);
     }
     
-    @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
-    public String VirtualMachineDetailController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("virtualMachineDetail", VirtualMachineDetail.findVirtualMachineDetail(id));
+    @RequestMapping(value = "/{machineId}", params = "form", method = RequestMethod.GET)
+    public String VirtualMachineDetailController.updateForm(@PathVariable("machineId") Integer machineId, Model uiModel) {
+        uiModel.addAttribute("virtualMachineDetail", VirtualMachineDetail.findVirtualMachineDetail(machineId));
         addDateTimeFormatPatterns(uiModel);
         return "virtualmachinedetails/update";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String VirtualMachineDetailController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        VirtualMachineDetail.findVirtualMachineDetail(id).remove();
+    @RequestMapping(value = "/{machineId}", method = RequestMethod.DELETE)
+    public String VirtualMachineDetailController.delete(@PathVariable("machineId") Integer machineId, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        VirtualMachineDetail.findVirtualMachineDetail(machineId).remove();
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());

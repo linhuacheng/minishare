@@ -27,28 +27,28 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     static class com.sjsu.minishare.web.ApplicationConversionServiceFactoryBean.CloudUserConverter implements Converter<CloudUser, String> {
         public String convert(CloudUser cloudUser) {
-            return new StringBuilder().append(cloudUser.getUserId()).append(" ").append(cloudUser.getUserName()).append(" ").append(cloudUser.getFirstName()).append(" ").append(cloudUser.getLastName()).toString();
+            return new StringBuilder().append(cloudUser.getUserName()).append(" ").append(cloudUser.getFirstName()).append(" ").append(cloudUser.getLastName()).append(" ").append(cloudUser.getPassword()).toString();
         }
         
     }
     
     static class com.sjsu.minishare.web.ApplicationConversionServiceFactoryBean.UserCreditConverter implements Converter<UserCredit, String> {
         public String convert(UserCredit userCredit) {
-            return new StringBuilder().append(userCredit.getCreditId()).append(" ").append(userCredit.getTotalCredits()).append(" ").append(userCredit.getTotalCreditsUsed()).toString();
+            return new StringBuilder().append(userCredit.getTotalCredits()).append(" ").append(userCredit.getTotalCreditsUsed()).toString();
         }
         
     }
     
     static class com.sjsu.minishare.web.ApplicationConversionServiceFactoryBean.VirtualMachineDetailConverter implements Converter<VirtualMachineDetail, String> {
         public String convert(VirtualMachineDetail virtualMachineDetail) {
-            return new StringBuilder().append(virtualMachineDetail.getMachineId()).append(" ").append(virtualMachineDetail.getMachineName()).append(" ").append(virtualMachineDetail.getMachineStatus()).append(" ").append(virtualMachineDetail.getNumberCPUs()).toString();
+            return new StringBuilder().append(virtualMachineDetail.getMachineName()).append(" ").append(virtualMachineDetail.getMachineStatus()).append(" ").append(virtualMachineDetail.getNumberCPUs()).append(" ").append(virtualMachineDetail.getMemory()).toString();
         }
         
     }
     
     static class com.sjsu.minishare.web.ApplicationConversionServiceFactoryBean.VirtualMachineMonitorConverter implements Converter<VirtualMachineMonitor, String> {
         public String convert(VirtualMachineMonitor virtualMachineMonitor) {
-            return new StringBuilder().append(virtualMachineMonitor.getMonitorId()).append(" ").append(virtualMachineMonitor.getMemoryConsumedInBytes()).append(" ").append(virtualMachineMonitor.getCpuUsageInPercent()).append(" ").append(virtualMachineMonitor.getMonitorInterval()).toString();
+            return new StringBuilder().append(virtualMachineMonitor.getMemoryConsumedInBytes()).append(" ").append(virtualMachineMonitor.getCpuUsageInPercent()).append(" ").append(virtualMachineMonitor.getMonitorInterval()).toString();
         }
         
     }

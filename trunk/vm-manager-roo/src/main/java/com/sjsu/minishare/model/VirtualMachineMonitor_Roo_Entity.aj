@@ -5,14 +5,10 @@ package com.sjsu.minishare.model;
 
 import com.sjsu.minishare.model.VirtualMachineMonitor;
 import java.lang.Integer;
-import java.lang.Long;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,22 +20,9 @@ privileged aspect VirtualMachineMonitor_Roo_Entity {
     @PersistenceContext
     transient EntityManager VirtualMachineMonitor.entityManager;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long VirtualMachineMonitor.id;
-    
     @Version
     @Column(name = "version")
     private Integer VirtualMachineMonitor.version;
-    
-    public Long VirtualMachineMonitor.getId() {
-        return this.id;
-    }
-    
-    public void VirtualMachineMonitor.setId(Long id) {
-        this.id = id;
-    }
     
     public Integer VirtualMachineMonitor.getVersion() {
         return this.version;
@@ -61,7 +44,7 @@ privileged aspect VirtualMachineMonitor_Roo_Entity {
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            VirtualMachineMonitor attached = VirtualMachineMonitor.findVirtualMachineMonitor(this.id);
+            VirtualMachineMonitor attached = VirtualMachineMonitor.findVirtualMachineMonitor(this.monitorId);
             this.entityManager.remove(attached);
         }
     }
@@ -100,9 +83,9 @@ privileged aspect VirtualMachineMonitor_Roo_Entity {
         return entityManager().createQuery("SELECT o FROM VirtualMachineMonitor o", VirtualMachineMonitor.class).getResultList();
     }
     
-    public static VirtualMachineMonitor VirtualMachineMonitor.findVirtualMachineMonitor(Long id) {
-        if (id == null) return null;
-        return entityManager().find(VirtualMachineMonitor.class, id);
+    public static VirtualMachineMonitor VirtualMachineMonitor.findVirtualMachineMonitor(Integer monitorId) {
+        if (monitorId == null) return null;
+        return entityManager().find(VirtualMachineMonitor.class, monitorId);
     }
     
     public static List<VirtualMachineMonitor> VirtualMachineMonitor.findVirtualMachineMonitorEntries(int firstResult, int maxResults) {

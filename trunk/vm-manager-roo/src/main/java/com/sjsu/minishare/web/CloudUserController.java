@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/cloudusers")
 @Controller
 public class CloudUserController {
+
 }

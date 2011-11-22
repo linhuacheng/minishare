@@ -33,11 +33,11 @@ privileged aspect VirtualMachineDetailIntegrationTest_Roo_IntegrationTest {
     public void VirtualMachineDetailIntegrationTest.testFindVirtualMachineDetail() {
         com.sjsu.minishare.model.VirtualMachineDetail obj = dod.getRandomVirtualMachineDetail();
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getMachineId();
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.VirtualMachineDetail.findVirtualMachineDetail(id);
         org.junit.Assert.assertNotNull("Find method for 'VirtualMachineDetail' illegally returned null for id '" + id + "'", obj);
-        org.junit.Assert.assertEquals("Find method for 'VirtualMachineDetail' returned the incorrect identifier", id, obj.getId());
+        org.junit.Assert.assertEquals("Find method for 'VirtualMachineDetail' returned the incorrect identifier", id, obj.getMachineId());
     }
     
     @Test
@@ -64,7 +64,7 @@ privileged aspect VirtualMachineDetailIntegrationTest_Roo_IntegrationTest {
     public void VirtualMachineDetailIntegrationTest.testFlush() {
         com.sjsu.minishare.model.VirtualMachineDetail obj = dod.getRandomVirtualMachineDetail();
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getMachineId();
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.VirtualMachineDetail.findVirtualMachineDetail(id);
         org.junit.Assert.assertNotNull("Find method for 'VirtualMachineDetail' illegally returned null for id '" + id + "'", obj);
@@ -78,14 +78,14 @@ privileged aspect VirtualMachineDetailIntegrationTest_Roo_IntegrationTest {
     public void VirtualMachineDetailIntegrationTest.testMerge() {
         com.sjsu.minishare.model.VirtualMachineDetail obj = dod.getRandomVirtualMachineDetail();
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getMachineId();
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.VirtualMachineDetail.findVirtualMachineDetail(id);
         boolean modified =  dod.modifyVirtualMachineDetail(obj);
         java.lang.Integer currentVersion = obj.getVersion();
         com.sjsu.minishare.model.VirtualMachineDetail merged =  obj.merge();
         obj.flush();
-        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getId(), id);
+        org.junit.Assert.assertEquals("Identifier of merged object not the same as identifier of original object", merged.getMachineId(), id);
         org.junit.Assert.assertTrue("Version for 'VirtualMachineDetail' failed to increment on merge and flush directive", (currentVersion != null && obj.getVersion() > currentVersion) || !modified);
     }
     
@@ -94,17 +94,17 @@ privileged aspect VirtualMachineDetailIntegrationTest_Roo_IntegrationTest {
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to initialize correctly", dod.getRandomVirtualMachineDetail());
         com.sjsu.minishare.model.VirtualMachineDetail obj = dod.getNewTransientVirtualMachineDetail(Integer.MAX_VALUE);
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to provide a new transient entity", obj);
-        org.junit.Assert.assertNull("Expected 'VirtualMachineDetail' identifier to be null", obj.getId());
+        org.junit.Assert.assertNull("Expected 'VirtualMachineDetail' identifier to be null", obj.getMachineId());
         obj.persist();
         obj.flush();
-        org.junit.Assert.assertNotNull("Expected 'VirtualMachineDetail' identifier to no longer be null", obj.getId());
+        org.junit.Assert.assertNotNull("Expected 'VirtualMachineDetail' identifier to no longer be null", obj.getMachineId());
     }
     
     @Test
     public void VirtualMachineDetailIntegrationTest.testRemove() {
         com.sjsu.minishare.model.VirtualMachineDetail obj = dod.getRandomVirtualMachineDetail();
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to initialize correctly", obj);
-        java.lang.Long id = obj.getId();
+        java.lang.Integer id = obj.getMachineId();
         org.junit.Assert.assertNotNull("Data on demand for 'VirtualMachineDetail' failed to provide an identifier", id);
         obj = com.sjsu.minishare.model.VirtualMachineDetail.findVirtualMachineDetail(id);
         obj.remove();

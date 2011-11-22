@@ -10,12 +10,11 @@ privileged aspect VirtualMachineMonitor_Roo_ToString {
     public String VirtualMachineMonitor.toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("CpuUsageInPercent: ").append(getCpuUsageInPercent()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
         sb.append("MemoryConsumedInBytes: ").append(getMemoryConsumedInBytes()).append(", ");
         sb.append("MonitorId: ").append(getMonitorId()).append(", ");
         sb.append("MonitorInterval: ").append(getMonitorInterval()).append(", ");
         sb.append("Version: ").append(getVersion()).append(", ");
-        sb.append("VirtualMachine: ").append(getVirtualMachine());
+        sb.append("VirtualMachineDetail: ").append(getVirtualMachineDetail());
         return sb.toString();
     }
     

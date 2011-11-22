@@ -2,11 +2,10 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:update id="fu_com_sjsu_minishare_model_VirtualMachineMonitor" modelAttribute="virtualMachineMonitor" path="/virtualmachinemonitors" versionField="Version" z="RFuqROLGOX/+pNfnEx3TUaeKq7w=">
-        <field:input field="monitorId" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_monitorId" required="true" validationMessageCode="field_invalid_integer" z="SHyHG0rhfyEZc2Opvnuu9ivhV8o="/>
+    <form:update id="fu_com_sjsu_minishare_model_VirtualMachineMonitor" idField="monitorId" modelAttribute="virtualMachineMonitor" path="/virtualmachinemonitors" versionField="Version" z="pJ2Cu/8WChdDHtaU7F1JL3/Mmgc=">
         <field:input field="memoryConsumedInBytes" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_memoryConsumedInBytes" validationMessageCode="field_invalid_integer" z="cwloMVLDf4aASewsrq0iu4JolFs="/>
         <field:input field="cpuUsageInPercent" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_cpuUsageInPercent" validationMessageCode="field_invalid_number" z="blmoqJe656NORbL3kgb7VdybwQ8="/>
         <field:input field="monitorInterval" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_monitorInterval" validationMessageCode="field_invalid_integer" z="eIhI05aWsoD+Lnm85Bv0RXAFLjQ="/>
-        <field:select field="virtualMachine" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_virtualMachine" itemValue="id" items="${virtualmachinedetails}" path="/virtualmachinedetails" z="Tt12cOwgoo+lu1v5s93Aeq1/eEQ="/>
+        <field:select field="virtualMachineDetail" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_virtualMachineDetail" itemValue="machineId" items="${virtualmachinedetails}" path="/virtualmachinedetails" z="xIeolq7cBY0OcjZag50Au3pTllI="/>
     </form:update>
 </div>

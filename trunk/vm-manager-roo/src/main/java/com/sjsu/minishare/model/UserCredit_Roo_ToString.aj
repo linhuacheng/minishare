@@ -11,7 +11,6 @@ privileged aspect UserCredit_Roo_ToString {
         StringBuilder sb = new StringBuilder();
         sb.append("CloudUser: ").append(getCloudUser()).append(", ");
         sb.append("CreditId: ").append(getCreditId()).append(", ");
-        sb.append("Id: ").append(getId()).append(", ");
         sb.append("TotalCredits: ").append(getTotalCredits()).append(", ");
         sb.append("TotalCreditsUsed: ").append(getTotalCreditsUsed()).append(", ");
         sb.append("Version: ").append(getVersion());

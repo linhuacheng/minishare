@@ -3,10 +3,9 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_com_sjsu_minishare_model_UserCredit" modelAttribute="userCredit" path="/usercredits" render="${empty dependencies}" z="px1qGD9VXTtiTb0LSLABRSRub8w=">
-        <field:input field="creditId" id="c_com_sjsu_minishare_model_UserCredit_creditId" required="true" validationMessageCode="field_invalid_integer" z="Akb1aDUugRaA43v2UeFBx2XC4zI="/>
         <field:input field="totalCredits" id="c_com_sjsu_minishare_model_UserCredit_totalCredits" validationMessageCode="field_invalid_integer" z="o7Joez/gf3yJ1qh5V9oRMqZmNL8="/>
         <field:input field="totalCreditsUsed" id="c_com_sjsu_minishare_model_UserCredit_totalCreditsUsed" validationMessageCode="field_invalid_integer" z="vkelCKdSAFBXgSgiBfy2s/zDZgo="/>
-        <field:select field="cloudUser" id="c_com_sjsu_minishare_model_UserCredit_cloudUser" itemValue="id" items="${cloudusers}" path="/cloudusers" z="ZHdt/0gyLd1x0EWNIgrr9oDSeao="/>
+        <field:select field="cloudUser" id="c_com_sjsu_minishare_model_UserCredit_cloudUser" itemValue="userId" items="${cloudusers}" path="/cloudusers" z="rf2MqRpWNj7PIAZuVxQWqQPKdS0="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_com_sjsu_minishare_model_UserCredit" render="${not empty dependencies}" z="aGYd0jTvW9qcYZ98q8OtCkH2HzI="/>
 </div>
