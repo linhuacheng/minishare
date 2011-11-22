@@ -56,4 +56,7 @@ public class VirtualMachineDetail {
 
     @ManyToOne
     private CloudUser userId;
+    
+    
+    
 }

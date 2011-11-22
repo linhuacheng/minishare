@@ -25,25 +25,6 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect VirtualMachineDetailController_Roo_Controller {
     
-    @RequestMapping(method = RequestMethod.POST)
-    public String VirtualMachineDetailController.create(@Valid VirtualMachineDetail virtualMachineDetail, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("virtualMachineDetail", virtualMachineDetail);
-            addDateTimeFormatPatterns(uiModel);
-            return "virtualmachinedetails/create";
-        }
-        uiModel.asMap().clear();
-        virtualMachineDetail.persist();
-        return "redirect:/virtualmachinedetails/" + encodeUrlPathSegment(virtualMachineDetail.getMachineId().toString(), httpServletRequest);
-    }
-    
-    @RequestMapping(params = "form", method = RequestMethod.GET)
-    public String VirtualMachineDetailController.createForm(Model uiModel) {
-        uiModel.addAttribute("virtualMachineDetail", new VirtualMachineDetail());
-        addDateTimeFormatPatterns(uiModel);
-        return "virtualmachinedetails/create";
-    }
-    
     @RequestMapping(value = "/{machineId}", method = RequestMethod.GET)
     public String VirtualMachineDetailController.show(@PathVariable("machineId") Integer machineId, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
@@ -64,18 +45,6 @@ privileged aspect VirtualMachineDetailController_Roo_Controller {
         }
         addDateTimeFormatPatterns(uiModel);
         return "virtualmachinedetails/list";
-    }
-    
-    @RequestMapping(method = RequestMethod.PUT)
-    public String VirtualMachineDetailController.update(@Valid VirtualMachineDetail virtualMachineDetail, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("virtualMachineDetail", virtualMachineDetail);
-            addDateTimeFormatPatterns(uiModel);
-            return "virtualmachinedetails/update";
-        }
-        uiModel.asMap().clear();
-        virtualMachineDetail.merge();
-        return "redirect:/virtualmachinedetails/" + encodeUrlPathSegment(virtualMachineDetail.getMachineId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{machineId}", params = "form", method = RequestMethod.GET)
