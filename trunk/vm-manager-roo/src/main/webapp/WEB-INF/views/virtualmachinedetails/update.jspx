@@ -4,15 +4,19 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_com_sjsu_minishare_model_VirtualMachineDetail" idField="machineId" modelAttribute="virtualMachineDetail" path="/virtualmachinedetails" versionField="Version" z="ATcoDE9hS54J3z20GmDfg5kHjf0=">
         <field:textarea field="machineName" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineName" z="vH+bJ9d6FzGBWhuMA/35w4nH4b4="/>
-        <field:textarea field="machineStatus" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" z="znCxnOL20K2QfC01rkhNpEOKdag="/>
+        <field:simple field="machineStatus" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" text="${virtualMachineDetail.machineStatus}" z="znCxnOL20K2QfC01rkhNpEOKdag="/>
+        <field:hidden field="machineStatus" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" z="znCxnOL20K2QfC01rkhNpEOKdag=" /> 
         <field:input field="numberCPUs" id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" validationMessageCode="field_invalid_integer" z="/C2pzvvmMvemHPMuYZS/4b0YrNY="/>
         <field:textarea field="memory" id="c_com_sjsu_minishare_model_VirtualMachineDetail_memory" z="Qx/3ZGJ2vE7Pj4o/CYE89um6rqc="/>
         <field:textarea field="operatingSystem" id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" z="PedpGgExJ5T09zoT+4QxyT8q7UI="/>
-        <field:input field="usageInMinutes" id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" validationMessageCode="field_invalid_number" z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/>
+        <field:simple field="usageInMinutes" id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" text="${virtualMachineDetail.usageInMinutes}"  z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/>
+        <field:hidden field="usageInMinutes"  id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/> 
         <field:datetime dateTimePattern="${virtualMachineDetail_lastlogin_date_format}" field="lastLogin" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogin" z="HMVA3epOYKwKYonG5ttfX8QxHHg="/>
         <field:datetime dateTimePattern="${virtualMachineDetail_lastlogout_date_format}" field="lastLogout" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogout" z="Rpek0kOrYvWoQEPmsBzAPIOfpmQ="/>
-        <field:input field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" validationMessageCode="field_invalid_integer" z="LaT9PTQ8OHt30w+b6+NAB9gBm8A="/>
-        <field:input field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost" validationMessageCode="field_invalid_number" z="4AMqBgSWEbNhHEwSOIL7aCIsLyo="/>
+        <field:simple field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" text="${virtualMachineDetail.creditsUsed}"  z="LaT9PTQ8OHt30w+b6+NAB9gBm8A="/>
+        <field:hidden field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" z="LaT9PTQ8OHt30w+b6+NAB9gBm8A=" />
+        <field:hidden field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost"/>      
+        <field:simple field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost" text="${virtualMachineDetail.totalCost}" z="4AMqBgSWEbNhHEwSOIL7aCIsLyo="/>
         <field:select field="userId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_userId" itemValue="userId" items="${cloudusers}" path="/cloudusers" z="aqw+qhgFWbKL7n9XnXUoJIkaMZ4="/>
     </form:update>
 </div>

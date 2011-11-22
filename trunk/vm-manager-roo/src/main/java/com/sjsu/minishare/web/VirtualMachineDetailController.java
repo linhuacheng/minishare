@@ -97,6 +97,7 @@ public class VirtualMachineDetailController {
 				HttpServletRequest httpServletRequest) {
 		
 		VirtualMachineDetail vmDetail = new VirtualMachineDetail();
+		vmDetail.setUsageInMinutes(new Float(0));
 		vmDetail.setCreditsUsed(new Integer(0));
 		vmDetail.setTotalCost(new Float(0));
 		vmDetail.setMachineStatus(MachineStatus.Off.toString());
