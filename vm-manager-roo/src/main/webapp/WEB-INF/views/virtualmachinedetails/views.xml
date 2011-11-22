@@ -13,4 +13,7 @@
 <definition extends="default" name="virtualmachinedetails/update">
         <put-attribute name="body" value="/WEB-INF/views/virtualmachinedetails/update.jspx"/>
     </definition>
+    <definition extends="default" name="virtualmachinedetails/template">
+        <put-attribute name="body" value="/WEB-INF/views/virtualmachinedetails/template.jspx"/>
+    </definition>
 </tiles-definitions>
