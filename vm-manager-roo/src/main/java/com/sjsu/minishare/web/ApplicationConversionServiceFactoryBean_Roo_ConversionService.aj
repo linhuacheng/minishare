@@ -9,10 +9,9 @@ import com.sjsu.minishare.model.VirtualMachineDetail;
 import com.sjsu.minishare.model.VirtualMachineMonitor;
 import java.lang.String;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.format.FormatterRegistry;
 
 privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService {
-
+    
     public void ApplicationConversionServiceFactoryBean.afterPropertiesSet() {
         super.afterPropertiesSet();
         installLabelConverters(getObject());

@@ -7,7 +7,6 @@
         <field:input field="firstName" id="c_com_sjsu_minishare_model_CloudUser_firstName" required="true" z="dnkn+1U/3WOVZz8awzyumXBGuAQ="/>
         <field:input field="lastName" id="c_com_sjsu_minishare_model_CloudUser_lastName" required="true" z="MUbvX81zd2OmkT3RLX23QTQ1YDE="/>
         <field:checkbox field="active" id="c_com_sjsu_minishare_model_CloudUser_active" z="SgVBDTaTJDkxCQefGHFnX1ZLigs="/>
-        <field:input field="password" id="c_com_sjsu_minishare_model_CloudUser_password" z="LNjO4/RUweaI5pIbfmstWP/4f0I="/>
         <field:input field="addressLine1" id="c_com_sjsu_minishare_model_CloudUser_addressLine1" z="bhCz9OK+MGV6/NK2JR7HOkyWluo="/>
         <field:input field="addressLine2" id="c_com_sjsu_minishare_model_CloudUser_addressLine2" z="jgUDHluXKj2sjTd9VksedgK+xPE="/>
         <field:input field="city" id="c_com_sjsu_minishare_model_CloudUser_city" z="z0mw9PgInQEvGAgXYSUT4jQSInM="/>
@@ -18,6 +17,7 @@
         <field:input field="cardExpirationMonth" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationMonth" validationMessageCode="field_invalid_integer" z="zwkaWm4NgQx2MhsIgiLdCgP42Wk="/>
         <field:input field="cardExpirationYear" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationYear" validationMessageCode="field_invalid_integer" z="6JGpYnO86cPz6HdRoTyyDiZ8/TM="/>
         <field:input field="cardCvvNumber" id="c_com_sjsu_minishare_model_CloudUser_cardCvvNumber" validationMessageCode="field_invalid_integer" z="XEjbqtig+DYu3/FZj4KnRLpS1T4="/>
+        <field:input field="password" id="c_com_sjsu_minishare_model_CloudUser_password" required="true" z="MeyPA8/940CNhhhpq3kYTWmj51Q="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_com_sjsu_minishare_model_CloudUser" render="${not empty dependencies}" z="4NME2LZ0aBepBf6aCP1L3n9xwyA="/>
 </div>

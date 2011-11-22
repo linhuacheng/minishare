@@ -30,6 +30,7 @@ public class CloudUser {
 
     private Boolean active;
 
+    @NotNull
     private String password;
 
     private String addressLine1;
@@ -51,4 +52,14 @@ public class CloudUser {
     private Integer cardExpirationYear;
 
     private Integer cardCvvNumber;
+
+    public static CloudUser findCloudUserByUserNameAndPassword(String userName, String password){
+
+        CloudUser cloudUser = (CloudUser)entityManager().createQuery("SELECT o FROM CloudUser o where o.userName = :userName AND o.password = :password")
+                .setParameter("userName", userName)
+                .setParameter("password", password)
+                .getSingleResult();
+
+        return cloudUser;
+    }
 }
