@@ -417,6 +417,11 @@
             <version>${spring-security.version}</version>
             <classifier/>
         </dependency>
+	<dependency>
+	    <groupId>org.jvnet.hudson</groupId>
+	    <artifactId>vijava</artifactId>
+	    <version>2120100824</version>
+	</dependency>
      </dependencies>
     <build>
         <plugins>
