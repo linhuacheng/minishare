@@ -67,5 +67,6 @@
         <property name="persistenceUnitName" value="persistenceUnit"/>
         <property name="dataSource" ref="dataSource"/>
     </bean>
-
+    <bean id="dataInitialization" class="com.sjsu.minishare.service.DataInitializationService" init-method="initialize">
+    </bean>
 </beans>
