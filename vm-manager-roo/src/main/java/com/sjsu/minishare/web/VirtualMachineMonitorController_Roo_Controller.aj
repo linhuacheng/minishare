@@ -23,23 +23,7 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect VirtualMachineMonitorController_Roo_Controller {
     
-    @RequestMapping(method = RequestMethod.POST)
-    public String VirtualMachineMonitorController.create(@Valid VirtualMachineMonitor virtualMachineMonitor, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("virtualMachineMonitor", virtualMachineMonitor);
-            return "virtualmachinemonitors/create";
-        }
-        uiModel.asMap().clear();
-        virtualMachineMonitor.persist();
-        return "redirect:/virtualmachinemonitors/" + encodeUrlPathSegment(virtualMachineMonitor.getMonitorId().toString(), httpServletRequest);
-    }
-    
-    @RequestMapping(params = "form", method = RequestMethod.GET)
-    public String VirtualMachineMonitorController.createForm(Model uiModel) {
-        uiModel.addAttribute("virtualMachineMonitor", new VirtualMachineMonitor());
-        return "virtualmachinemonitors/create";
-    }
-    
+
     @RequestMapping(value = "/{monitorId}", method = RequestMethod.GET)
     public String VirtualMachineMonitorController.show(@PathVariable("monitorId") Integer monitorId, Model uiModel) {
         uiModel.addAttribute("virtualmachinemonitor", VirtualMachineMonitor.findVirtualMachineMonitor(monitorId));
@@ -60,32 +44,9 @@ privileged aspect VirtualMachineMonitorController_Roo_Controller {
         return "virtualmachinemonitors/list";
     }
     
-    @RequestMapping(method = RequestMethod.PUT)
-    public String VirtualMachineMonitorController.update(@Valid VirtualMachineMonitor virtualMachineMonitor, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("virtualMachineMonitor", virtualMachineMonitor);
-            return "virtualmachinemonitors/update";
-        }
-        uiModel.asMap().clear();
-        virtualMachineMonitor.merge();
-        return "redirect:/virtualmachinemonitors/" + encodeUrlPathSegment(virtualMachineMonitor.getMonitorId().toString(), httpServletRequest);
-    }
+
     
-    @RequestMapping(value = "/{monitorId}", params = "form", method = RequestMethod.GET)
-    public String VirtualMachineMonitorController.updateForm(@PathVariable("monitorId") Integer monitorId, Model uiModel) {
-        uiModel.addAttribute("virtualMachineMonitor", VirtualMachineMonitor.findVirtualMachineMonitor(monitorId));
-        return "virtualmachinemonitors/update";
-    }
-    
-    @RequestMapping(value = "/{monitorId}", method = RequestMethod.DELETE)
-    public String VirtualMachineMonitorController.delete(@PathVariable("monitorId") Integer monitorId, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        VirtualMachineMonitor.findVirtualMachineMonitor(monitorId).remove();
-        uiModel.asMap().clear();
-        uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
-        uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/virtualmachinemonitors";
-    }
-    
+
     @ModelAttribute("virtualmachinedetails")
     public Collection<VirtualMachineDetail> VirtualMachineMonitorController.populateVirtualMachineDetails() {
         return VirtualMachineDetail.findAllVirtualMachineDetails();

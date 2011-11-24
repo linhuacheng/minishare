@@ -18,7 +18,7 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
 		super.installFormatters(registry);
 		// Register application converters and formatters
 	}
-	
+
     public void installLabelConverters(FormatterRegistry registry) {
         registry.addConverter(new CloudUserConverter());
         registry.addConverter(new UserCreditConverter());
