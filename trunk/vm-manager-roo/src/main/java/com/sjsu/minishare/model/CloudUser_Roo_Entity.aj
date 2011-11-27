@@ -88,6 +88,15 @@ privileged aspect CloudUser_Roo_Entity {
         return entityManager().find(CloudUser.class, userId);
     }
     
+    public static CloudUser CloudUser.findCloudUser(String userName){
+		    if(userName == null) return null;
+		
+		    CloudUser cloudUser = (CloudUser)entityManager().createQuery("SELECT o FROM CloudUser o where o.userName = :userName")
+                .setParameter("userName", userName)
+                .getSingleResult();
+		    return cloudUser;
+	 }
+    
     public static List<CloudUser> CloudUser.findCloudUserEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM CloudUser o", CloudUser.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
