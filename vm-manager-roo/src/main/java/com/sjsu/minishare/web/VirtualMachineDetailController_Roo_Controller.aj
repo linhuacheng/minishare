@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
+import com.sjsu.minishare.util.ApplicationUtil;
 
 privileged aspect VirtualMachineDetailController_Roo_Controller {
     
@@ -33,13 +34,14 @@ privileged aspect VirtualMachineDetailController_Roo_Controller {
     
     @RequestMapping(method = RequestMethod.GET)
     public String VirtualMachineDetailController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        String userName = ApplicationUtil.getLogonUsername();
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
-            uiModel.addAttribute("virtualmachinedetails", VirtualMachineDetail.findVirtualMachineDetailEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            uiModel.addAttribute("virtualmachinedetails", VirtualMachineDetail.findVirtualMachineDetailEntries(userName, page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
             float nrOfPages = (float) VirtualMachineDetail.countVirtualMachineDetails() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("virtualmachinedetails", VirtualMachineDetail.findAllVirtualMachineDetails());
+            uiModel.addAttribute("virtualmachinedetails", VirtualMachineDetail.findAllVirtualMachineDetails(userName));
         }
         addDateTimeFormatPatterns(uiModel);
         return "virtualmachinedetails/list";

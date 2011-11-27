@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,7 @@ import com.sjsu.minishare.model.VirtualMachineDetail;
 import com.sjsu.minishare.model.VirtualMachineRequest;
 import com.sjsu.minishare.model.VirtualMachineTemplate;
 import com.sjsu.minishare.service.VirtualMachineService;
+import com.sjsu.minishare.util.ApplicationUtil;
 import com.sjsu.minishare.util.VirtualMachineConstants;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,6 +73,7 @@ public class VirtualMachineDetailController {
 			return "virtualmachinedetails/create";
 		}
 		uiModel.asMap().clear();
+		virtualMachineDetail.setUserId(ApplicationUtil.getLogonCloudUser());
 		virtualMachineDetail.persist();
 		//Create the virtual Machine
 		String templateId = httpServletRequest.getParameter("templateId");
@@ -211,4 +215,5 @@ public class VirtualMachineDetailController {
 			e.printStackTrace();
 		}
 	}
+	
 }

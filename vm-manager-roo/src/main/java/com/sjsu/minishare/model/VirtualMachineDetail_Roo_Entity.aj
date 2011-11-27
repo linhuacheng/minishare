@@ -83,6 +83,10 @@ privileged aspect VirtualMachineDetail_Roo_Entity {
         return entityManager().createQuery("SELECT o FROM VirtualMachineDetail o", VirtualMachineDetail.class).getResultList();
     }
     
+    public static List<VirtualMachineDetail> VirtualMachineDetail.findAllVirtualMachineDetails(String userName) {
+        return entityManager().createQuery("SELECT o FROM VirtualMachineDetail o where o.userId.userName = :userName", VirtualMachineDetail.class).setParameter("userName", userName).getResultList();
+    }
+    
     public static VirtualMachineDetail VirtualMachineDetail.findVirtualMachineDetail(Integer machineId) {
         if (machineId == null) return null;
         return entityManager().find(VirtualMachineDetail.class, machineId);
@@ -90,6 +94,10 @@ privileged aspect VirtualMachineDetail_Roo_Entity {
     
     public static List<VirtualMachineDetail> VirtualMachineDetail.findVirtualMachineDetailEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM VirtualMachineDetail o", VirtualMachineDetail.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+    
+    public static List<VirtualMachineDetail> VirtualMachineDetail.findVirtualMachineDetailEntries(String userName, int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM VirtualMachineDetail o where o.userId.userName = :userName", VirtualMachineDetail.class).setParameter("userName", userName).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
 }
