@@ -20,7 +20,8 @@ privileged aspect VirtualMachineDetail_Roo_ToString {
         sb.append("OperatingSystem: ").append(getOperatingSystem()).append(", ");
         sb.append("TotalCost: ").append(getTotalCost()).append(", ");
         sb.append("UsageInMinutes: ").append(getUsageInMinutes()).append(", ");
-        sb.append("UserId: ").append(getUserId());
+        sb.append("UserId: ").append(getUserId()).append(", ");
+        sb.append("Version: ").append(getVersion());
         return sb.toString();
     }
     

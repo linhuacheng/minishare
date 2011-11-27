@@ -12,7 +12,8 @@
         <field:hidden field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" z="LaT9PTQ8OHt30w+b6+NAB9gBm8A=" />
         <field:hidden field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost"/>
 		<field:hidden field="machineId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineId" z="8yeMuvyYt73fmrQJYFMNq/p5YSw="/>  
-  
+        <input type="hidden" name="templateId" value="${templateId}" />
+        <input type="hidden" name="state" value="CREATE" />
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_com_sjsu_minishare_model_VirtualMachineDetail" render="${not empty dependencies}" z="wcmkgyoKTUgRRJkkwAWN0raJQNs="/>
 </div>

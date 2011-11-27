@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
@@ -18,48 +20,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
+import com.sjsu.minishare.model.MachineRequest;
 import com.sjsu.minishare.model.MachineStatus;
 import com.sjsu.minishare.model.VirtualMachineDetail;
+import com.sjsu.minishare.model.VirtualMachineRequest;
 import com.sjsu.minishare.model.VirtualMachineTemplate;
+import com.sjsu.minishare.service.VirtualMachineService;
+import com.sjsu.minishare.util.VirtualMachineConstants;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RooWebScaffold(path = "virtualmachinedetails", formBackingObject = VirtualMachineDetail.class)
 @RequestMapping("/virtualmachinedetails")
 @Controller
 public class VirtualMachineDetailController {
 	
-	static List<VirtualMachineTemplate> virtualMachineTemplates;
-	static List<Integer> numCPUs; 
-	
-	static {
-		virtualMachineTemplates = new ArrayList<VirtualMachineTemplate>();
-		
-		VirtualMachineTemplate template1 = new VirtualMachineTemplate();
-		template1.setId(1);
-		template1.setMemory("512");
-		template1.setNumberCPUs(1);
-		template1.setOperatingSystem("Debian");
-		
-		VirtualMachineTemplate template2 = new VirtualMachineTemplate();
-		template2.setId(2);
-		template2.setMemory("512");
-		template2.setNumberCPUs(1);
-		template2.setOperatingSystem("Oracle Linux");
-		
-		virtualMachineTemplates.add(template1);
-		virtualMachineTemplates.add(template2);
-		
-		
-		numCPUs = new ArrayList<Integer>();
-		numCPUs.add(Integer.valueOf(1));
-		numCPUs.add(Integer.valueOf(2));
-		numCPUs.add(Integer.valueOf(3));
-		numCPUs.add(Integer.valueOf(4));
-				
-	}
-	
+	@Autowired
+	@Qualifier("virtualMachineService")
+	VirtualMachineService virtualMachineService;
+
 	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String templateForm(Model uiModel) {
-		uiModel.addAttribute("virtualMachineTemplates", virtualMachineTemplates);
+		uiModel.addAttribute("virtualMachineTemplates", VirtualMachineConstants.getVirtualMachineTemplates());
 		return "virtualmachinedetails/template";
 	}
 	
@@ -68,7 +51,8 @@ public class VirtualMachineDetailController {
 			BindingResult bindingResult, Model uiModel,
 			HttpServletRequest httpServletRequest) {
 		String templateId = httpServletRequest.getParameter("templateId");
-		if (templateId != null && templateId.length()>0) {
+		String state = httpServletRequest.getParameter("state");
+		if (templateId != null && templateId.length()>0 && !"CREATE".equalsIgnoreCase(state)) {
 			 return createForm(virtualMachineDetail, bindingResult, uiModel,
 						httpServletRequest);
 		} else {
@@ -87,6 +71,11 @@ public class VirtualMachineDetailController {
 		}
 		uiModel.asMap().clear();
 		virtualMachineDetail.persist();
+		//Create the virtual Machine
+		String templateId = httpServletRequest.getParameter("templateId");
+		VirtualMachineTemplate template = VirtualMachineConstants.getVirtualMachineTemplateById(templateId);
+		processVirtualMachineRequest(virtualMachineDetail, "CREATE", template.getTemplateName());
+		
 		return "redirect:/virtualmachinedetails/"
 				+ encodeUrlPathSegment(virtualMachineDetail.getMachineId()
 						.toString(), httpServletRequest);
@@ -103,7 +92,7 @@ public class VirtualMachineDetailController {
 		vmDetail.setMachineStatus(MachineStatus.Off.toString());
 		
 		String templateId = httpServletRequest.getParameter("templateId");
-		for (VirtualMachineTemplate template: virtualMachineTemplates) {
+		for (VirtualMachineTemplate template: VirtualMachineConstants.getVirtualMachineTemplates()) {
 			boolean same =template.getId().toString().equals(templateId);
 			if (template.getId().toString().equals(templateId)) {
 				
@@ -114,7 +103,9 @@ public class VirtualMachineDetailController {
 		}
 	
 		uiModel.addAttribute("virtualMachineDetail", vmDetail);
-		uiModel.addAttribute("numCPUs", numCPUs);
+		uiModel.addAttribute("numCPUs", VirtualMachineConstants.getCPUNums());
+		uiModel.addAttribute("templateId", templateId);
+		httpServletRequest.setAttribute("templateId", templateId);
 
 		addDateTimeFormatPatterns(uiModel);
 		return "virtualmachinedetails/create";
@@ -151,6 +142,8 @@ public class VirtualMachineDetailController {
 		} else 	if (state.equalsIgnoreCase("PAUSE")) {
 			tempMachineDetail.setMachineStatus(MachineStatus.Suspended.toString());
 		}
+		processVirtualMachineRequest(tempMachineDetail, state, "");
+	
 		
 		tempMachineDetail.persist();
 
@@ -177,5 +170,45 @@ public class VirtualMachineDetailController {
 						.toString(), httpServletRequest);
 	}
 
-
+    @RequestMapping(value = "/{machineId}", method = RequestMethod.DELETE)
+    public String delete(@PathVariable("machineId") Integer machineId, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+    	VirtualMachineDetail virtualMachineDetail =  VirtualMachineDetail.findVirtualMachineDetail(machineId);
+    	// Send Request to remove VM
+        processVirtualMachineRequest(virtualMachineDetail, "DELETE", "");
+    	virtualMachineDetail.remove();
+        uiModel.asMap().clear();
+        uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
+        uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
+        return "redirect:/virtualmachinedetails";
+    }
+    
+	
+	
+	
+	
+	private void processVirtualMachineRequest(VirtualMachineDetail virtualMachineDetail, String state, String templateName) {
+		VirtualMachineRequest req = new VirtualMachineRequest();
+		req.setMachineName(virtualMachineDetail.getMachineName());
+		
+		if ("START".equalsIgnoreCase(state)) {
+			req.setMachineRequest(MachineRequest.Start);
+		} else 	if ("STOP".equalsIgnoreCase(state)) {
+			req.setMachineRequest(MachineRequest.Stop);
+		} else 	if ("PAUSE".equalsIgnoreCase(state)) {
+			req.setMachineRequest(MachineRequest.Suspend);
+		} else if ("DELETE".equalsIgnoreCase(state)) {
+			req.setMachineRequest(MachineRequest.Remove);
+		} else if ("CREATE".equalsIgnoreCase(state)) {
+			req.setMemory(virtualMachineDetail.getMemory());
+			req.setNumberCPUs(virtualMachineDetail.getNumberCPUs());
+			req.setTemplateName(templateName);
+			req.setMachineRequest(MachineRequest.Create);
+		}
+		
+		try {
+			virtualMachineService.processRequest(req);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

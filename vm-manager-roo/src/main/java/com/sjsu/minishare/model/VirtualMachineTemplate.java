@@ -12,7 +12,17 @@ public class VirtualMachineTemplate {
 	private String memory;
 
 	private String operatingSystem;
+	
+	private String templateName;
 
+
+	public String getTemplateName() {
+		return templateName;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
+	}
 
 	public Integer getId() {
 		return id;

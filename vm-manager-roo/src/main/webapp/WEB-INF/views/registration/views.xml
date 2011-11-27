@@ -10,4 +10,13 @@
         <put-attribute name="body" value="/WEB-INF/views/registration/success.jspx"/>
     </definition>
 
+<definition extends="default" name="registration/list">
+        <put-attribute name="body" value="/WEB-INF/views/registration/list.jspx"/>
+    </definition>
+<definition extends="default" name="registration/show">
+        <put-attribute name="body" value="/WEB-INF/views/registration/show.jspx"/>
+    </definition>
+<definition extends="default" name="registration/update">
+        <put-attribute name="body" value="/WEB-INF/views/registration/update.jspx"/>
+    </definition>
 </tiles-definitions>
