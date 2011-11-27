@@ -43,6 +43,33 @@
         The most commonly used annotation is @Autowired, which instructs Spring to
         dependency inject an object into your class.
     -->
+    <bean id="virtualMachineService" class="com.sjsu.minishare.service.VirtualMachineServiceImpl">
+      	<property name="vmwareHostURL">
+      		<value>https://cmpe-admin3.engr.sjsu.edu/sdk</value>
+  		</property>
+      	<property name="vmwareLogin">
+    		<value>student</value>
+  		</property>    
+      	<property name="vmwarePassword">
+    		<value>welcome2sjsu</value>
+  		</property>     
+      	<property name="vmwareDatacenter">
+    		<value>SJSU VM LAB</value>
+  		</property>     
+      	<property name="vmwareHost">
+    		<value>cmpe-pool3.engr.sjsu.edu</value>
+  		</property>        
+      	<property name="vmwareResourcePool">
+    		<value>Lab</value>
+  		</property>
+      	<property name="vmwareDatastore">
+    		<value>datastore2</value>
+  		</property>
+      	<property name="vmwareTeamFolder">
+    		<value>team1-Chandu_Cheng_ Priyanka_Niktha</value>
+  		</property>
+    </bean>
+    
     <context:component-scan base-package="com.sjsu.minishare">
         <context:exclude-filter expression=".*_Roo_.*" type="regex"/>
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>

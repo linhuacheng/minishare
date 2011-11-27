@@ -10,4 +10,7 @@
     <definition extends="default" name="cloudusers/update">
         <put-attribute name="body" value="/WEB-INF/views/cloudusers/update.jspx"/>
     </definition>
+<definition extends="default" name="cloudusers/create">
+        <put-attribute name="body" value="/WEB-INF/views/cloudusers/create.jspx"/>
+    </definition>
 </tiles-definitions>
