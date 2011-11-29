@@ -17,6 +17,6 @@
         <field:display field="cardExpirationMonth" id="s_com_sjsu_minishare_model_CloudUser_cardExpirationMonth" object="${clouduser}" z="tLjxS2GUm8UFs+1HR6YPTYicgq4="/>
         <field:display field="cardExpirationYear" id="s_com_sjsu_minishare_model_CloudUser_cardExpirationYear" object="${clouduser}" z="qYQJnYEif+HKhcJ4vArz30BIw6o="/>
         <field:display field="cardCvvNumber" id="s_com_sjsu_minishare_model_CloudUser_cardCvvNumber" object="${clouduser}" z="hRQUM1YoezgPGoh6Mr3xpYTG3tA="/>
-        <field:display field="password" id="s_com_sjsu_minishare_model_CloudUser_password" object="${clouduser}" z="FssH1kLVkCJ3Cc1wWlSYX6+sAdA="/>
+        <field:display field="password" id="s_com_sjsu_minishare_model_CloudUser_password" object="${clouduser}" render="false" z="FssH1kLVkCJ3Cc1wWlSYX6+sAdA="/>
     </page:show>
 </div>
