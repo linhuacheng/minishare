@@ -7,9 +7,9 @@
             <table:column id="c_com_sjsu_minishare_model_CloudUser_userName" property="userName" z="4F7ygAmRZcQYS7ieHI+aaKhaClU="/>
             <table:column id="c_com_sjsu_minishare_model_CloudUser_firstName" property="firstName" z="XRH+lyVRp/RXixqfxijjqa3X0wk="/>
             <table:column id="c_com_sjsu_minishare_model_CloudUser_lastName" property="lastName" z="QG+jTLxv3TB/pm9jFBoqWdHTOOA="/>
-            <table:column id="c_com_sjsu_minishare_model_CloudUser_active" property="active" z="LHfl48ShPLKgltZK6xUxHGALOQk="/>
+            <table:column id="c_com_sjsu_minishare_model_CloudUser_active" property="active" render="false" z="LHfl48ShPLKgltZK6xUxHGALOQk="/>
             <table:column id="c_com_sjsu_minishare_model_CloudUser_addressLine1" property="addressLine1" z="PL1Hm0V6jHVSagxSUDiGNBYACyw="/>
-            <table:column id="c_com_sjsu_minishare_model_CloudUser_password" property="password" z="lly6GJLu/IGncS2aPGtX90yphIc="/>
+            <table:column id="c_com_sjsu_minishare_model_CloudUser_password" property="password" render="false" z="lly6GJLu/IGncS2aPGtX90yphIc="/>
         </table:table>
     </page:list>
 </div>
