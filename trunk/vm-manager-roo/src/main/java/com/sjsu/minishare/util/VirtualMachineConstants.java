@@ -8,7 +8,8 @@ import com.sjsu.minishare.model.VirtualMachineTemplate;
 public class VirtualMachineConstants {
 	
 	static List<VirtualMachineTemplate> virtualMachineTemplates;
-	static List<Integer> numCPUs; 
+	static List<Integer> numCPUs;
+	static List<Integer> memories; 
 	
 	static {
 		virtualMachineTemplates = new ArrayList<VirtualMachineTemplate>();
@@ -35,8 +36,11 @@ public class VirtualMachineConstants {
 		numCPUs.add(Integer.valueOf(1));
 		numCPUs.add(Integer.valueOf(2));
 		numCPUs.add(Integer.valueOf(3));
-		numCPUs.add(Integer.valueOf(4));
-				
+		
+		memories = new ArrayList<Integer>();
+		memories.add(Integer.valueOf(512));
+		memories.add(Integer.valueOf(1024));
+		memories.add(Integer.valueOf(1536));
 	}
 	
 	public static List<VirtualMachineTemplate> getVirtualMachineTemplates() {
@@ -45,6 +49,10 @@ public class VirtualMachineConstants {
 	 
 	public static List<Integer> getCPUNums() {
 		return numCPUs; 
+	}
+	
+	public static List<Integer> getMemories() {
+		return memories; 
 	}
 	
 	public static VirtualMachineTemplate getVirtualMachineTemplateById(String templateId) {

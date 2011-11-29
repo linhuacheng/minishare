@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 import com.sjsu.minishare.util.ApplicationUtil;
+import com.sjsu.minishare.util.VirtualMachineConstants;
 
 privileged aspect VirtualMachineDetailController_Roo_Controller {
     
@@ -50,6 +51,8 @@ privileged aspect VirtualMachineDetailController_Roo_Controller {
     @RequestMapping(value = "/{machineId}", params = "form", method = RequestMethod.GET)
     public String VirtualMachineDetailController.updateForm(@PathVariable("machineId") Integer machineId, Model uiModel) {
         uiModel.addAttribute("virtualMachineDetail", VirtualMachineDetail.findVirtualMachineDetail(machineId));
+        uiModel.addAttribute("numCPUs", VirtualMachineConstants.getCPUNums());
+   		  uiModel.addAttribute("memories", VirtualMachineConstants.getMemories());
         addDateTimeFormatPatterns(uiModel);
         return "virtualmachinedetails/update";
     }

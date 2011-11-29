@@ -108,6 +108,7 @@ public class VirtualMachineDetailController {
 	
 		uiModel.addAttribute("virtualMachineDetail", vmDetail);
 		uiModel.addAttribute("numCPUs", VirtualMachineConstants.getCPUNums());
+		uiModel.addAttribute("memories", VirtualMachineConstants.getMemories());
 		uiModel.addAttribute("templateId", templateId);
 		httpServletRequest.setAttribute("templateId", templateId);
 
@@ -139,15 +140,26 @@ public class VirtualMachineDetailController {
 		String id = httpServletRequest.getParameter("id");
 		
 		VirtualMachineDetail tempMachineDetail = VirtualMachineDetail.findVirtualMachineDetail(new Integer(id));
-		if (state.equalsIgnoreCase("START")) {
+		// Before start, check if current state is suspend or off
+		if (state.equalsIgnoreCase("START") && 
+				( MachineStatus.Off.toString().equalsIgnoreCase(tempMachineDetail.getMachineStatus()) || 
+				  MachineStatus.Suspended.toString().equalsIgnoreCase(tempMachineDetail.getMachineStatus()) ) ) {
 			tempMachineDetail.setMachineStatus(MachineStatus.On.toString());
-		} else 	if (state.equalsIgnoreCase("STOP")) {
+			processVirtualMachineRequest(tempMachineDetail, state, "");
+		// Before turning off, check if current state is on		
+		} else 	if (state.equalsIgnoreCase("STOP") && 
+				MachineStatus.On.toString().equalsIgnoreCase(tempMachineDetail.getMachineStatus()) ) {
+			processVirtualMachineRequest(tempMachineDetail, state, "");
 			tempMachineDetail.setMachineStatus(MachineStatus.Off.toString());
-		} else 	if (state.equalsIgnoreCase("PAUSE")) {
+		// Before suspending, check if current state is on
+		} else 	if (state.equalsIgnoreCase("PAUSE") &&
+				MachineStatus.On.toString().equalsIgnoreCase(tempMachineDetail.getMachineStatus()) ) {
 			tempMachineDetail.setMachineStatus(MachineStatus.Suspended.toString());
+			processVirtualMachineRequest(tempMachineDetail, state, "");
+		} else {
+			// invalid request should not go here
+			System.out.println("Invalid Request");
 		}
-		processVirtualMachineRequest(tempMachineDetail, state, "");
-	
 		
 		tempMachineDetail.persist();
 
@@ -177,18 +189,18 @@ public class VirtualMachineDetailController {
     @RequestMapping(value = "/{machineId}", method = RequestMethod.DELETE)
     public String delete(@PathVariable("machineId") Integer machineId, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
     	VirtualMachineDetail virtualMachineDetail =  VirtualMachineDetail.findVirtualMachineDetail(machineId);
-    	// Send Request to remove VM
-        processVirtualMachineRequest(virtualMachineDetail, "DELETE", "");
-    	virtualMachineDetail.remove();
+    	// check first if the vm is off before removing
+    	if (MachineStatus.Off.toString().equalsIgnoreCase(virtualMachineDetail.getMachineStatus()) ) {
+    		// Send Request to remove VM
+    		processVirtualMachineRequest(virtualMachineDetail, "DELETE", "");
+    		virtualMachineDetail.remove();
+    	}
+    	
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/virtualmachinedetails";
     }
-    
-	
-	
-	
 	
 	private void processVirtualMachineRequest(VirtualMachineDetail virtualMachineDetail, String state, String templateName) {
 		VirtualMachineRequest req = new VirtualMachineRequest();
