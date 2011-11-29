@@ -4,8 +4,12 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_com_sjsu_minishare_model_VirtualMachineDetail" modelAttribute="virtualMachineDetail" path="/virtualmachinedetails" render="${empty dependencies}" z="bTPTtVRBSLuNiA+REwLOvdogG0o=">
         <field:textarea field="machineName" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineName" z="vH+bJ9d6FzGBWhuMA/35w4nH4b4="/>
+        <field:select field="numberCPUs" id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" disableFormBinding="false" items="${numCPUs}" z="/C2pzvvmMvemHPMuYZS/4b0YrNY=" path="/" />
+        <field:select field="memory" id="c_com_sjsu_minishare_model_VirtualMachineDetail_memory" disableFormBinding="false"  items="${memories}" z="Qx/3ZGJ2vE7Pj4o/CYE89um6rqc=" path="/" />
+  <!-- 
         <field:input field="numberCPUs" id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" validationMessageCode="field_invalid_integer" z="/C2pzvvmMvemHPMuYZS/4b0YrNY="/>
         <field:textarea field="memory" id="c_com_sjsu_minishare_model_VirtualMachineDetail_memory" z="Qx/3ZGJ2vE7Pj4o/CYE89um6rqc="/>
+         -->
         <field:textarea field="operatingSystem" id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" z="PedpGgExJ5T09zoT+4QxyT8q7UI="/>
     	<field:hidden field="usageInMinutes"  id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/> 
         <field:hidden field="machineStatus" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" z="znCxnOL20K2QfC01rkhNpEOKdag=" /> 
