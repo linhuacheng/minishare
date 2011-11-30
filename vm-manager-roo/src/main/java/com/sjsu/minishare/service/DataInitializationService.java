@@ -40,14 +40,14 @@ public class DataInitializationService {
         cu.persist();
         cu.flush();
 
-        UserCredit userCredit = new UserCredit();
-        userCredit.setCloudUser(cu);
-        userCredit.setTotalCredits(100);
-        userCredit.setTotalCreditsUsed(50);
-        userCredit.persist();
-        userCredit.flush();
+//        UserCredit userCredit = new UserCredit();
+//        userCredit.setCloudUser(cu);
+//        userCredit.setTotalCredits(100);
+//        userCredit.setTotalCreditsUsed(50);
+//        userCredit.persist();
+//        userCredit.flush();
 
-        VirtualMachineDetail vmd = new VirtualMachineDetail();
+        /*VirtualMachineDetail vmd = new VirtualMachineDetail();
         vmd.setLastLogin(new Date());
         vmd.setCreditsUsed(20);
         vmd.setLastLogout(new Date());
@@ -67,6 +67,6 @@ public class DataInitializationService {
         vmm.setCpuUsageInPercent(60.0f);
         vmm.setMemoryConsumedInBytes(800000);
         vmm.persist();
-        vmm.flush();
+        vmm.flush();*/
     }
 }
