@@ -25,14 +25,6 @@ import com.sjsu.minishare.util.VirtualMachineConstants;
 
 privileged aspect VirtualMachineDetailController_Roo_Controller {
     
-    @RequestMapping(value = "/{machineId}", method = RequestMethod.GET)
-    public String VirtualMachineDetailController.show(@PathVariable("machineId") Integer machineId, Model uiModel) {
-        addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("virtualmachinedetail", VirtualMachineDetail.findVirtualMachineDetail(machineId));
-        uiModel.addAttribute("itemId", machineId);
-        return "virtualmachinedetails/show";
-    }
-    
     @RequestMapping(method = RequestMethod.GET)
     public String VirtualMachineDetailController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         String userName = ApplicationUtil.getLogonUsername();

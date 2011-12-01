@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:vmtable="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_com_sjsu_minishare_model_VirtualMachineDetail" items="${virtualmachinedetails}" z="LHDv49pDWxqwpT/tuuYe8ZdwPfA=">
-        <table:table data="${virtualmachinedetails}" id="l_com_sjsu_minishare_model_VirtualMachineDetail" path="/virtualmachinedetails" typeIdFieldName="machineId" z="srpUi5iERFNnFWwgCZxgyNgo/rk="  start="true" stop="true" pause="true">
-            <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineName" property="machineName" z="a0wYi9N9jZfMlWoWmmCz/3+t9Qk="/>
-            <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" property="machineStatus" z="u7FMnnFBMAdwWRSkkj10940uDzw="/>
-            <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" property="numberCPUs" z="WfKma3SGGFIRQfHmz/TakZjExDE="/>
-            <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_memory" property="memory" z="aEme+nhguqrWBCrQetOLf8SZoDE="/>
-            <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" property="operatingSystem" z="m7/KuspCLglRkk9+AX/XYCZLa3I="/>
-            <table:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" property="usageInMinutes" z="jMg8XDJRdpISvP6yTvL9eFan2xo="/>
-        </table:table>
+        <vmtable:vmtable data="${virtualmachinedetails}" id="l_com_sjsu_minishare_model_VirtualMachineDetail" path="/virtualmachinedetails" typeIdFieldName="machineId" z="srpUi5iERFNnFWwgCZxgyNgo/rk="  delete="true" start="true" stop="true" pause="true">
+            <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineName" property="machineName" z="a0wYi9N9jZfMlWoWmmCz/3+t9Qk="/>
+            <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" property="machineStatus" z="u7FMnnFBMAdwWRSkkj10940uDzw="/>
+            <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" property="numberCPUs" z="WfKma3SGGFIRQfHmz/TakZjExDE="/>
+            <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_memory" property="memory" z="aEme+nhguqrWBCrQetOLf8SZoDE="/>
+            <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" property="operatingSystem" z="m7/KuspCLglRkk9+AX/XYCZLa3I="/>
+            <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" property="usageInMinutes" z="jMg8XDJRdpISvP6yTvL9eFan2xo="/>
+        </vmtable:vmtable>
     </page:list>
 </div>

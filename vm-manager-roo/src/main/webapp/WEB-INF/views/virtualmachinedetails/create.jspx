@@ -13,6 +13,9 @@
         <field:textarea field="operatingSystem" id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" z="PedpGgExJ5T09zoT+4QxyT8q7UI="/>
     	<field:hidden field="usageInMinutes"  id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/> 
         <field:hidden field="machineStatus" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" z="znCxnOL20K2QfC01rkhNpEOKdag=" /> 
+		<field:hidden field="defaultUsername" id="c_com_sjsu_minishare_model_VirtualMachineDetail_defaultUsername" z="" /> 
+        <field:hidden field="defaultPassword" id="c_com_sjsu_minishare_model_VirtualMachineDetail_defaultPassword" z="" /> 
+        <field:hidden field="ipAddress" id="c_com_sjsu_minishare_model_VirtualMachineDetail_ipAddress" z="" /> 
         <field:hidden field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" z="LaT9PTQ8OHt30w+b6+NAB9gBm8A=" />
         <field:hidden field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost"/>
 		<field:hidden field="machineId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineId" z="8yeMuvyYt73fmrQJYFMNq/p5YSw="/>  

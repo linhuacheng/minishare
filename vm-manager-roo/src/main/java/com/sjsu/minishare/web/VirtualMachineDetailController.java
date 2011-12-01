@@ -49,6 +49,22 @@ public class VirtualMachineDetailController {
 		return "virtualmachinedetails/template";
 	}
 	
+    @RequestMapping(value = "/{machineId}", method = RequestMethod.GET)
+    public String show(@PathVariable("machineId") Integer machineId, Model uiModel) {
+        addDateTimeFormatPatterns(uiModel);
+        uiModel.addAttribute("virtualmachinedetail", VirtualMachineDetail.findVirtualMachineDetail(machineId));
+        uiModel.addAttribute("itemId", machineId);
+        return "virtualmachinedetails/show";
+    }
+    
+    @RequestMapping(value = "/{machineId}", params = "credential", method = RequestMethod.GET)
+    public String showCredential(@PathVariable("machineId") Integer machineId, Model uiModel) {
+        addDateTimeFormatPatterns(uiModel);
+        uiModel.addAttribute("virtualmachinedetail", VirtualMachineDetail.findVirtualMachineDetail(machineId));
+        uiModel.addAttribute("itemId", machineId);
+        return "virtualmachinedetails/showCredential";
+    }
+    
 	@RequestMapping(method = RequestMethod.POST)
 	public String createRecord(@Valid VirtualMachineDetail virtualMachineDetail,
 			BindingResult bindingResult, Model uiModel,
@@ -73,7 +89,12 @@ public class VirtualMachineDetailController {
 			return "virtualmachinedetails/create";
 		}
 		uiModel.asMap().clear();
+		String ipAddress = ApplicationUtil.getNextIpAddress();
 		virtualMachineDetail.setUserId(ApplicationUtil.getLogonCloudUser());
+		virtualMachineDetail.setDefaultUsername(VirtualMachineConstants.DEFAULT_USERNAME);
+		virtualMachineDetail.setDefaultPassword(VirtualMachineConstants.DEFAULT_PASSWORD);
+		virtualMachineDetail.setIpAddress("test");
+		
 		virtualMachineDetail.persist();
 		//Create the virtual Machine
 		String templateId = httpServletRequest.getParameter("templateId");
