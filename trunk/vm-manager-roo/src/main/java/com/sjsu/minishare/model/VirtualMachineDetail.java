@@ -57,6 +57,13 @@ public class VirtualMachineDetail {
     @ManyToOne
     private CloudUser userId;
     
+    @Size(max = 20)
+    private String defaultUsername;
     
+    @Size(max = 20)
+    private String defaultPassword;
+    
+    @Size(max = 20)
+    private String ipAddress;
     
 }

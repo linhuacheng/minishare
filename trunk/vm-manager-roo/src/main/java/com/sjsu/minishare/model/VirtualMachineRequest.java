@@ -13,6 +13,16 @@ public class VirtualMachineRequest {
 	private Integer memory;
 
 	private String templateName;
+	
+	private String ipAddress;
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
 
 	public String getMachineName() {
 		return machineName;

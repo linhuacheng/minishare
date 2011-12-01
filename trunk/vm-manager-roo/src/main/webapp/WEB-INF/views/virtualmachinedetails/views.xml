@@ -16,4 +16,7 @@
     <definition extends="default" name="virtualmachinedetails/template">
         <put-attribute name="body" value="/WEB-INF/views/virtualmachinedetails/template.jspx"/>
     </definition>
+    <definition extends="popup" name="virtualmachinedetails/showCredential">
+        <put-attribute name="body" value="/WEB-INF/views/virtualmachinedetails/showCredential.jspx"/>
+    </definition>
 </tiles-definitions>

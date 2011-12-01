@@ -10,6 +10,8 @@ public class VirtualMachineConstants {
 	static List<VirtualMachineTemplate> virtualMachineTemplates;
 	static List<Integer> numCPUs;
 	static List<Integer> memories; 
+	public static final String DEFAULT_USERNAME = "student";
+	public static final String DEFAULT_PASSWORD = "welcome2sjsu";
 	
 	static {
 		virtualMachineTemplates = new ArrayList<VirtualMachineTemplate>();

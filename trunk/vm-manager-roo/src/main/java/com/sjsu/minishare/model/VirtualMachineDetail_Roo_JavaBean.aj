@@ -107,4 +107,28 @@ privileged aspect VirtualMachineDetail_Roo_JavaBean {
         this.userId = userId;
     }
     
+    public String VirtualMachineDetail.getDefaultUsername() {
+        return this.defaultUsername;
+    }
+    
+    public void VirtualMachineDetail.setDefaultUsername(String defaultUsername) {
+        this.defaultUsername = defaultUsername;
+    }
+    
+    public String VirtualMachineDetail.getDefaultPassword() {
+        return this.defaultPassword;
+    }
+    
+    public void VirtualMachineDetail.setDefaultPassword(String defaultPassword) {
+        this.defaultPassword = defaultPassword;
+    }
+    
+    public String VirtualMachineDetail.getIpAddress() {
+        return this.ipAddress;
+    }
+    
+    public void VirtualMachineDetail.setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+    
 }

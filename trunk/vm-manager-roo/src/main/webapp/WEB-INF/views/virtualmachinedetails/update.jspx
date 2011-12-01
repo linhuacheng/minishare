@@ -18,5 +18,9 @@
         <field:hidden field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost"/>      
         <field:simple field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost" text="${virtualMachineDetail.totalCost}" z="4AMqBgSWEbNhHEwSOIL7aCIsLyo="/>
         <field:select field="userId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_userId" itemValue="userId" items="${cloudusers}" path="/cloudusers" z="aqw+qhgFWbKL7n9XnXUoJIkaMZ4="/>
+       	<field:hidden field="defaultUsername" id="c_com_sjsu_minishare_model_VirtualMachineDetail_defaultUsername"/> 
+        <field:hidden field="defaultPassword" id="c_com_sjsu_minishare_model_VirtualMachineDetail_defaultPassword"  /> 
+        <field:hidden field="ipAddress" id="c_com_sjsu_minishare_model_VirtualMachineDetail_ipAddress"/> 
+    
     </form:update>
 </div>
