@@ -23,17 +23,6 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect UserCreditController_Roo_Controller {
     
-    @RequestMapping(method = RequestMethod.POST)
-    public String UserCreditController.create(@Valid UserCredit userCredit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("userCredit", userCredit);
-            return "usercredits/create";
-        }
-        uiModel.asMap().clear();
-        userCredit.persist();
-        return "redirect:/usercredits/" + encodeUrlPathSegment(userCredit.getCreditId().toString(), httpServletRequest);
-    }
-    
     @RequestMapping(params = "form", method = RequestMethod.GET)
     public String UserCreditController.createForm(Model uiModel) {
         uiModel.addAttribute("userCredit", new UserCredit());
