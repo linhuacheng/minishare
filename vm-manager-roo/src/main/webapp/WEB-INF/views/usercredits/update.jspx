@@ -6,5 +6,7 @@
         <field:input field="totalCredits" id="c_com_sjsu_minishare_model_UserCredit_totalCredits" validationMessageCode="field_invalid_integer" z="o7Joez/gf3yJ1qh5V9oRMqZmNL8="/>
         <field:input field="totalCreditsUsed" id="c_com_sjsu_minishare_model_UserCredit_totalCreditsUsed" validationMessageCode="field_invalid_integer" z="vkelCKdSAFBXgSgiBfy2s/zDZgo="/>
         <field:select field="cloudUser" id="c_com_sjsu_minishare_model_UserCredit_cloudUser" itemValue="userId" items="${cloudusers}" path="/cloudusers" z="rf2MqRpWNj7PIAZuVxQWqQPKdS0="/>
+        <field:input field="amount" id="c_com_sjsu_minishare_model_UserCredit_amount" validationMessageCode="field_invalid_integer" z="Lmqoo5yBUohZwksAjwk2HFkRwms="/>
+        <field:input field="paymentTransaction" id="c_com_sjsu_minishare_model_UserCredit_paymentTransaction" z="LUp1abkAH6yvyxarI6NJUUlk700="/>
     </form:update>
 </div>
