@@ -46,18 +46,7 @@ privileged aspect CloudUserController_Roo_Controller {
         return "cloudusers/show";
     }
     
-    @RequestMapping(method = RequestMethod.GET)
-    public String CloudUserController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            uiModel.addAttribute("cloudusers", CloudUser.findCloudUserEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) CloudUser.countCloudUsers() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("cloudusers", CloudUser.findAllCloudUsers());
-        }
-        return "cloudusers/list";
-    }
+    
     
     @RequestMapping(method = RequestMethod.PUT)
     public String CloudUserController.update(@Valid CloudUser cloudUser, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
