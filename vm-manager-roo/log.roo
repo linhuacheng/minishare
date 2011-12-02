@@ -105,3 +105,6 @@ quit
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-11-21 15:08:14
 // Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-11-21 19:14:30
 entity --class ExampleEntity
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-12-01 22:34:04
+exit
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-12-01 22:37:21
