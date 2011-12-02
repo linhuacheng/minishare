@@ -7,7 +7,7 @@
             <!--<menu:item id="i_clouduser_new" messageCode="global_menu_new" url="/cloudusers?form" z="xt3PgixVIu5oStXhMQhz0ulHDlw="/>-->
             <menu:item id="i_clouduser_list" messageCode="global_menu_list" url="/cloudusers?page=1&amp;size=${empty param.size ? 10 : param.size}" z="PpyO7LBW7gJnxIfbF8Uf8x1Yne0="/>
             <!--<menu:item id="i_clouduser_new" messageCode="global_menu_new" url="/logon?form" z="gLw8nifoct1HFK1p/c5ELBfugG4="/>-->
-            <menu:item id="i_clouduser_new" messageCode="global_menu_new" url="/cloudusers?form" z="xt3PgixVIu5oStXhMQhz0ulHDlw="/>
+<!--             <menu:item id="i_clouduser_new" messageCode="global_menu_new" url="/cloudusers?form" z="xt3PgixVIu5oStXhMQhz0ulHDlw="/> -->
         </menu:category>
         <menu:category id="c_usercredit" z="3PCLYij+RI5yRvKxvdGMhHtIrOw=">
             <menu:item id="i_usercredit_new" messageCode="global_menu_new" url="/usercredits?form" z="as6j/DaVUfjwc84t4XyryzRSN3Y="/>
