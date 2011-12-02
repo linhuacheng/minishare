@@ -1,8 +1,12 @@
 package com.sjsu.minishare.model;
 
+import java.util.List;
+
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import com.sjsu.minishare.model.CloudUser;
 
 import javax.annotation.Generated;
 import javax.persistence.GeneratedValue;
@@ -62,4 +66,10 @@ public class CloudUser {
 
         return cloudUser;
     }
+    
+	public static List<CloudUser> findCloudUserEntriesByName(String userName, int firstResult, int maxResults) {
+        return entityManager().createQuery("SELECT o FROM CloudUser o where o.userName = :userName", CloudUser.class).setFirstResult(firstResult).setMaxResults(maxResults).setParameter("userName", userName).getResultList();
+    }
+
+	
 }
