@@ -9,8 +9,10 @@ privileged aspect UserCredit_Roo_ToString {
     
     public String UserCredit.toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Amount: ").append(getAmount()).append(", ");
         sb.append("CloudUser: ").append(getCloudUser()).append(", ");
         sb.append("CreditId: ").append(getCreditId()).append(", ");
+        sb.append("PaymentTransaction: ").append(getPaymentTransaction()).append(", ");
         sb.append("TotalCredits: ").append(getTotalCredits()).append(", ");
         sb.append("TotalCreditsUsed: ").append(getTotalCreditsUsed()).append(", ");
         sb.append("Version: ").append(getVersion());
