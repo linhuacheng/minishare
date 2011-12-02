@@ -32,6 +32,7 @@ public class UserCreditController {
 		  if(amount >= 1000){
 	    	  userCredit.setPaymentTransaction("TRANSACTION REJECTED");
 	    	  totalCredits = 0;
+	    	  userCredit.setAmount(0);
 	      }
 	      else{
 	    	  userCredit.setPaymentTransaction("TRANSACTION ACCEPTED");
@@ -61,7 +62,7 @@ public class UserCreditController {
 		    	  amt = amt - amount;
 		      }
 		      else{
-		    	  userCredit.setPaymentTransaction("TRANSACTION ACCEPTED");
+		    	  ucredit.setPaymentTransaction("TRANSACTION ACCEPTED");
 		    	  totalCredits = amount * 100000; 
 		      }
 			  
