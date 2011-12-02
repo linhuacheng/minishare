@@ -13,9 +13,9 @@
       </div>
     </c:if>
     <c:if test="${empty param.login_error}">
-      <p>
-        <spring:message code="security_login_message" />
-      </p>
+<!--       <p> -->
+<!--         <spring:message code="security_login_message" /> -->
+<!--       </p> -->
     </c:if>
     <spring:url value="/j_spring_security_check" var="form_url" />
     <form name="f" action="${fn:escapeXml(form_url)}" method="POST">
