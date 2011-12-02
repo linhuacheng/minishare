@@ -5,6 +5,7 @@ package com.sjsu.minishare.model;
 
 import com.sjsu.minishare.model.CloudUser;
 import java.lang.Integer;
+import java.lang.String;
 
 privileged aspect UserCredit_Roo_JavaBean {
     
@@ -30,6 +31,22 @@ privileged aspect UserCredit_Roo_JavaBean {
     
     public void UserCredit.setTotalCreditsUsed(Integer totalCreditsUsed) {
         this.totalCreditsUsed = totalCreditsUsed;
+    }
+    
+    public Integer UserCredit.getAmount() {
+        return this.amount;
+    }
+    
+    public void UserCredit.setAmount(Integer amount) {
+        this.amount = amount;
+    }
+    
+    public String UserCredit.getPaymentTransaction() {
+        return this.paymentTransaction;
+    }
+    
+    public void UserCredit.setPaymentTransaction(String paymentTransaction) {
+        this.paymentTransaction = paymentTransaction;
     }
     
     public CloudUser UserCredit.getCloudUser() {
