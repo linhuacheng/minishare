@@ -7,6 +7,7 @@ import com.sjsu.minishare.model.CloudUser;
 import com.sjsu.minishare.model.CloudUserDataOnDemand;
 import com.sjsu.minishare.model.UserCredit;
 import java.lang.Integer;
+import java.lang.String;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,15 +31,27 @@ privileged aspect UserCreditDataOnDemand_Roo_DataOnDemand {
     
     public UserCredit UserCreditDataOnDemand.getNewTransientUserCredit(int index) {
         UserCredit obj = new UserCredit();
+        setAmount(obj, index);
         setCloudUser(obj, index);
+        setPaymentTransaction(obj, index);
         setTotalCredits(obj, index);
         setTotalCreditsUsed(obj, index);
         return obj;
     }
     
+    public void UserCreditDataOnDemand.setAmount(UserCredit obj, int index) {
+        Integer amount = new Integer(index);
+        obj.setAmount(amount);
+    }
+    
     public void UserCreditDataOnDemand.setCloudUser(UserCredit obj, int index) {
         CloudUser cloudUser = cloudUserDataOnDemand.getRandomCloudUser();
         obj.setCloudUser(cloudUser);
+    }
+    
+    public void UserCreditDataOnDemand.setPaymentTransaction(UserCredit obj, int index) {
+        String paymentTransaction = "paymentTransaction_" + index;
+        obj.setPaymentTransaction(paymentTransaction);
     }
     
     public void UserCreditDataOnDemand.setTotalCredits(UserCredit obj, int index) {
