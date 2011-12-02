@@ -26,7 +26,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     static class com.sjsu.minishare.web.ApplicationConversionServiceFactoryBean.UserCreditConverter implements Converter<UserCredit, String> {
         public String convert(UserCredit userCredit) {
-            return new StringBuilder().append(userCredit.getTotalCredits()).append(" ").append(userCredit.getTotalCreditsUsed()).toString();
+            return new StringBuilder().append(userCredit.getTotalCredits()).append(" ").append(userCredit.getTotalCreditsUsed()).append(" ").append(userCredit.getAmount()).append(" ").append(userCredit.getPaymentTransaction()).toString();
         }
         
     }
