@@ -40,7 +40,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     
     static class com.sjsu.minishare.web.ApplicationConversionServiceFactoryBean.VirtualMachineMonitorConverter implements Converter<VirtualMachineMonitor, String> {
         public String convert(VirtualMachineMonitor virtualMachineMonitor) {
-            return new StringBuilder().append(virtualMachineMonitor.getMemoryConsumedInBytes()).append(" ").append(virtualMachineMonitor.getCpuUsageInPercent()).append(" ").append(virtualMachineMonitor.getMonitorInterval()).toString();
+            return new StringBuilder().append(virtualMachineMonitor.getGuestMemoryUsage()).append(" ").append(virtualMachineMonitor.getOverallCpuUsage()).append(" ").append(virtualMachineMonitor.getMonitorInterval()).append(" ").append(virtualMachineMonitor.getMachineStatus()).toString();
         }
         
     }

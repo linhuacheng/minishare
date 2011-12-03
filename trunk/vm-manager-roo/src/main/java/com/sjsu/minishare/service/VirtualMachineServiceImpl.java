@@ -2,29 +2,18 @@ package com.sjsu.minishare.service;
 
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sjsu.minishare.exception.VirtualMachineException;
-import com.sjsu.minishare.model.MachineRequest;
-import com.sjsu.minishare.model.VirtualMachineRequest;
-import com.vmware.vim25.InvalidPowerState;
-import com.vmware.vim25.InvalidProperty;
-import com.vmware.vim25.RuntimeFault;
-import com.vmware.vim25.TaskInfoState;
-import com.vmware.vim25.VirtualMachineCloneSpec;
-import com.vmware.vim25.VirtualMachineConfigSpec;
-import com.vmware.vim25.VirtualMachinePowerState;
-import com.vmware.vim25.VirtualMachineRelocateSpec;
-import com.vmware.vim25.VirtualMachineRuntimeInfo;
-import com.vmware.vim25.mo.Datacenter;
-import com.vmware.vim25.mo.Datastore;
-import com.vmware.vim25.mo.Folder;
-import com.vmware.vim25.mo.HostSystem;
-import com.vmware.vim25.mo.InventoryNavigator;
-import com.vmware.vim25.mo.ManagedEntity;
-import com.vmware.vim25.mo.ResourcePool;
-import com.vmware.vim25.mo.ServiceInstance;
-import com.vmware.vim25.mo.Task;
-import com.vmware.vim25.mo.VirtualMachine;
+import com.sjsu.minishare.model.*;
+import com.vmware.vim25.*;
+import com.vmware.vim25.mo.*;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.scheduling.*;
+import org.springframework.scheduling.annotation.Scheduled;
 
 public class VirtualMachineServiceImpl implements VirtualMachineService {
 
@@ -101,7 +90,8 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 		this.vmwareTeamFolder = vmwareTeamFolder;
 	}
 
-	private ServiceInstance getServiceInstance() throws VirtualMachineException {
+	@Override
+    public ServiceInstance getServiceInstance() throws VirtualMachineException {
 		ServiceInstance si;
 		try {
 			si = new ServiceInstance(new URL(vmwareHostURL), vmwareLogin,
@@ -316,7 +306,8 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 
 	}
 
-	private VirtualMachine getVirtualMachine(String vmName)
+	@Override
+    public VirtualMachine getVirtualMachine(String vmName)
 			throws VirtualMachineException, InvalidProperty, RuntimeFault,
 			RemoteException {
 		VirtualMachine vm = null;
@@ -336,4 +327,25 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 		}
 		return vm;
 	}
+
+    /**
+     * finds all virtual machine by on and suspended state
+     * @return
+     */
+    @Override
+    public List<VirtualMachineDetail> findAllVirtualMachineByOnAndSuspendState(){
+
+        List<MachineStatus> machineStatusList= new ArrayList<MachineStatus>();
+        machineStatusList.add(MachineStatus.On);
+        machineStatusList.add(MachineStatus.Suspended);
+        List<VirtualMachineDetail> virtualMachineDetailList = VirtualMachineDetail.findByMachineStatus(machineStatusList);
+
+        return virtualMachineDetailList;
+    }
+
+    @Override
+    public PerformanceManager getPerformanceManager() throws VirtualMachineException {
+        return getServiceInstance().getPerformanceManager();
+    }
+
 }

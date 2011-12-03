@@ -20,12 +20,13 @@ public class VirtualMachineMonitor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer monitorId;
 
-    private Integer memoryConsumedInBytes;
+    private Integer guestMemoryUsage;
 
-    private Float cpuUsageInPercent;
+    private Integer overallCpuUsage;
 
     private Integer monitorInterval;
 
+    private String machineStatus;
     @ManyToOne
     private VirtualMachineDetail virtualMachineDetail;
 }

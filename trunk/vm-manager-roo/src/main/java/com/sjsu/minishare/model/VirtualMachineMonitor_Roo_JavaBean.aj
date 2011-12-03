@@ -4,8 +4,8 @@
 package com.sjsu.minishare.model;
 
 import com.sjsu.minishare.model.VirtualMachineDetail;
-import java.lang.Float;
 import java.lang.Integer;
+import java.lang.String;
 
 privileged aspect VirtualMachineMonitor_Roo_JavaBean {
     
@@ -17,20 +17,20 @@ privileged aspect VirtualMachineMonitor_Roo_JavaBean {
         this.monitorId = monitorId;
     }
     
-    public Integer VirtualMachineMonitor.getMemoryConsumedInBytes() {
-        return this.memoryConsumedInBytes;
+    public Integer VirtualMachineMonitor.getGuestMemoryUsage() {
+        return this.guestMemoryUsage;
     }
     
-    public void VirtualMachineMonitor.setMemoryConsumedInBytes(Integer memoryConsumedInBytes) {
-        this.memoryConsumedInBytes = memoryConsumedInBytes;
+    public void VirtualMachineMonitor.setGuestMemoryUsage(Integer guestMemoryUsage) {
+        this.guestMemoryUsage = guestMemoryUsage;
     }
     
-    public Float VirtualMachineMonitor.getCpuUsageInPercent() {
-        return this.cpuUsageInPercent;
+    public Integer VirtualMachineMonitor.getOverallCpuUsage() {
+        return this.overallCpuUsage;
     }
     
-    public void VirtualMachineMonitor.setCpuUsageInPercent(Float cpuUsageInPercent) {
-        this.cpuUsageInPercent = cpuUsageInPercent;
+    public void VirtualMachineMonitor.setOverallCpuUsage(Integer overallCpuUsage) {
+        this.overallCpuUsage = overallCpuUsage;
     }
     
     public Integer VirtualMachineMonitor.getMonitorInterval() {
@@ -39,6 +39,14 @@ privileged aspect VirtualMachineMonitor_Roo_JavaBean {
     
     public void VirtualMachineMonitor.setMonitorInterval(Integer monitorInterval) {
         this.monitorInterval = monitorInterval;
+    }
+    
+    public String VirtualMachineMonitor.getMachineStatus() {
+        return this.machineStatus;
+    }
+    
+    public void VirtualMachineMonitor.setMachineStatus(String machineStatus) {
+        this.machineStatus = machineStatus;
     }
     
     public VirtualMachineDetail VirtualMachineMonitor.getVirtualMachineDetail() {

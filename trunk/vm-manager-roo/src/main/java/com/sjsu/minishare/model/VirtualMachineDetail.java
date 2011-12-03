@@ -12,7 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.TemporalType;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import com.sjsu.minishare.model.CloudUser;
@@ -65,5 +67,14 @@ public class VirtualMachineDetail {
     
     @Size(max = 20)
     private String ipAddress;
+    
+    public static List<VirtualMachineDetail> findByMachineStatus(List<MachineStatus> machineStatusList){
+        List<String> machineStatusStr = new ArrayList<String>();
+        for(MachineStatus machineStatus: machineStatusList){
+            machineStatusStr.add(machineStatus.name());
+        }
+        return entityManager().createQuery("select vm from VirtualMachineDetail vm where vm.machineStatus in (:machineStatues)")
+                .setParameter("machineStatues", machineStatusStr).getResultList();
+    }
     
 }
