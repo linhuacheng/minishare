@@ -13,6 +13,6 @@ import java.rmi.RemoteException;
  */
 public interface VirtualMachineMonitorService {
 
-    public void populateVirtualMachineStats() throws VirtualMachineException, RemoteException;
+    public void populateVirtualMachineMonitorInfo() throws VirtualMachineException, RemoteException;
 
 }

@@ -2,6 +2,7 @@ package com.sjsu.minishare.service;
 
 import com.sjsu.minishare.exception.VirtualMachineException;
 import com.sjsu.minishare.model.MachineStatus;
+import com.sjsu.minishare.model.PerformanceMetricBean;
 import com.sjsu.minishare.model.VirtualMachineDetail;
 import com.sjsu.minishare.model.VirtualMachineMonitor;
 import com.vmware.vim25.*;
@@ -12,8 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,50 +30,81 @@ import java.util.List;
  */
 @Component
 public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorService {
+
+    private static PerfCounterInfo[] perfCounterInfos;
+    public static final String GROUP_CPU = "cpu";
+    public static final String GROUP_MEM = "mem";
+    public static final String COUNTER_USAGEMHZ = "usagemhz";
+    public static final String COUNTER_CONSUMED = "consumed";
+
+    private PerformanceManager performanceManager;
+    private PerfMetricId cpuUsageMetricId;
+    private PerfMetricId memoryConsumedMetricId;
+
     @Autowired
     private VirtualMachineService virtualMachineService;
 
-    private static final int VM_MONITORING_INTERVAL_MS = 5000;
-    private static final Log log = LogFactory.getLog(VirtualMachineServiceImpl.class);
+    private static final int VM_MONITORING_INTERVAL_MS = 60000;
+    private static final Log log = LogFactory.getLog(VirtualMachineMonitorServiceImpl.class);
+
     //CK commenting the scheduling as quick stats doesn't seem to update the required monitoring info
-    //@Scheduled(fixedDelay = VM_MONITORING_INTERVAL_MS)
-    public void populateVirtualMachineStats() throws VirtualMachineException, RemoteException {
+    @Scheduled(fixedDelay = VM_MONITORING_INTERVAL_MS)
+    public void populateVirtualMachineMonitorInfo() throws VirtualMachineException, RemoteException {
 
         List<VirtualMachineDetail> virtualMachineDetailList = virtualMachineService.findAllVirtualMachineByOnAndSuspendState();
-
-        if (virtualMachineDetailList != null && virtualMachineDetailList.size() > 0){
-            for (VirtualMachineDetail virtualMachineDetail: virtualMachineDetailList) {
+        List<PerformanceMetricBean> performanceMetricBeanList = null;
+        if (virtualMachineDetailList != null && virtualMachineDetailList.size() > 0) {
+            for (VirtualMachineDetail virtualMachineDetail : virtualMachineDetailList) {
                 log.debug("Found following machines in ON / Suspend state: " + virtualMachineDetailList);
 
                 VirtualMachine virtualMachine = virtualMachineService.getVirtualMachine(virtualMachineDetail.getMachineName());
                 VirtualMachineSummary summary = virtualMachine.getSummary();
-                VirtualMachineQuickStats quickStats = summary.getQuickStats();
-                log.debug(String.format("Memory Usage: %s CPU Usage %s", quickStats.getGuestMemoryUsage(), quickStats.getOverallCpuUsage()));
-                crateVirtualMachineMonitor(virtualMachineDetail, quickStats.getOverallCpuUsage()
-                        , quickStats.getGuestMemoryUsage(), summary.getRuntime().getPowerState());
+                //VirtualMachineQuickStats quickStats = summary.getQuickStats();
+                //log.debug(String.format("Memory Usage: %s CPU Usage %s", quickStats.getGuestMemoryUsage(), quickStats.getOverallCpuUsage()));
+                performanceMetricBeanList = getRealTimePerformanceMetrics(virtualMachine);
+                if (performanceMetricBeanList != null && performanceMetricBeanList.size() > 0){
+                    PerformanceMetricBean cpuMetricBean = getPerformanceMetricBeanByMetricId(performanceMetricBeanList, cpuUsageMetricId);
+                    PerformanceMetricBean memoryMetricBean = getPerformanceMetricBeanByMetricId(performanceMetricBeanList, memoryConsumedMetricId);
+
+                    log.debug(String.format("CPU utilization %s, Memory Utilization %s "
+                            ,cpuMetricBean != null ? cpuMetricBean.getAvgValue(): 0
+                            ,memoryMetricBean != null ? memoryMetricBean.getAvgValue(): 0
+                            ,cpuMetricBean != null ? cpuMetricBean.getStartTime(): 0
+                            ,cpuMetricBean != null ? cpuMetricBean.getEndTime() : 0
+                    ));
+                    if (cpuMetricBean != null && memoryMetricBean != null){
+                        createVirtualMachineMonitor(virtualMachineDetail
+                                , (int)cpuMetricBean.getAvgValue()
+                                , (int)memoryMetricBean.getAvgValue(), summary.getRuntime().getPowerState());
+                    }
+
+                }
+//                createVirtualMachineMonitor(virtualMachineDetail, quickStats.getOverallCpuUsage()
+//                        , quickStats.getGuestMemoryUsage(), summary.getRuntime().getPowerState());
             }
         } else {
-           log.debug("No VM Found in ON / Suspend state");
+            log.debug("No VM Found in ON / Suspend state");
         }
     }
 
     /**
      * create virtual machine monitor
+     *
      * @param virtualMachineDetail
      * @param overallCpuUsage
      * @param guestMemoryUsage
      * @param powerState
      */
-    private void crateVirtualMachineMonitor(VirtualMachineDetail virtualMachineDetail
-            ,Integer overallCpuUsage
+    private void createVirtualMachineMonitor(VirtualMachineDetail virtualMachineDetail
+            , Integer overallCpuUsage
             , Integer guestMemoryUsage
-            , VirtualMachinePowerState powerState){
+            , VirtualMachinePowerState powerState) {
         VirtualMachineMonitor virtualMachineMonitor = new VirtualMachineMonitor();
-        virtualMachineMonitor.setMonitorInterval(VM_MONITORING_INTERVAL_MS/1000);
+        virtualMachineMonitor.setMonitorInterval(VM_MONITORING_INTERVAL_MS / 1000);
         virtualMachineMonitor.setOverallCpuUsage(overallCpuUsage);
         virtualMachineMonitor.setGuestMemoryUsage(guestMemoryUsage);
         virtualMachineMonitor.setVirtualMachineDetail(virtualMachineDetail);
-        if(VirtualMachinePowerState.poweredOn.equals(powerState)){
+        if (VirtualMachinePowerState.poweredOn.equals(powerState)) {
             virtualMachineMonitor.setMachineStatus(MachineStatus.On.name());
         } else if (VirtualMachinePowerState.suspended.equals(powerState)) {
             virtualMachineMonitor.setMachineStatus(MachineStatus.Off.name());
@@ -76,106 +112,179 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
         virtualMachineMonitor.persist();
     }
 
+    /**
+     * gets real time monitor information
+     *
+     * @throws VirtualMachineException
+     * @throws InvalidProperty
+     * @throws RemoteException
+     */
     //@Scheduled(fixedDelay = VM_MONITORING_INTERVAL_MS)
-    public void testVirtualMachineRuntimeInfo() throws Exception {
 
-        Folder rootFolder= virtualMachineService.getServiceInstance().getRootFolder();
+    public List<PerformanceMetricBean> getRealTimePerformanceMetrics(VirtualMachine virtualMachine)
+            throws VirtualMachineException, InvalidProperty, RemoteException {
 
-        String name = rootFolder.getName();
-		ManagedEntity vmEntity = new InventoryNavigator(rootFolder)
-				.searchManagedEntity("VirtualMachine", "machine-db-new");
-        VirtualMachine vm = (VirtualMachine)vmEntity;
-        VirtualMachineSummary summary = ((VirtualMachine)vmEntity).getSummary();
+        List<PerformanceMetricBean> performanceMetricBeanList= null;
+        initialize();
+        PerfProviderSummary perfProviderSummary = performanceManager.queryPerfProviderSummary(virtualMachine);
+        Integer refreshRate = perfProviderSummary.getRefreshRate();
+        PerfMetricId[] perfMetricIds;// = performanceManager.queryAvailablePerfMetric(virtualMachine, null, null, refreshRate);
+        perfMetricIds = getCPUAndMemoryPerformanceMetricId();
 
-        VirtualMachineQuickStats quickStats = summary.getQuickStats();
-        log.debug(String.format("Vm name %s, Vm status %s", vm.getName(), vm.getRuntime().getPowerState()));
-        log.debug(String.format("Memory Usage: %s CPU Usage %s", quickStats.getGuestMemoryUsage(), quickStats.getOverallCpuDemand()));
-        log.debug("Uptime in secs:" + quickStats.getUptimeSeconds());
-        //log.debug("Vm quick Stats" + quickStats);
-        //log.debug(String.format("Max cup %s, Max memory %s ", summary.getRuntime().getMaxCpuUsage(), summary.getRuntime().getMaxMemoryUsage()));
+        PerfQuerySpec perfQuerySpec = new PerfQuerySpec();
+        perfQuerySpec.setEntity(virtualMachine.getMOR());
+        perfQuerySpec.setMetricId(perfMetricIds);
+        perfQuerySpec.setMaxSample(3);
+        perfQuerySpec.setIntervalId(refreshRate);
+
+        PerfEntityMetricBase[] pValues = performanceManager.queryPerf(new PerfQuerySpec[]{perfQuerySpec});
+
+        if (pValues != null && pValues.length > 0) {
+            log.debug("Pvalues length:" +pValues.length);
+            if (pValues[0] instanceof  PerfEntityMetric) {
+                performanceMetricBeanList = convertPerfMetricToBean((PerfEntityMetric)pValues[0]);
+
+            }
+        }
+        return performanceMetricBeanList;
     }
 
+    /**
+     * initializes performance manager
+     * @throws VirtualMachineException
+     */
+    private void initialize() throws VirtualMachineException {
+        if (performanceManager == null) {
+            performanceManager = virtualMachineService.getPerformanceManager();
+        }
+        if (perfCounterInfos == null) {
+            perfCounterInfos = performanceManager.getPerfCounter();
+        }
+        if (cpuUsageMetricId == null || memoryConsumedMetricId == null) {
+            for (int i = 0; i < perfCounterInfos.length; i++) {
 
-    //@Scheduled(fixedDelay = VM_MONITORING_INTERVAL_MS)
-    public void getPerformanceMetrics() throws VirtualMachineException, InvalidProperty, RemoteException {
+                if (PerfSummaryType.average.equals(perfCounterInfos[i].getRollupType())){
+                    if (perfCounterInfos[i].getGroupInfo().key.equalsIgnoreCase(GROUP_CPU) && perfCounterInfos[i].getNameInfo().key.equals(COUNTER_USAGEMHZ)){
+                        cpuUsageMetricId = new PerfMetricId();
+                        cpuUsageMetricId.setCounterId(perfCounterInfos[i].getKey());
+                        cpuUsageMetricId.setInstance("");
+                    } else if (perfCounterInfos[i].getGroupInfo().key.equalsIgnoreCase(GROUP_MEM) && perfCounterInfos[i].getNameInfo().key.equals(COUNTER_CONSUMED)) {
+                        memoryConsumedMetricId = new PerfMetricId();
+                        memoryConsumedMetricId.setCounterId(perfCounterInfos[i].getKey());
+                        memoryConsumedMetricId.setInstance("");
+                    }
+                }
+            }
+        }
+    }
 
-        PerformanceManager performanceManager = virtualMachineService.getPerformanceManager();
-        VirtualMachine virtualMachine = virtualMachineService.getVirtualMachine("machine-db-new");
-        PerfMetricId[] perfMetricIds = performanceManager.queryAvailablePerfMetric(virtualMachine, null, null, 60);
-//        int [] counterIds = new int[perfMetricIds.length];
-//        for (int i=0; i < perfMetricIds.length; i++){
-//            log.debug(String.format("Perf Metric id %s name %s" , perfMetricIds[i].counterId, perfMetricIds[i].getInstance()));
-//            counterIds[i] = perfMetricIds[i].getCounterId();
-//        }
+    /**
+     * gets cpu and memory performance metric id
+     * @return
+     */
+    private PerfMetricId[] getCPUAndMemoryPerformanceMetricId() {
 
-        PerfCounterInfo [] perfCounterInfos = performanceManager.getPerfCounter();
         List<PerfMetricId> perfMetricIdList = new ArrayList<PerfMetricId>();
-        for (int i=0;i < perfCounterInfos.length; i ++){
+
+        for (int i = 0; i < perfCounterInfos.length; i++) {
 
             if (PerfSummaryType.average.equals(perfCounterInfos[i].getRollupType())
-                    && (perfCounterInfos[i].getNameInfo().key.equals("usagemhz") || perfCounterInfos[i].getNameInfo().key.equals("consumed"))) {
-                log.debug(String.format("name %s, groupinfo %s, unit info %s summaryType %s"
-                    , perfCounterInfos[i].getNameInfo().key
-                    , perfCounterInfos[i].getGroupInfo().key
-                    , perfCounterInfos[i].getUnitInfo().key
-                    , perfCounterInfos[i].getRollupType()));
+                    && ((perfCounterInfos[i].getGroupInfo().key.equalsIgnoreCase(GROUP_CPU) && perfCounterInfos[i].getNameInfo().key.equals(COUNTER_USAGEMHZ))
+                    || (perfCounterInfos[i].getGroupInfo().key.equalsIgnoreCase(GROUP_MEM) && perfCounterInfos[i].getNameInfo().key.equals(COUNTER_CONSUMED)))) {
+                PerformanceMonitorHelper.printPerformanceCounterInfo(perfCounterInfos[i]);
                 PerfMetricId pmid = new PerfMetricId();
                 pmid.setCounterId(perfCounterInfos[i].getKey());
                 pmid.setInstance("");
                 perfMetricIdList.add(pmid);
             }
         }
-
-        PerfQuerySpec perfQuerySpec = new PerfQuerySpec();
-        perfQuerySpec.setEntity(virtualMachine.getMOR());
-        perfQuerySpec.setMetricId((PerfMetricId[])perfMetricIdList.toArray(new PerfMetricId[]{}));
-
-        //perfQuerySpec.setMaxSample();
-        perfQuerySpec.setMaxSample(1);
-        perfQuerySpec.setIntervalId(60);
-
-        PerfEntityMetricBase[] pValues = performanceManager.queryPerf(new PerfQuerySpec[]{perfQuerySpec});
-        if (pValues != null) {
-          printPerformanceMetrics(pValues);
-        }
-
-
+        return perfMetricIdList.toArray(new PerfMetricId[]{});
     }
 
-    private void printPerformanceMetrics(PerfEntityMetricBase[] pValues) {
-        for (int a = 0; a < pValues.length; a++) {
-            String entityDesc = pValues[a].getEntity().getType() + ":" + pValues[a].getEntity().get_value();
-            log.debug("Entity Description " + entityDesc);
-            if (pValues[a] instanceof PerfEntityMetric) {
-                PerfMetricSeries[] metricSeries = ((PerfEntityMetric) pValues[a]).getValue();
-                PerfSampleInfo[] perfSampleInfos = ((PerfEntityMetric) pValues[a]).getSampleInfo();
-                System.out.println("Sampling Times and Intervales:");
+    /**
+     * gets performance counter info for given counter id
+     *
+     * @param counterId
+     * @return
+     */
+    private PerfCounterInfo getPerfCounterInfo(Integer counterId) {
 
-                for (int i = 0; perfSampleInfos != null && i < perfSampleInfos.length; i++) {
-                    System.out.println("Sample time: " + perfSampleInfos[i].getTimestamp().getTime());
-                    System.out.println("Sample interval (sec):" + perfSampleInfos[i].getInterval());
-                }
-                System.out.println("Sample values:");
-                for (int j = 0; metricSeries != null && j < metricSeries.length; ++j) {
-                    System.out.println("Perf counter ID:" + metricSeries[j].getId().getCounterId());
-                    System.out.println("Device instance ID:" + metricSeries[j].getId().getInstance());
-
-                    if (metricSeries[j] instanceof PerfMetricIntSeries) {
-                        PerfMetricIntSeries val = (PerfMetricIntSeries) metricSeries[j];
-                        long[] longs = val.getValue();
-                        for (int k = 0; k < longs.length; k++) {
-                            System.out.print(longs[k] + " ");
-                        }
-                        System.out.println("Total:" + longs.length);
-                    } else if (metricSeries[j] instanceof PerfMetricSeriesCSV) { // it is not likely coming here...
-                        PerfMetricSeriesCSV val = (PerfMetricSeriesCSV) metricSeries[j];
-                        System.out.println("CSV value:" + val.getValue());
-                    }
-                }
-
+        for (int i = 0; i < perfCounterInfos.length; i++) {
+            if (counterId.equals(perfCounterInfos[i].getKey())) {
+                return perfCounterInfos[i];
             }
+        }
+        return null;
+    }
 
+    /**
+     * gets performance metric bean for give perf metric id
+     *
+     * @param performanceMetricBeans
+     * @param perfMetricId
+     * @return
+     */
+    private PerformanceMetricBean getPerformanceMetricBeanByMetricId(List<PerformanceMetricBean> performanceMetricBeans, PerfMetricId perfMetricId) {
+
+        for (PerformanceMetricBean performanceMetricBean: performanceMetricBeans) {
+
+            if (perfMetricId.getCounterId() == performanceMetricBean.getCounterId()) {
+                return performanceMetricBean;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * converts performance metric to performance metric bean
+     *
+     * @param perfEntityMetric
+     * @return
+     */
+    private List<PerformanceMetricBean> convertPerfMetricToBean(PerfEntityMetric perfEntityMetric) {
+        List<PerformanceMetricBean> performanceMetricBeanList = new ArrayList<PerformanceMetricBean>();
+        PerfMetricSeries[] metricSeries = perfEntityMetric.getValue();
+        PerfSampleInfo[] perfSampleInfos = perfEntityMetric.getSampleInfo();
+        long aggValue = 0;
+        Date startTime = null;
+        Date endTime = null;
+
+        for (int i = 0; perfSampleInfos != null && i < perfSampleInfos.length; i++) {
+            if(i== 0){
+                startTime = perfSampleInfos[i].getTimestamp().getTime();
+            } else if (i == perfSampleInfos.length-1){
+                endTime =   perfSampleInfos[i].getTimestamp().getTime();
+            }
+            log.debug("Sample time: " + perfSampleInfos[i].getTimestamp().getTime());
+            log.debug("Sample interval (sec):" + perfSampleInfos[i].getInterval());
+        }
+        log.debug("Sample values:");
+
+        for (int j = 0; metricSeries != null && j < metricSeries.length; ++j) {
+            PerformanceMetricBean performanceMetricBean = new PerformanceMetricBean();
+            PerfCounterInfo perfCounterInfo = getPerfCounterInfo(metricSeries[j].getId().getCounterId());
+            performanceMetricBean.setPerfCounterInfo(perfCounterInfo);
+            performanceMetricBean.setStartTime(startTime);
+            performanceMetricBean.setEndTime(endTime);
+            log.debug("Perf counter ID:" + metricSeries[j].getId().getCounterId());
+            log.debug("Device instance ID:" + metricSeries[j].getId().getInstance());
+            if (metricSeries[j] instanceof PerfMetricIntSeries) {
+                PerfMetricIntSeries val = (PerfMetricIntSeries) metricSeries[j];
+
+                long[] lValue = val.getValue();
+                for (int k = 0; k < lValue.length; k++) {
+                    log.debug("long value: " + lValue[k]);
+                    aggValue += lValue[k];
+                }
+                aggValue = aggValue / lValue.length;
+            } else {
+                throw new IllegalArgumentException("Invalid metric format");
+            }
+            performanceMetricBean.setAvgValue(aggValue);
+            performanceMetricBeanList.add(performanceMetricBean);
         }
 
+        return performanceMetricBeanList;
     }
+
 }
