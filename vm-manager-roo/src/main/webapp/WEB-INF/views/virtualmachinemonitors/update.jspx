@@ -3,9 +3,10 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_com_sjsu_minishare_model_VirtualMachineMonitor" idField="monitorId" modelAttribute="virtualMachineMonitor" path="/virtualmachinemonitors" versionField="Version" z="pJ2Cu/8WChdDHtaU7F1JL3/Mmgc=">
-        <field:input field="memoryConsumedInBytes" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_memoryConsumedInBytes" validationMessageCode="field_invalid_integer" z="cwloMVLDf4aASewsrq0iu4JolFs="/>
-        <field:input field="cpuUsageInPercent" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_cpuUsageInPercent" validationMessageCode="field_invalid_number" z="blmoqJe656NORbL3kgb7VdybwQ8="/>
         <field:input field="monitorInterval" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_monitorInterval" validationMessageCode="field_invalid_integer" z="eIhI05aWsoD+Lnm85Bv0RXAFLjQ="/>
         <field:select field="virtualMachineDetail" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_virtualMachineDetail" itemValue="machineId" items="${virtualmachinedetails}" path="/virtualmachinedetails" z="xIeolq7cBY0OcjZag50Au3pTllI="/>
+        <field:input field="guestMemoryUsage" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_guestMemoryUsage" validationMessageCode="field_invalid_integer" z="P2KiMkFRrEfooG6AiVSUVbW7Bec="/>
+        <field:input field="overallCpuUsage" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_overallCpuUsage" validationMessageCode="field_invalid_integer" z="C1eYzeP6mhbPTQXEl/kZ0wDGug4="/>
+        <field:input field="machineStatus" id="c_com_sjsu_minishare_model_VirtualMachineMonitor_machineStatus" z="QA10Ue7d8+WaOe9fU4U4kazFszY="/>
     </form:update>
 </div>

@@ -45,7 +45,7 @@ privileged aspect VirtualMachineMonitorController_Roo_Controller {
     }
     
 
-    
+
 
     @ModelAttribute("virtualmachinedetails")
     public Collection<VirtualMachineDetail> VirtualMachineMonitorController.populateVirtualMachineDetails() {

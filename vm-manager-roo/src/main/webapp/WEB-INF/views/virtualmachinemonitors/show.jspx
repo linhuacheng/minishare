@@ -3,9 +3,10 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_com_sjsu_minishare_model_VirtualMachineMonitor" object="${virtualmachinemonitor}" path="/virtualmachinemonitors" z="rL+7pf4KXupDDWfkUFVRgqTx44I=">
-        <field:display field="memoryConsumedInBytes" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_memoryConsumedInBytes" object="${virtualmachinemonitor}" z="Fx/dkTcNaAQEk34gsDYcaeVeFOE="/>
-        <field:display field="cpuUsageInPercent" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_cpuUsageInPercent" object="${virtualmachinemonitor}" z="zM0BhCpk68F/ymK48CW3RhEZjPE="/>
         <field:display field="monitorInterval" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_monitorInterval" object="${virtualmachinemonitor}" z="tO+P1IbQopgPrnX3cYzC5I6brjg="/>
         <field:display field="virtualMachineDetail" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_virtualMachineDetail" object="${virtualmachinemonitor}" z="1OQjxSuEd41s8VaM5gfJTAYrsB0="/>
+        <field:display field="guestMemoryUsage" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_guestMemoryUsage" object="${virtualmachinemonitor}" z="ikeRjPRphuiWmTwmbJNOFYtQKOU="/>
+        <field:display field="overallCpuUsage" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_overallCpuUsage" object="${virtualmachinemonitor}" z="hAbuiTZWm2WBm400TrVgAIrWXcU="/>
+        <field:display field="machineStatus" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_machineStatus" object="${virtualmachinemonitor}" z="kKwKsJPE3sv9TC66vm0nqsw6SBE="/>
     </page:show>
 </div>
