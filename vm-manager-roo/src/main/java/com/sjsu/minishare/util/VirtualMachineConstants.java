@@ -20,19 +20,40 @@ public class VirtualMachineConstants {
 		template1.setId(1);
 		template1.setMemory("512");
 		template1.setNumberCPUs(1);
-		template1.setTemplateName("Debian Template Group1");
+		template1.setTemplateName("Group1 - Debian Template1");
+		template1.setDefaultUsername(DEFAULT_USERNAME);
+		template1.setDefaultPassword(DEFAULT_PASSWORD);
+		template1.setDefaultIpAddress("130.65.150.222");
 		template1.setOperatingSystem("Debian");
 		
 		VirtualMachineTemplate template2 = new VirtualMachineTemplate();
 		template2.setId(2);
 		template2.setMemory("512");
 		template2.setNumberCPUs(1);
-		template2.setTemplateName("Ubuntu Template Group1");
+		template2.setTemplateName("Group1 - Ubuntu Template1");
+		template2.setDefaultUsername(DEFAULT_USERNAME);
+		template2.setDefaultPassword(DEFAULT_PASSWORD);
+		template2.setDefaultIpAddress("130.65.150.223");
 		template2.setOperatingSystem("Ubuntu");
+		
+		VirtualMachineTemplate template3 = new VirtualMachineTemplate();
+		template3.setId(3);
+		template3.setMemory("1024");
+		template3.setNumberCPUs(2);
+		template3.setTemplateName("Group1 - Ubuntu Template2");
+		template3.setDefaultUsername(DEFAULT_USERNAME);
+		template3.setDefaultPassword(DEFAULT_PASSWORD);
+		template3.setDefaultIpAddress("130.65.150.201");
+		template3.setOperatingSystem("Ubuntu");
 		
 		virtualMachineTemplates.add(template1);
 		virtualMachineTemplates.add(template2);
+		virtualMachineTemplates.add(template3);
 		
+		//Chandu - 130.65.150.201 - Group1 - Ubuntu Template2
+		// Priyanka - 130.65.150.203 - 
+		// Nikitha - 130.65.150.222 - Group1 - Debian Template1
+		// Cheng - 130.65.150.223 - Group1 - Ubuntu Template1
 		
 		numCPUs = new ArrayList<Integer>();
 		numCPUs.add(Integer.valueOf(1));
