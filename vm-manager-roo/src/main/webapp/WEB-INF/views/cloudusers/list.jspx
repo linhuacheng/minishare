@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_com_sjsu_minishare_model_CloudUser" items="${cloudusers}" z="GM4F1e7/lf+G09rQ2WGxl5LF5OY=">
-        <table:table data="${cloudusers}" id="l_com_sjsu_minishare_model_CloudUser" path="/cloudusers" typeIdFieldName="userId" z="OpYn5tX3V/FC5uwDqh3AVQtkH0M=">
+        <table:table data="${cloudusers}" id="l_com_sjsu_minishare_model_CloudUser" delete="false" path="/cloudusers" typeIdFieldName="userId" z="OpYn5tX3V/FC5uwDqh3AVQtkH0M=">
             <table:column id="c_com_sjsu_minishare_model_CloudUser_userName" property="userName" z="4F7ygAmRZcQYS7ieHI+aaKhaClU="/>
             <table:column id="c_com_sjsu_minishare_model_CloudUser_firstName" property="firstName" z="XRH+lyVRp/RXixqfxijjqa3X0wk="/>
             <table:column id="c_com_sjsu_minishare_model_CloudUser_lastName" property="lastName" z="QG+jTLxv3TB/pm9jFBoqWdHTOOA="/>
