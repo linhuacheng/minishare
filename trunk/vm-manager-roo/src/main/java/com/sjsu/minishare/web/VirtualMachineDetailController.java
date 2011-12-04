@@ -89,16 +89,18 @@ public class VirtualMachineDetailController {
 			return "virtualmachinedetails/create";
 		}
 		uiModel.asMap().clear();
-		String ipAddress = ApplicationUtil.getNextIpAddress();
-		virtualMachineDetail.setUserId(ApplicationUtil.getLogonCloudUser());
-		virtualMachineDetail.setDefaultUsername(VirtualMachineConstants.DEFAULT_USERNAME);
-		virtualMachineDetail.setDefaultPassword(VirtualMachineConstants.DEFAULT_PASSWORD);
-		virtualMachineDetail.setIpAddress("test");
 		
-		virtualMachineDetail.persist();
 		//Create the virtual Machine
 		String templateId = httpServletRequest.getParameter("templateId");
 		VirtualMachineTemplate template = VirtualMachineConstants.getVirtualMachineTemplateById(templateId);
+						
+		virtualMachineDetail.setUserId(ApplicationUtil.getLogonCloudUser());
+		virtualMachineDetail.setDefaultUsername(template.getDefaultUsername());
+		virtualMachineDetail.setDefaultPassword(template.getDefaultPassword());
+		virtualMachineDetail.setIpAddress(template.getDefaultIpAddress());
+		
+		virtualMachineDetail.persist();
+		
 		processVirtualMachineRequest(virtualMachineDetail, "CREATE", template.getTemplateName());
 		
 		return "redirect:/virtualmachinedetails/"

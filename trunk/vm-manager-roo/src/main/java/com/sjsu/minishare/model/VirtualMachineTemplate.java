@@ -6,15 +6,42 @@ import org.springframework.roo.addon.tostring.RooToString;
 public class VirtualMachineTemplate {
 
 	private Integer id;
-	
+
 	private Integer numberCPUs;
 
 	private String memory;
 
 	private String operatingSystem;
-	
+
 	private String templateName;
 
+	private String defaultUsername;
+	private String defaultPassword;
+	private String defaultIpAddress;
+
+	public String getDefaultUsername() {
+		return defaultUsername;
+	}
+
+	public void setDefaultUsername(String defaultUsername) {
+		this.defaultUsername = defaultUsername;
+	}
+
+	public String getDefaultPassword() {
+		return defaultPassword;
+	}
+
+	public void setDefaultPassword(String defaultPassword) {
+		this.defaultPassword = defaultPassword;
+	}
+
+	public String getDefaultIpAddress() {
+		return defaultIpAddress;
+	}
+
+	public void setDefaultIpAddress(String defaultIpAddress) {
+		this.defaultIpAddress = defaultIpAddress;
+	}
 
 	public String getTemplateName() {
 		return templateName;
@@ -31,7 +58,7 @@ public class VirtualMachineTemplate {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public Integer getNumberCPUs() {
 		return numberCPUs;
 	}
@@ -55,9 +82,10 @@ public class VirtualMachineTemplate {
 	public void setOperatingSystem(String operatingSystem) {
 		this.operatingSystem = operatingSystem;
 	}
-	
+
 	public String toString() {
-		return "OS: " + operatingSystem + " / CPU: " + numberCPUs + " / Memory: " + memory + "MB";  
+		return "OS: " + operatingSystem + " / CPU: " + numberCPUs
+				+ " / Memory: " + memory + "MB";
 	}
- 
+
 }
