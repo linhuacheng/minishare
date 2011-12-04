@@ -2,7 +2,7 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <page:show id="ps_com_sjsu_minishare_model_CloudUser" object="${clouduser}" path="/cloudusers" z="zmKzEWThD2tLQploWB0IxgXtOPA=">
+    <page:show id="ps_com_sjsu_minishare_model_CloudUser" object="${clouduser}" delete="false" path="/cloudusers" z="zmKzEWThD2tLQploWB0IxgXtOPA=">
         <field:display field="userName" id="s_com_sjsu_minishare_model_CloudUser_userName" object="${clouduser}" z="6tb6458xxZ3h6YO2psoCA001TUA="/>
         <field:display field="firstName" id="s_com_sjsu_minishare_model_CloudUser_firstName" object="${clouduser}" z="rgaT4Vpv+Gk2wc7PS9wXXC9dwkc="/>
         <field:display field="lastName" id="s_com_sjsu_minishare_model_CloudUser_lastName" object="${clouduser}" z="FUS3eeMulotePpBVa8Ol8crpj7I="/>
