@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_com_sjsu_minishare_model_VirtualMachineMonitor" items="${virtualmachinemonitors}" z="6eX7tVaqlle6uPpmTG33JShwmX8=">
-        <table:table data="${virtualmachinemonitors}" id="l_com_sjsu_minishare_model_VirtualMachineMonitor" path="/virtualmachinemonitors" typeIdFieldName="monitorId" z="DM477hP7I6hce4jcPAMZr5Dosyc=">
+        <table:table data="${virtualmachinemonitors}" id="l_com_sjsu_minishare_model_VirtualMachineMonitor" delete="false" update="false" path="/virtualmachinemonitors" typeIdFieldName="monitorId" z="DM477hP7I6hce4jcPAMZr5Dosyc=">
             <table:column id="c_com_sjsu_minishare_model_VirtualMachineMonitor_monitorInterval" property="monitorInterval" z="ej85jaIptpOlH1ntOEJQpKeGSto="/>
             <table:column id="c_com_sjsu_minishare_model_VirtualMachineMonitor_virtualMachineDetail" property="virtualMachineDetail" z="Mw7jnetuj8zVR3gwIyzfvaPQSvk="/>
             <table:column id="c_com_sjsu_minishare_model_VirtualMachineMonitor_guestMemoryUsage" property="guestMemoryUsage" z="theZpHniXJpfkiZUTdqA9UVtzVE="/>
