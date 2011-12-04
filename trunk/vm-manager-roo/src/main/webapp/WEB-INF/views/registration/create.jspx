@@ -3,17 +3,23 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_com_sjsu_minishare_model_CloudUser" modelAttribute="cloudUser" path="/registration" render="${empty dependencies}" z="iKYLIJS+3yhblQtwX7VfSYrn4ig=">
+        <h2> Basic User Information: </h2>
+        <br/>
         <field:input field="userName" id="c_com_sjsu_minishare_model_CloudUser_userName" required="true" z="Wkp7yUNL/6p/tqi9S3MZ/X/EoZM="/>
         <field:input field="firstName" id="c_com_sjsu_minishare_model_CloudUser_firstName" required="true" z="dnkn+1U/3WOVZz8awzyumXBGuAQ="/>
         <field:input field="lastName" id="c_com_sjsu_minishare_model_CloudUser_lastName" required="true" z="MUbvX81zd2OmkT3RLX23QTQ1YDE="/>
-        <field:checkbox field="active" id="c_com_sjsu_minishare_model_CloudUser_active" z="SgVBDTaTJDkxCQefGHFnX1ZLigs="/>
+<!--         <field:checkbox field="active" id="c_com_sjsu_minishare_model_CloudUser_active" z="SgVBDTaTJDkxCQefGHFnX1ZLigs="/> -->
         <field:input field="password" id="c_com_sjsu_minishare_model_CloudUser_password" type="password" required="true" z="MeyPA8/940CNhhhpq3kYTWmj51Q="/>
+        <h2>User Address Information:</h2>
+        <br/>
         <field:input field="addressLine1" id="c_com_sjsu_minishare_model_CloudUser_addressLine1" z="bhCz9OK+MGV6/NK2JR7HOkyWluo="/>
         <field:input field="addressLine2" id="c_com_sjsu_minishare_model_CloudUser_addressLine2" z="jgUDHluXKj2sjTd9VksedgK+xPE="/>
         <field:input field="city" id="c_com_sjsu_minishare_model_CloudUser_city" z="z0mw9PgInQEvGAgXYSUT4jQSInM="/>
         <field:input field="zip" id="c_com_sjsu_minishare_model_CloudUser_zip" z="75/PU8oO576mZ6W5YgXIOhhQMoU="/>
         <field:input field="userState" id="c_com_sjsu_minishare_model_CloudUser_userState" z="K/u6Nt0kyi4raZ6rt5uDBSiPQAs="/>
         <field:input field="country" id="c_com_sjsu_minishare_model_CloudUser_country" z="alMycFM0CaE7P+BFzZg39LDdvuE="/>
+        <h2>User Credit Card Information:</h2>
+        <br/>
         <field:input field="cardNumber" id="c_com_sjsu_minishare_model_CloudUser_cardNumber" z="wbV3RJT18ZTX8dno3CvxEXlKGIM="/>
         <field:input field="cardExpirationMonth" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationMonth" validationMessageCode="field_invalid_integer" z="zwkaWm4NgQx2MhsIgiLdCgP42Wk="/>
         <field:input field="cardExpirationYear" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationYear" validationMessageCode="field_invalid_integer" z="6JGpYnO86cPz6HdRoTyyDiZ8/TM="/>
