@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,6 +29,7 @@ import com.sjsu.minishare.model.MachineStatus;
 import com.sjsu.minishare.model.VirtualMachineDetail;
 import com.sjsu.minishare.model.VirtualMachineRequest;
 import com.sjsu.minishare.model.VirtualMachineTemplate;
+import com.sjsu.minishare.service.VirtualMachineMonitorServiceImpl;
 import com.sjsu.minishare.service.VirtualMachineService;
 import com.sjsu.minishare.util.ApplicationUtil;
 import com.sjsu.minishare.util.VirtualMachineConstants;
@@ -42,6 +45,9 @@ public class VirtualMachineDetailController {
 	@Autowired
 	@Qualifier("virtualMachineService")
 	VirtualMachineService virtualMachineService;
+	
+	 private static final Log log = LogFactory.getLog(VirtualMachineDetailController.class);
+
 
 	@RequestMapping(params = "form", method = RequestMethod.GET)
 	public String templateForm(Model uiModel) {
@@ -163,6 +169,12 @@ public class VirtualMachineDetailController {
 		String id = httpServletRequest.getParameter("id");
 		
 		VirtualMachineDetail tempMachineDetail = VirtualMachineDetail.findVirtualMachineDetail(new Integer(id));
+		String page = httpServletRequest.getParameter("page");
+		String size = httpServletRequest.getParameter("size");
+		uiModel.asMap().clear();
+		uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
+		uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
+		
 		// Before start, check if current state is suspend or off
 		if (state.equalsIgnoreCase("START") && 
 				( MachineStatus.Off.toString().equalsIgnoreCase(tempMachineDetail.getMachineStatus()) || 
@@ -181,16 +193,13 @@ public class VirtualMachineDetailController {
 			processVirtualMachineRequest(tempMachineDetail, state, "");
 		} else {
 			// invalid request should not go here
-			System.out.println("Invalid Request");
+			uiModel.addAttribute("errorMessage", "Invalid command requested.");
+			log.debug("Invalid Request");
+			return "redirect:/virtualmachinedetails";
 		}
 		
 		tempMachineDetail.persist();
-
-		String page = httpServletRequest.getParameter("page");
-		String size = httpServletRequest.getParameter("size");
-		uiModel.asMap().clear();
-		uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
-		uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
+		
 		return "redirect:/virtualmachinedetails";
 	}
 	public String updateVirtualMachineDetail(@Valid VirtualMachineDetail virtualMachineDetail,
