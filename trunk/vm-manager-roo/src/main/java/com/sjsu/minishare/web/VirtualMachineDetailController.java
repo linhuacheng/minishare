@@ -179,6 +179,13 @@ public class VirtualMachineDetailController {
 		if (state.equalsIgnoreCase("START") && 
 				( MachineStatus.Off.toString().equalsIgnoreCase(tempMachineDetail.getMachineStatus()) || 
 				  MachineStatus.Suspended.toString().equalsIgnoreCase(tempMachineDetail.getMachineStatus()) ) ) {
+			// Check if user still have remaining credits
+			if (!ApplicationUtil.logonUserHaveCredits()) {
+				uiModel.addAttribute("errorMessage", "Virtual machine cannot be started, there are no available credits.");
+				log.debug("Virtual machine cannot be started, there are no more remaining credits.");
+				return "redirect:/virtualmachinedetails";
+			}
+				
 			tempMachineDetail.setMachineStatus(MachineStatus.On.toString());
 			processVirtualMachineRequest(tempMachineDetail, state, "");
 		// Before turning off, check if current state is on		
@@ -193,7 +200,7 @@ public class VirtualMachineDetailController {
 			processVirtualMachineRequest(tempMachineDetail, state, "");
 		} else {
 			// invalid request should not go here
-			uiModel.addAttribute("errorMessage", "Invalid command requested.");
+			uiModel.addAttribute("errorMessage", "Invalid command requested, please try again.");
 			log.debug("Invalid Request");
 			return "redirect:/virtualmachinedetails";
 		}
@@ -221,17 +228,23 @@ public class VirtualMachineDetailController {
     @RequestMapping(value = "/{machineId}", method = RequestMethod.DELETE)
     public String delete(@PathVariable("machineId") Integer machineId, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
     	VirtualMachineDetail virtualMachineDetail =  VirtualMachineDetail.findVirtualMachineDetail(machineId);
+        uiModel.asMap().clear();
+        uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
+        uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
+ 
     	// check first if the vm is off before removing
     	if (MachineStatus.Off.toString().equalsIgnoreCase(virtualMachineDetail.getMachineStatus()) ) {
     		// Send Request to remove VM
     		processVirtualMachineRequest(virtualMachineDetail, "DELETE", "");
-    		virtualMachineDetail.remove();
+    		virtualMachineDetail.setMachineStatus(MachineStatus.Deleted.toString());
+    		virtualMachineDetail.persist();
+    		//virtualMachineDetail.remove();
+    		
+    	} else {
+    		uiModel.addAttribute("errorMessage", "Virtual machine needs to be turned off before it can be deleted.");
     	}
     	
-        uiModel.asMap().clear();
-        uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
-        uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/virtualmachinedetails";
+          return "redirect:/virtualmachinedetails";
     }
 	
 	private void processVirtualMachineRequest(VirtualMachineDetail virtualMachineDetail, String state, String templateName) {

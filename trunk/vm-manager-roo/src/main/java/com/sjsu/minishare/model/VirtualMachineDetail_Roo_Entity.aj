@@ -84,7 +84,7 @@ privileged aspect VirtualMachineDetail_Roo_Entity {
     }
     
     public static List<VirtualMachineDetail> VirtualMachineDetail.findAllVirtualMachineDetails(String userName) {
-        return entityManager().createQuery("SELECT o FROM VirtualMachineDetail o where o.userId.userName = :userName", VirtualMachineDetail.class).setParameter("userName", userName).getResultList();
+        return entityManager().createQuery("SELECT o FROM VirtualMachineDetail o where o.userId.userName = :userName and o.machineStatus not in ('Deleted')", VirtualMachineDetail.class).setParameter("userName", userName).getResultList();
     }
     
     public static VirtualMachineDetail VirtualMachineDetail.findVirtualMachineDetail(Integer machineId) {
@@ -97,7 +97,7 @@ privileged aspect VirtualMachineDetail_Roo_Entity {
     }
     
     public static List<VirtualMachineDetail> VirtualMachineDetail.findVirtualMachineDetailEntries(String userName, int firstResult, int maxResults) {
-        return entityManager().createQuery("SELECT o FROM VirtualMachineDetail o where o.userId.userName = :userName", VirtualMachineDetail.class).setParameter("userName", userName).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+        return entityManager().createQuery("SELECT o FROM VirtualMachineDetail o where o.userId.userName = :userName and o.machineStatus not in ('Deleted')", VirtualMachineDetail.class).setParameter("userName", userName).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
 }

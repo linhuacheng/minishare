@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.sjsu.minishare.model.CloudUser;
+import com.sjsu.minishare.model.UserCredit;
 
 public class ApplicationUtil {
 	
@@ -25,6 +26,17 @@ public class ApplicationUtil {
 
 		return username;
 	}
+	
+	public static boolean logonUserHaveCredits() {
+		CloudUser user = getLogonCloudUser();
+		UserCredit credit = UserCredit.findCloudUser(user);
+		if (credit == null) {
+			return false;
+		} else {
+			return (credit.getTotalCredits().intValue() > 0);
+		}
+	}
+	
 
 	public static CloudUser getLogonCloudUser() {
 		return CloudUser.findCloudUser(getLogonUsername());
