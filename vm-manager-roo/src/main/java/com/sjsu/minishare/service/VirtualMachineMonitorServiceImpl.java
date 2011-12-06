@@ -36,6 +36,7 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
     public static final String GROUP_MEM = "mem";
     public static final String COUNTER_USAGEMHZ = "usagemhz";
     public static final String COUNTER_CONSUMED = "consumed";
+    public static final int KILO_BYTES = 1024;
 
     private PerformanceManager performanceManager;
     private PerfMetricId cpuUsageMetricId;
@@ -45,6 +46,7 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
     private VirtualMachineService virtualMachineService;
 
     private static final int VM_MONITORING_INTERVAL_MS = 60000;
+    private static final int PER_MINUTE_CONVERSION_FACTOR = 60000;
     private static final Log log = LogFactory.getLog(VirtualMachineMonitorServiceImpl.class);
 
     //CK commenting the scheduling as quick stats doesn't seem to update the required monitoring info
@@ -61,26 +63,40 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
                 VirtualMachineSummary summary = virtualMachine.getSummary();
                 //VirtualMachineQuickStats quickStats = summary.getQuickStats();
                 //log.debug(String.format("Memory Usage: %s CPU Usage %s", quickStats.getGuestMemoryUsage(), quickStats.getOverallCpuUsage()));
-                performanceMetricBeanList = getRealTimePerformanceMetrics(virtualMachine);
-                if (performanceMetricBeanList != null && performanceMetricBeanList.size() > 0){
-                    PerformanceMetricBean cpuMetricBean = getPerformanceMetricBeanByMetricId(performanceMetricBeanList, cpuUsageMetricId);
-                    PerformanceMetricBean memoryMetricBean = getPerformanceMetricBeanByMetricId(performanceMetricBeanList, memoryConsumedMetricId);
+                //memory consumed
+                // as per requirement memory is fixed at configured vm max memory
+                //not using the consumed memory from the monitor
+                int memory = Integer.parseInt(virtualMachineDetail.getMemory());
+                if (MachineStatus.Suspended.name().equalsIgnoreCase(virtualMachineDetail.getMachineStatus())) {
+                    //machine in suspended status update max memory as memory consumed
+                    virtualMachineDetail.getMemory();
+                    createVirtualMachineMonitor(virtualMachineDetail
+                                    , 0
+                                    , memory, summary.getRuntime().getPowerState());
+                }  else {
+                    performanceMetricBeanList = getRealTimePerformanceMetrics(virtualMachine);
+                    if (performanceMetricBeanList != null && performanceMetricBeanList.size() > 0){
+                        PerformanceMetricBean cpuMetricBean = getPerformanceMetricBeanByMetricId(performanceMetricBeanList, cpuUsageMetricId);
+                        PerformanceMetricBean memoryMetricBean = getPerformanceMetricBeanByMetricId(performanceMetricBeanList, memoryConsumedMetricId);
 
-                    log.debug(String.format("CPU utilization %s, Memory Utilization %s "
-                            ,cpuMetricBean != null ? cpuMetricBean.getAvgValue(): 0
-                            ,memoryMetricBean != null ? memoryMetricBean.getAvgValue(): 0
-                            ,cpuMetricBean != null ? cpuMetricBean.getStartTime(): 0
-                            ,cpuMetricBean != null ? cpuMetricBean.getEndTime() : 0
-                    ));
-                    if (cpuMetricBean != null && memoryMetricBean != null){
-                        createVirtualMachineMonitor(virtualMachineDetail
-                                , (int)cpuMetricBean.getAvgValue()
-                                , (int)memoryMetricBean.getAvgValue(), summary.getRuntime().getPowerState());
+                        log.debug(String.format("CPU utilization %s, Memory Utilization %s "
+                                ,cpuMetricBean != null ? cpuMetricBean.getAvgValue(): 0
+                                ,memory
+                                ,cpuMetricBean != null ? cpuMetricBean.getStartTime(): 0
+                                ,cpuMetricBean != null ? cpuMetricBean.getEndTime() : 0
+                        ));
+                        if (cpuMetricBean != null && memoryMetricBean != null){
+                            createVirtualMachineMonitor(virtualMachineDetail
+                                    , (int)cpuMetricBean.getAvgValue()
+                                    , (int)memoryMetricBean.getAvgValue(), summary.getRuntime().getPowerState());
+                        }
+
                     }
-
                 }
 //                createVirtualMachineMonitor(virtualMachineDetail, quickStats.getOverallCpuUsage()
 //                        , quickStats.getGuestMemoryUsage(), summary.getRuntime().getPowerState());
+
+                //update credits consumed and usage minutes
             }
         } else {
             log.debug("No VM Found in ON / Suspend state");
@@ -100,7 +116,7 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
             , Integer guestMemoryUsage
             , VirtualMachinePowerState powerState) {
         VirtualMachineMonitor virtualMachineMonitor = new VirtualMachineMonitor();
-        virtualMachineMonitor.setMonitorInterval(VM_MONITORING_INTERVAL_MS / 1000);
+        virtualMachineMonitor.setMonitorInterval(VM_MONITORING_INTERVAL_MS / PER_MINUTE_CONVERSION_FACTOR);
         virtualMachineMonitor.setOverallCpuUsage(overallCpuUsage);
         virtualMachineMonitor.setGuestMemoryUsage(guestMemoryUsage);
         virtualMachineMonitor.setVirtualMachineDetail(virtualMachineDetail);
