@@ -8,8 +8,9 @@
         <field:hidden field="machineStatus" id="c_com_sjsu_minishare_model_VirtualMachineDetail_machineStatus" z="znCxnOL20K2QfC01rkhNpEOKdag=" /> 
         <field:select field="numberCPUs" id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" disableFormBinding="false" items="${numCPUs}" z="/C2pzvvmMvemHPMuYZS/4b0YrNY=" path="/" />
         <field:select field="memory" id="c_com_sjsu_minishare_model_VirtualMachineDetail_memory" disableFormBinding="false"  items="${memories}" z="Qx/3ZGJ2vE7Pj4o/CYE89um6rqc=" path="/" />
-        <field:textarea field="operatingSystem" id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" z="PedpGgExJ5T09zoT+4QxyT8q7UI="/>
-        <field:simple field="usageInMinutes" id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" text="${virtualMachineDetail.usageInMinutes}"  z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/>
+        <field:simple field="operatingSystem" id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" text="${virtualMachineDetail.operatingSystem}" z="PedpGgExJ5T09zoT+4QxyT8q7UI="/>
+        <field:hidden field="operatingSystem" id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" z="PedpGgExJ5T09zoT+4QxyT8q7UI=" /> 
+         <field:simple field="usageInMinutes" id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" text="${virtualMachineDetail.usageInMinutes}"  z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/>
         <field:hidden field="usageInMinutes"  id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/> 
         <field:datetime dateTimePattern="${virtualMachineDetail_lastlogin_date_format}" field="lastLogin" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogin" z="HMVA3epOYKwKYonG5ttfX8QxHHg="/>
         <field:datetime dateTimePattern="${virtualMachineDetail_lastlogout_date_format}" field="lastLogout" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogout" z="Rpek0kOrYvWoQEPmsBzAPIOfpmQ="/>

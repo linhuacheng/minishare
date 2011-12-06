@@ -25,6 +25,8 @@ public interface VirtualMachineService {
 	public void pauseVM(VirtualMachineRequest req) throws VirtualMachineException;
 	
 	public void removeVM(VirtualMachineRequest req) throws VirtualMachineException;
+	
+	public void updateVM(VirtualMachineRequest req) throws VirtualMachineException;
 
     List<VirtualMachineDetail> findAllVirtualMachineByOnAndSuspendState();
 

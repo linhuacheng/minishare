@@ -1,41 +1,29 @@
 package com.sjsu.minishare.web;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.UriUtils;
-import org.springframework.web.util.WebUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sjsu.minishare.model.MachineRequest;
 import com.sjsu.minishare.model.MachineStatus;
 import com.sjsu.minishare.model.VirtualMachineDetail;
 import com.sjsu.minishare.model.VirtualMachineRequest;
 import com.sjsu.minishare.model.VirtualMachineTemplate;
-import com.sjsu.minishare.service.VirtualMachineMonitorServiceImpl;
 import com.sjsu.minishare.service.VirtualMachineService;
 import com.sjsu.minishare.util.ApplicationUtil;
 import com.sjsu.minishare.util.VirtualMachineConstants;
-
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RooWebScaffold(path = "virtualmachinedetails", formBackingObject = VirtualMachineDetail.class)
 @RequestMapping("/virtualmachinedetails")
@@ -217,9 +205,14 @@ public class VirtualMachineDetailController {
 			addDateTimeFormatPatterns(uiModel);
 			return "virtualmachinedetails/update";
 		}
+		
 		uiModel.asMap().clear();
-		virtualMachineDetail.merge();
-
+		if (MachineStatus.Off.toString().equalsIgnoreCase(virtualMachineDetail.getMachineStatus()) ) {
+			processVirtualMachineRequest(virtualMachineDetail, "UPDATE", "");
+			virtualMachineDetail.merge();
+		} else {
+			uiModel.addAttribute("errorMessage", "Virtual machine cannot be updated, please shutdown the virtual machine and try again.");
+		}
 		return "redirect:/virtualmachinedetails/"
 				+ encodeUrlPathSegment(virtualMachineDetail.getMachineId()
 						.toString(), httpServletRequest);
@@ -259,6 +252,10 @@ public class VirtualMachineDetailController {
 			req.setMachineRequest(MachineRequest.Suspend);
 		} else if ("DELETE".equalsIgnoreCase(state)) {
 			req.setMachineRequest(MachineRequest.Remove);
+		} else if ("UPDATE".equalsIgnoreCase(state)) {
+			req.setMachineRequest(MachineRequest.Update);
+			req.setMemory(virtualMachineDetail.getMemory());
+			req.setNumberCPUs(virtualMachineDetail.getNumberCPUs());
 		} else if ("CREATE".equalsIgnoreCase(state)) {
 			req.setMemory(virtualMachineDetail.getMemory());
 			req.setNumberCPUs(virtualMachineDetail.getNumberCPUs());

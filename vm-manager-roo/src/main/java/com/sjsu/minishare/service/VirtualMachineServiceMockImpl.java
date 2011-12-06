@@ -156,4 +156,10 @@ public class VirtualMachineServiceMockImpl implements VirtualMachineService {
 		return getServiceInstance().getPerformanceManager();
 	}
 
+	@Override
+	public void updateVM(VirtualMachineRequest req)
+			throws VirtualMachineException {
+		
+	}
+
 }

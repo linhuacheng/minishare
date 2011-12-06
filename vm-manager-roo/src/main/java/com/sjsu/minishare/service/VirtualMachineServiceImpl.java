@@ -26,6 +26,8 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 	private String vmwareDatastore; // "datastore2"
 	private String vmwareTeamFolder; // "team1-Chandu_Cheng_ Priyanka_Niktha"
 
+    private static final Log log = LogFactory.getLog(VirtualMachineServiceImpl.class);
+    
 	public String getVmwareHostURL() {
 		return vmwareHostURL;
 	}
@@ -129,6 +131,8 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 			this.pauseVM(req);
 		} else if (MachineRequest.Remove == machineReq) {
 			this.removeVM(req);
+		} else if (MachineRequest.Update == machineReq) {
+			this.updateVM(req);
 		}
 		
 		
@@ -138,9 +142,8 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 	@Override
 	public void startVM(VirtualMachineRequest req)
 			throws VirtualMachineException {
-		// TODO Auto-generated method stub
-		System.out.println("================================");
-		System.out.println("Command: Power On");
+		log.debug("================================");
+		log.debug("Command: Power On");
 		try {
 			VirtualMachine vm = getVirtualMachine(req.getMachineName());
 			// Check if vm is powered off or suspend
@@ -149,7 +152,7 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 							.equals(getVmState(vm))) {
 				Task task = vm.powerOnVM_Task(null);
 				while (task.getTaskInfo().getState() == TaskInfoState.running) {
-					System.out.println(" Powering on in progress... ");
+					log.debug(" Powering on in progress... ");
 					Thread.currentThread().sleep(3000);
 				}
 			} else {
@@ -158,7 +161,7 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(e.toString());
+			log.debug(e.toString());
 			throw new VirtualMachineException(e.getMessage());
 		}
 
@@ -166,67 +169,109 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 
 	@Override
 	public void stopVM(VirtualMachineRequest req) {
-		System.out.println("================================");
-		System.out.println("Command: Power Off");
+		log.debug("================================");
+		log.debug("Command: Power Off");
 		try {
 			VirtualMachine vm = getVirtualMachine(req.getMachineName());
 			// Check if vm is up
 			if (VirtualMachinePowerState.poweredOn.equals(getVmState(vm))) {
 				Task task = vm.powerOffVM_Task();
 				while (task.getTaskInfo().getState() == TaskInfoState.running) {
-					System.out.println(" Powering off in progress... ");
+					log.debug(" Powering off in progress... ");
 					Thread.currentThread().sleep(3000);
 				}
 			} else {
-				System.out.println("Virtual Machine is not powered on");
+				log.debug("Virtual Machine is not powered on");
 			}
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			log.debug(e.toString());
 		}
 	}
 
 	@Override
 	public void pauseVM(VirtualMachineRequest req) {
-		System.out.println("================================");
-		System.out.println("Command: Suspend");
+		log.debug("================================");
+		log.debug("Command: Suspend");
 		try {
 			VirtualMachine vm = getVirtualMachine(req.getMachineName());
 			// check if vm is powered on
 			if (VirtualMachinePowerState.poweredOn.equals(getVmState(vm))) {
+				//vm.standbyGuest();
 				Task task = vm.suspendVM_Task();
 				while (task.getTaskInfo().getState() == TaskInfoState.running) {
-					System.out.println(" Suspend in progress... ");
+					log.debug(" Suspend in progress... ");
 					Thread.currentThread().sleep(3000);
 				}
 			} else {
-				System.out.println("Virtual Machine is not powered on");
+				log.debug("Virtual Machine is not powered on");
 			}
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			log.debug(e.toString());
 		}
 	}
 	
 	@Override
 	public void removeVM(VirtualMachineRequest req) {
-		System.out.println("================================");
-		System.out.println("Command: Remove");
+		log.debug("================================");
+		log.debug("Command: Remove");
 		try {
 			VirtualMachine vm = getVirtualMachine(req.getMachineName());
 			// check if vm is powered on
 			if (VirtualMachinePowerState.poweredOff.equals(getVmState(vm))) {
 				Task task = vm.destroy_Task();
 				while (task.getTaskInfo().getState() == TaskInfoState.running) {
-					System.out.println(" Remove progress... ");
+					log.debug(" Remove progress... ");
 					Thread.currentThread().sleep(3000);
 				}
 			} else {
-				System.out.println("Virtual Machine is not powered off");
+				log.debug("Virtual Machine is not powered off");
 			}
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			log.debug(e.toString());
+		}
+	}
+	
+	@Override
+	public void updateVM(VirtualMachineRequest req) {
+		log.debug("================================");
+		log.debug("Command: Update");
+		try {
+			VirtualMachine vm = getVirtualMachine(req.getMachineName());
+
+			// check if vm is powered on
+			if (VirtualMachinePowerState.poweredOff.equals(getVmState(vm))) {
+				VirtualMachineConfigSpec vmConfigSpec = new VirtualMachineConfigSpec();
+			    vmConfigSpec.setMemoryMB(Long.valueOf(req.getMemory().toString()));          
+			    vmConfigSpec.setNumCPUs(req.getNumberCPUs());
+			   
+				Task task = vm.reconfigVM_Task(vmConfigSpec);
+				while (task.getTaskInfo().getState() == TaskInfoState.running) {
+					log.debug(" Reconfigure in progress... ");
+					Thread.currentThread().sleep(3000);
+				}
+			} else {
+				log.debug("Virtual Machine is not powered off");
+			}
+		} catch (Exception e) {
+			log.debug(e.toString());
 		}
 	}
 
+	private static ResourceAllocationInfo getShares(String val) throws Exception  {
+		ResourceAllocationInfo raInfo = new ResourceAllocationInfo();
+		SharesInfo sharesInfo = new SharesInfo();
+		
+		SharesLevel sl = SharesLevel.valueOf(val);
+		if(sl == SharesLevel.high || sl == SharesLevel.normal || sl == SharesLevel.low){
+			sharesInfo.setLevel(sl);
+		} else {
+			sharesInfo.setLevel(SharesLevel.custom);
+			sharesInfo.setShares(Integer.parseInt(val));
+		}
+		raInfo.setShares(sharesInfo);
+		return raInfo;
+	}
+	   
 	private VirtualMachinePowerState getVmState(VirtualMachine vm) {
 		VirtualMachineRuntimeInfo runtime = vm.getRuntime();
 		return runtime.getPowerState();
@@ -295,7 +340,7 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 			Task task = vm.cloneVM_Task(teamFolder, req.getMachineName(),
 					cloneSpec);
 			while (task.getTaskInfo().getState() == TaskInfoState.running) {
-				System.out.println(" Cloning in progress... ");
+				log.debug(" Cloning in progress... ");
 				Thread.currentThread().sleep(3000);
 			}
 		} catch (Exception e) {
@@ -319,7 +364,7 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 			return null;
 		}
 		for (ManagedEntity me : mes) {
-			//System.out.println(" Virtual Machine:" + me.getName());
+			//log.debug(" Virtual Machine:" + me.getName());
 			if (me.getName().equalsIgnoreCase(vmName)) {
 				vm = (VirtualMachine) me;
 				break;
@@ -347,5 +392,6 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
     public PerformanceManager getPerformanceManager() throws VirtualMachineException {
         return getServiceInstance().getPerformanceManager();
     }
+
 
 }
