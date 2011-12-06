@@ -188,6 +188,7 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 		}
 	}
 
+
 	@Override
 	public void pauseVM(VirtualMachineRequest req) {
 		log.debug("================================");

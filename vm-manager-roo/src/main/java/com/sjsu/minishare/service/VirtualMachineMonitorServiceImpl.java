@@ -1,10 +1,7 @@
 package com.sjsu.minishare.service;
 
 import com.sjsu.minishare.exception.VirtualMachineException;
-import com.sjsu.minishare.model.MachineStatus;
-import com.sjsu.minishare.model.PerformanceMetricBean;
-import com.sjsu.minishare.model.VirtualMachineDetail;
-import com.sjsu.minishare.model.VirtualMachineMonitor;
+import com.sjsu.minishare.model.*;
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.*;
 import org.apache.commons.logging.Log;
@@ -37,6 +34,8 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
     public static final String COUNTER_USAGEMHZ = "usagemhz";
     public static final String COUNTER_CONSUMED = "consumed";
     public static final int KILO_BYTES = 1024;
+    public static final int MEMORY_USAGE_CHARGE_PER_MB_PER_MINUTE_IN_CREDIT_UNITS = Math.round((0.5f)/512);
+    public static final int CPU_USAGE_CHARGE_PER_MGHZ_PER_MINUTE_IN_CREDIT_UNITS = Math.round((0.5f));
 
     private PerformanceManager performanceManager;
     private PerfMetricId cpuUsageMetricId;
@@ -49,28 +48,33 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
     private static final int PER_MINUTE_CONVERSION_FACTOR = 60000;
     private static final Log log = LogFactory.getLog(VirtualMachineMonitorServiceImpl.class);
 
-    //CK commenting the scheduling as quick stats doesn't seem to update the required monitoring info
+    /**
+     * monitors virtual machines at scheduled intervals
+     * updates monitoring information to database
+     *
+     * @throws VirtualMachineException
+     * @throws RemoteException
+     */
     @Scheduled(fixedDelay = VM_MONITORING_INTERVAL_MS)
     public void populateVirtualMachineMonitorInfo() throws VirtualMachineException, RemoteException {
 
         List<VirtualMachineDetail> virtualMachineDetailList = virtualMachineService.findAllVirtualMachineByOnAndSuspendState();
         List<PerformanceMetricBean> performanceMetricBeanList = null;
         if (virtualMachineDetailList != null && virtualMachineDetailList.size() > 0) {
+
             for (VirtualMachineDetail virtualMachineDetail : virtualMachineDetailList) {
                 log.debug("Found following machines in ON / Suspend state: " + virtualMachineDetailList);
 
                 VirtualMachine virtualMachine = virtualMachineService.getVirtualMachine(virtualMachineDetail.getMachineName());
                 VirtualMachineSummary summary = virtualMachine.getSummary();
-                //VirtualMachineQuickStats quickStats = summary.getQuickStats();
-                //log.debug(String.format("Memory Usage: %s CPU Usage %s", quickStats.getGuestMemoryUsage(), quickStats.getOverallCpuUsage()));
-                //memory consumed
-                // as per requirement memory is fixed at configured vm max memory
-                //not using the consumed memory from the monitor
+
                 int memory = Integer.parseInt(virtualMachineDetail.getMemory());
+                VirtualMachineMonitor virtualMachineMonitor = null;
+
                 if (MachineStatus.Suspended.name().equalsIgnoreCase(virtualMachineDetail.getMachineStatus())) {
                     //machine in suspended status update max memory as memory consumed
                     virtualMachineDetail.getMemory();
-                    createVirtualMachineMonitor(virtualMachineDetail
+                    virtualMachineMonitor = createVirtualMachineMonitor(virtualMachineDetail
                                     , 0
                                     , memory, summary.getRuntime().getPowerState());
                 }  else {
@@ -81,26 +85,79 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
 
                         log.debug(String.format("CPU utilization %s, Memory Utilization %s "
                                 ,cpuMetricBean != null ? cpuMetricBean.getAvgValue(): 0
-                                ,memory
+                                ,memoryMetricBean.getAvgValue()
                                 ,cpuMetricBean != null ? cpuMetricBean.getStartTime(): 0
                                 ,cpuMetricBean != null ? cpuMetricBean.getEndTime() : 0
                         ));
                         if (cpuMetricBean != null && memoryMetricBean != null){
-                            createVirtualMachineMonitor(virtualMachineDetail
+                            virtualMachineMonitor = createVirtualMachineMonitor(virtualMachineDetail
                                     , (int)cpuMetricBean.getAvgValue()
-                                    , (int)memoryMetricBean.getAvgValue(), summary.getRuntime().getPowerState());
+                                    , memory, summary.getRuntime().getPowerState());
                         }
 
                     }
                 }
-//                createVirtualMachineMonitor(virtualMachineDetail, quickStats.getOverallCpuUsage()
-//                        , quickStats.getGuestMemoryUsage(), summary.getRuntime().getPowerState());
 
                 //update credits consumed and usage minutes
+                if (virtualMachineMonitor != null){
+                   UserCredit userCredit = updateUserCredit(virtualMachineDetail, virtualMachineMonitor);
+                    if (userCredit.getTotalCredits() < 0){
+                        log.debug("Must shutdown the virtual machine as user has utilized all the credits");
+                        forcePowerOffVM(virtualMachineDetail);
+                    }
+                }
             }
         } else {
             log.debug("No VM Found in ON / Suspend state");
         }
+    }
+
+    /**
+     * forcefully powers off VM due to low balance
+     *
+     * @param virtualMachineDetail
+     * @throws VirtualMachineException
+     */
+    private void forcePowerOffVM(VirtualMachineDetail virtualMachineDetail) throws VirtualMachineException {
+        VirtualMachineRequest vmr = new VirtualMachineRequest();
+        vmr.setMachineName(virtualMachineDetail.getMachineName());
+        if (MachineStatus.Suspended.name().equalsIgnoreCase(virtualMachineDetail.getMachineStatus())) {
+            //for suspended vm power on the vm then
+            vmr.setMachineRequest(MachineRequest.Start);
+            virtualMachineService.processRequest(new VirtualMachineRequest());
+        }
+        vmr.setMachineRequest(MachineRequest.Stop);
+        virtualMachineService.processRequest(vmr);
+    }
+
+    /**
+     * updates user credit based on the usage.
+     * @param machineDetail
+     * @param virtualMachineMonitor
+     * @return
+     */
+    public UserCredit updateUserCredit(VirtualMachineDetail machineDetail, VirtualMachineMonitor virtualMachineMonitor){
+        CloudUser cloudUser = machineDetail.getUserId();
+        UserCredit userCredit = UserCredit.findCloudUser(cloudUser);
+        userCredit.merge();
+
+        int creditsUsed = 0;
+
+        if (virtualMachineMonitor.getGuestMemoryUsage() != null){
+            creditsUsed = virtualMachineMonitor.getGuestMemoryUsage() * MEMORY_USAGE_CHARGE_PER_MB_PER_MINUTE_IN_CREDIT_UNITS;
+        }
+
+        if (virtualMachineMonitor.getOverallCpuUsage() != null){
+            creditsUsed = creditsUsed + virtualMachineMonitor.getOverallCpuUsage() * CPU_USAGE_CHARGE_PER_MGHZ_PER_MINUTE_IN_CREDIT_UNITS;
+        }
+        if (creditsUsed > 0 ){
+            userCredit.setTotalCredits(userCredit.getTotalCredits()-creditsUsed);
+        }
+        log.debug(String.format("CpuUsed=(%s), MemoryUsed=(%s), CreditsCharged=%s, CreditsRemaining=(%s)"
+                , virtualMachineMonitor.getOverallCpuUsage()
+                ,virtualMachineMonitor.getGuestMemoryUsage(), creditsUsed, userCredit.getTotalCredits()));
+        userCredit.merge();
+        return userCredit;
     }
 
     /**
@@ -111,7 +168,7 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
      * @param guestMemoryUsage
      * @param powerState
      */
-    private void createVirtualMachineMonitor(VirtualMachineDetail virtualMachineDetail
+    private VirtualMachineMonitor createVirtualMachineMonitor(VirtualMachineDetail virtualMachineDetail
             , Integer overallCpuUsage
             , Integer guestMemoryUsage
             , VirtualMachinePowerState powerState) {
@@ -126,6 +183,7 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
             virtualMachineMonitor.setMachineStatus(MachineStatus.Off.name());
         }
         virtualMachineMonitor.persist();
+        return virtualMachineMonitor;
     }
 
     /**

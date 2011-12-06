@@ -52,4 +52,8 @@ public class UserCredit {
     	}
     }
 
+    public void updateUserCredit(VirtualMachineDetail machineDetail, VirtualMachineMonitor virtualMachineMonitor){
+
+    }
+
 }
