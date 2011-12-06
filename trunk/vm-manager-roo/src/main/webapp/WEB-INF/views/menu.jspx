@@ -18,7 +18,6 @@
             <menu:item id="i_virtualmachinedetail_list" messageCode="global_menu_list" url="/virtualmachinedetails?page=1&amp;size=${empty param.size ? 10 : param.size}" z="UHqIWlVWObQm55nSnsOsvGbCkeE="/>
         </menu:category>
         <menu:category id="c_virtualmachinemonitor" z="tq/6dBXoS1PZUhkaFNC/9nLbQk0=">
-            <menu:item id="i_virtualmachinemonitor_new" messageCode="global_menu_new" url="/virtualmachinemonitors?form" z="MTXFYx5UvLQy13daC1bwuNZuG2w="/>
             <menu:item id="i_virtualmachinemonitor_list" messageCode="global_menu_list" url="/virtualmachinemonitors?page=1&amp;size=${empty param.size ? 10 : param.size}" z="7imtHUcqo8KUmX8fJFH5gII22/c="/>
         </menu:category>
     </menu:menu>
