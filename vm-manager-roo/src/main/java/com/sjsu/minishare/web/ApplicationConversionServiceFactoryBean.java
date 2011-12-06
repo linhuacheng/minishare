@@ -5,6 +5,7 @@ import org.springframework.format.support.FormattingConversionServiceFactoryBean
 import org.springframework.roo.addon.web.mvc.controller.RooConversionService;
 import org.springframework.core.convert.converter.Converter;
 
+import com.sjsu.minishare.model.CloudUser;
 import com.sjsu.minishare.model.VirtualMachineTemplate;
 
 /**
@@ -21,6 +22,7 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
 
     public void installLabelConverters(FormatterRegistry registry) {
         registry.addConverter(new CloudUserConverter());
+        registry.addConverter(new StringToCloudUserConverter());
         registry.addConverter(new UserCreditConverter());
         registry.addConverter(new VirtualMachineDetailConverter());
         registry.addConverter(new VirtualMachineMonitorConverter());
@@ -34,4 +36,11 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
         }
         
     }
+    
+    static class StringToCloudUserConverter implements Converter<String, CloudUser> {
+    	 public CloudUser convert(String userId) {
+    	        return CloudUser.findCloudUser(Integer.valueOf(userId));
+    	 }
+    }
+    
 }
