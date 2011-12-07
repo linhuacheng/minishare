@@ -10,7 +10,10 @@
 <definition extends="default" name="virtualmachinemonitors/create">
         <put-attribute name="body" value="/WEB-INF/views/virtualmachinemonitors/create.jspx"/>
     </definition>
-<definition extends="default" name="virtualmachinemonitors/update">
+    <definition extends="default" name="virtualmachinemonitors/update">
         <put-attribute name="body" value="/WEB-INF/views/virtualmachinemonitors/update.jspx"/>
+    </definition>
+    <definition extends="default" name="virtualmachinemonitors/usageReportByStatus">
+        <put-attribute name="body" value="/WEB-INF/views/virtualmachinemonitors/usageReportByStatus.jspx"/>
     </definition>
 </tiles-definitions>

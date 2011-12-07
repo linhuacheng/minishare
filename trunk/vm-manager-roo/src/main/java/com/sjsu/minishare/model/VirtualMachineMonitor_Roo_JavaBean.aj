@@ -6,6 +6,7 @@ package com.sjsu.minishare.model;
 import com.sjsu.minishare.model.VirtualMachineDetail;
 import java.lang.Integer;
 import java.lang.String;
+import java.sql.Timestamp;
 
 privileged aspect VirtualMachineMonitor_Roo_JavaBean {
     
@@ -56,5 +57,30 @@ privileged aspect VirtualMachineMonitor_Roo_JavaBean {
     public void VirtualMachineMonitor.setVirtualMachineDetail(VirtualMachineDetail virtualMachineDetail) {
         this.virtualMachineDetail = virtualMachineDetail;
     }
+
+    public Integer VirtualMachineMonitor.getCreditsCharged() {
+        return this.creditsCharged;
+    }
+
+    public void VirtualMachineMonitor.setCreditsCharged(Integer creditsCharged) {
+        this.creditsCharged = creditsCharged;
+    }
+
+    public Timestamp VirtualMachineMonitor.getStartTime() {
+        return this.startTime;
+    }
+
+    public void VirtualMachineMonitor.setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
+    }
+
+    public Timestamp VirtualMachineMonitor.getEndTime() {
+        return this.endTime;
+    }
+
+    public void VirtualMachineMonitor.setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
+    }
+
     
 }

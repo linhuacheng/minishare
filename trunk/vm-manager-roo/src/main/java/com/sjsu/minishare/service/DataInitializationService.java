@@ -1,9 +1,6 @@
 package com.sjsu.minishare.service;
 
-import com.sjsu.minishare.model.CloudUser;
-import com.sjsu.minishare.model.UserCredit;
-import com.sjsu.minishare.model.VirtualMachineDetail;
-import com.sjsu.minishare.model.VirtualMachineMonitor;
+import com.sjsu.minishare.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
@@ -46,27 +43,38 @@ public class DataInitializationService {
 //        userCredit.setTotalCreditsUsed(50);
 //        userCredit.persist();
 //        userCredit.flush();
-
-        /*VirtualMachineDetail vmd = new VirtualMachineDetail();
-        vmd.setLastLogin(new Date());
-        vmd.setCreditsUsed(20);
-        vmd.setLastLogout(new Date());
-        vmd.setMachineName("machine1");
-        vmd.setMachineStatus("pending");
-        vmd.setMemory("1GB");
-        vmd.setNumberCPUs(1);
-        vmd.setOperatingSystem("Ubuntu");
-        vmd.setUsageInMinutes(60.0f);
-        vmd.setUserId(cu);
-        vmd.persist();
-        vmd.flush();
-
-        VirtualMachineMonitor vmm = new VirtualMachineMonitor();
-        vmm.setMonitorInterval(1);
-        vmm.setVirtualMachineDetail(vmd);
-        vmm.setCpuUsageInPercent(60.0f);
-        vmm.setMemoryConsumedInBytes(800000);
-        vmm.persist();
-        vmm.flush();*/
+//
+//        VirtualMachineDetail vmd = new VirtualMachineDetail();
+//        vmd.setLastLogin(new Date());
+//        vmd.setCreditsUsed(20);
+//        vmd.setLastLogout(new Date());
+//        vmd.setMachineName("machine1");
+//        vmd.setMachineStatus(MachineStatus.Off.name());
+//        vmd.setMemory("512");
+//        vmd.setNumberCPUs(1);
+//        vmd.setOperatingSystem("Ubuntu");
+//        vmd.setUsageInMinutes(60.0f);
+//        vmd.setUserId(cu);
+//        vmd.persist();
+//        vmd.flush();
+//
+//        VirtualMachineMonitor vmm = new VirtualMachineMonitor();
+//        vmm.setMonitorInterval(1);
+//        vmm.setVirtualMachineDetail(vmd);
+//        vmm.setOverallCpuUsage(100);
+//        vmm.setGuestMemoryUsage(512);
+//        vmm.setCreditsCharged(51);
+//        vmm.setMonitorInterval(1);
+//        vmm.persist();
+//        vmm.flush();
+//
+//        vmm = new VirtualMachineMonitor();
+//        vmm.setVirtualMachineDetail(vmd);
+//        vmm.setOverallCpuUsage(150);
+//        vmm.setGuestMemoryUsage(512);
+//        vmm.setCreditsCharged(60);
+//        vmm.setMonitorInterval(1);
+//        vmm.persist();
+//        vmm.flush();
     }
 }
