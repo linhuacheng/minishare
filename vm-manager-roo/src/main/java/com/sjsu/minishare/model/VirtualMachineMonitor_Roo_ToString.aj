@@ -14,6 +14,9 @@ privileged aspect VirtualMachineMonitor_Roo_ToString {
         sb.append("MonitorId: ").append(getMonitorId()).append(", ");
         sb.append("MonitorInterval: ").append(getMonitorInterval()).append(", ");
         sb.append("OverallCpuUsage: ").append(getOverallCpuUsage()).append(", ");
+        sb.append("StartTime: ").append(getStartTime()).append(", ");
+	    sb.append("EndTime: ").append(getEndTime()).append(", ");
+	    sb.append("CreditsCharged: ").append(getCreditsCharged()).append(", ");
         sb.append("Version: ").append(getVersion()).append(", ");
         sb.append("VirtualMachineDetail: ").append(getVirtualMachineDetail());
         return sb.toString();

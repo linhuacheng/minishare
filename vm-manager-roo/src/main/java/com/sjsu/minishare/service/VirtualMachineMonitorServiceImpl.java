@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,8 +35,6 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
     public static final String COUNTER_USAGEMHZ = "usagemhz";
     public static final String COUNTER_CONSUMED = "consumed";
     public static final int KILO_BYTES = 1024;
-    public static final int MEMORY_USAGE_CHARGE_PER_MB_PER_MINUTE_IN_CREDIT_UNITS = Math.round((0.5f)/512);
-    public static final int CPU_USAGE_CHARGE_PER_MGHZ_PER_MINUTE_IN_CREDIT_UNITS = Math.round((0.5f));
 
     private PerformanceManager performanceManager;
     private PerfMetricId cpuUsageMetricId;
@@ -43,6 +42,9 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
 
     @Autowired
     private VirtualMachineService virtualMachineService;
+
+    @Autowired
+    private UserCreditsService userCreditsService;
 
     private static final int VM_MONITORING_INTERVAL_MS = 60000;
     private static final int PER_MINUTE_CONVERSION_FACTOR = 60000;
@@ -69,14 +71,21 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
                 VirtualMachineSummary summary = virtualMachine.getSummary();
 
                 int memory = Integer.parseInt(virtualMachineDetail.getMemory());
+                int creditsUsed;
                 VirtualMachineMonitor virtualMachineMonitor = null;
 
                 if (MachineStatus.Suspended.name().equalsIgnoreCase(virtualMachineDetail.getMachineStatus())) {
                     //machine in suspended status update max memory as memory consumed
-                    virtualMachineDetail.getMemory();
+                    creditsUsed = userCreditsService.calculateMemoryCreditUsage(memory, VM_MONITORING_INTERVAL_MS / PER_MINUTE_CONVERSION_FACTOR);
+                    Calendar endTime = Calendar.getInstance();
+                    Calendar startTime = (Calendar)endTime.clone();
+                    startTime.roll(Calendar.MINUTE, -(VM_MONITORING_INTERVAL_MS / PER_MINUTE_CONVERSION_FACTOR));
+
                     virtualMachineMonitor = createVirtualMachineMonitor(virtualMachineDetail
                                     , 0
-                                    , memory, summary.getRuntime().getPowerState());
+                                    , memory, summary.getRuntime().getPowerState()
+                                    , creditsUsed, startTime.getTime(), endTime.getTime());
+
                 }  else {
                     performanceMetricBeanList = getRealTimePerformanceMetrics(virtualMachine);
                     if (performanceMetricBeanList != null && performanceMetricBeanList.size() > 0){
@@ -89,10 +98,16 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
                                 ,cpuMetricBean != null ? cpuMetricBean.getStartTime(): 0
                                 ,cpuMetricBean != null ? cpuMetricBean.getEndTime() : 0
                         ));
-                        if (cpuMetricBean != null && memoryMetricBean != null){
+                        if (cpuMetricBean != null){
+
+                            creditsUsed = userCreditsService.calculateCreditsUsageForMemoryNCpu(memory, (int)cpuMetricBean.getAvgValue()
+                                                            , VM_MONITORING_INTERVAL_MS / PER_MINUTE_CONVERSION_FACTOR);
+                            log.debug(String.format("CpuUsed=(%s), MemoryUsed=(%s), CreditsCharged=%s"
+                                , cpuMetricBean.getAvgValue()
+                                , memory, creditsUsed));
                             virtualMachineMonitor = createVirtualMachineMonitor(virtualMachineDetail
                                     , (int)cpuMetricBean.getAvgValue()
-                                    , memory, summary.getRuntime().getPowerState());
+                                    , memory, summary.getRuntime().getPowerState(), creditsUsed, cpuMetricBean.getStartTime(), cpuMetricBean.getEndTime());
                         }
 
                     }
@@ -100,7 +115,7 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
 
                 //update credits consumed and usage minutes
                 if (virtualMachineMonitor != null){
-                   UserCredit userCredit = updateUserCredit(virtualMachineDetail, virtualMachineMonitor);
+                   UserCredit userCredit = userCreditsService.updateUserCredit(virtualMachineDetail, virtualMachineMonitor.getCreditsCharged());
                     if (userCredit.getTotalCredits() < 0){
                         log.debug("Must shutdown the virtual machine as user has utilized all the credits");
                         forcePowerOffVM(virtualMachineDetail);
@@ -130,35 +145,7 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
         virtualMachineService.processRequest(vmr);
     }
 
-    /**
-     * updates user credit based on the usage.
-     * @param machineDetail
-     * @param virtualMachineMonitor
-     * @return
-     */
-    public UserCredit updateUserCredit(VirtualMachineDetail machineDetail, VirtualMachineMonitor virtualMachineMonitor){
-        CloudUser cloudUser = machineDetail.getUserId();
-        UserCredit userCredit = UserCredit.findCloudUser(cloudUser);
-        userCredit.merge();
 
-        int creditsUsed = 0;
-
-        if (virtualMachineMonitor.getGuestMemoryUsage() != null){
-            creditsUsed = virtualMachineMonitor.getGuestMemoryUsage() * MEMORY_USAGE_CHARGE_PER_MB_PER_MINUTE_IN_CREDIT_UNITS;
-        }
-
-        if (virtualMachineMonitor.getOverallCpuUsage() != null){
-            creditsUsed = creditsUsed + virtualMachineMonitor.getOverallCpuUsage() * CPU_USAGE_CHARGE_PER_MGHZ_PER_MINUTE_IN_CREDIT_UNITS;
-        }
-        if (creditsUsed > 0 ){
-            userCredit.setTotalCredits(userCredit.getTotalCredits()-creditsUsed);
-        }
-        log.debug(String.format("CpuUsed=(%s), MemoryUsed=(%s), CreditsCharged=%s, CreditsRemaining=(%s)"
-                , virtualMachineMonitor.getOverallCpuUsage()
-                ,virtualMachineMonitor.getGuestMemoryUsage(), creditsUsed, userCredit.getTotalCredits()));
-        userCredit.merge();
-        return userCredit;
-    }
 
     /**
      * create virtual machine monitor
@@ -171,12 +158,18 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
     private VirtualMachineMonitor createVirtualMachineMonitor(VirtualMachineDetail virtualMachineDetail
             , Integer overallCpuUsage
             , Integer guestMemoryUsage
-            , VirtualMachinePowerState powerState) {
+            , VirtualMachinePowerState powerState
+            , Integer creditsUsed
+            , Date startTime
+            , Date endTime ) {
         VirtualMachineMonitor virtualMachineMonitor = new VirtualMachineMonitor();
         virtualMachineMonitor.setMonitorInterval(VM_MONITORING_INTERVAL_MS / PER_MINUTE_CONVERSION_FACTOR);
         virtualMachineMonitor.setOverallCpuUsage(overallCpuUsage);
         virtualMachineMonitor.setGuestMemoryUsage(guestMemoryUsage);
         virtualMachineMonitor.setVirtualMachineDetail(virtualMachineDetail);
+        virtualMachineMonitor.setCreditsCharged(creditsUsed);
+        virtualMachineMonitor.setStartTime(new Timestamp(startTime.getTime()));
+        virtualMachineMonitor.setEndTime(new Timestamp(endTime.getTime()));
         if (VirtualMachinePowerState.poweredOn.equals(powerState)) {
             virtualMachineMonitor.setMachineStatus(MachineStatus.On.name());
         } else if (VirtualMachinePowerState.suspended.equals(powerState)) {

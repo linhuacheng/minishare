@@ -31,21 +31,6 @@ privileged aspect VirtualMachineMonitorController_Roo_Controller {
         return "virtualmachinemonitors/show";
     }
     
-    @RequestMapping(method = RequestMethod.GET)
-    public String VirtualMachineMonitorController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            uiModel.addAttribute("virtualmachinemonitors", VirtualMachineMonitor.findVirtualMachineMonitorEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) VirtualMachineMonitor.countVirtualMachineMonitors() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("virtualmachinemonitors", VirtualMachineMonitor.findAllVirtualMachineMonitors());
-        }
-        return "virtualmachinemonitors/list";
-    }
-    
-
-
 
     @ModelAttribute("virtualmachinedetails")
     public Collection<VirtualMachineDetail> VirtualMachineMonitorController.populateVirtualMachineDetails() {

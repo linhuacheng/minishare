@@ -8,5 +8,9 @@
         <field:display field="guestMemoryUsage" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_guestMemoryUsage" object="${virtualmachinemonitor}" z="ikeRjPRphuiWmTwmbJNOFYtQKOU="/>
         <field:display field="overallCpuUsage" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_overallCpuUsage" object="${virtualmachinemonitor}" z="hAbuiTZWm2WBm400TrVgAIrWXcU="/>
         <field:display field="machineStatus" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_machineStatus" object="${virtualmachinemonitor}" z="kKwKsJPE3sv9TC66vm0nqsw6SBE="/>
+        <field:display field="creditsCharged" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_creditsCharged" object="${virtualmachinemonitor}" z="QMEtNxSKtxpxt9UvucNX7o+m6KI="/>
+        <field:display field="startTime" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_startTime" object="${virtualmachinemonitor}" z="laG+liVE7dJbYiU+pt5VbTCfK70="/>
+        <field:display field="endTime" id="s_com_sjsu_minishare_model_VirtualMachineMonitor_endTime" object="${virtualmachinemonitor}" z="M/73/PQ0V7Oj61NmfIYtibHC/bQ="/>
+
     </page:show>
 </div>

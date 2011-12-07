@@ -2,6 +2,7 @@ package com.sjsu.minishare.service;
 
 
 import com.sjsu.minishare.model.CloudUser;
+import com.sjsu.minishare.model.CloudUserPrincipal;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,7 +10,6 @@ import org.springframework.security.authentication.dao.AbstractUserDetailsAuthen
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
@@ -34,13 +34,14 @@ public class MinishareAuthenticationProvider  extends AbstractUserDetailsAuthent
 
     @Override
     protected UserDetails retrieveUser(String userName, UsernamePasswordAuthenticationToken authenticationToken) throws AuthenticationException {
-         String password = (String) authenticationToken.getCredentials();
+        String password = (String) authenticationToken.getCredentials();
+        CloudUser cloudUser;
         if (!StringUtils.hasText(password)) {
             throw new BadCredentialsException("Please enter password");
         }
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         try {
-            CloudUser cloudUser = CloudUser.findCloudUserByUserNameAndPassword(userName, password);
+            cloudUser = CloudUser.findCloudUserByUserNameAndPassword(userName, password);
             authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
         } catch (EmptyResultDataAccessException e) {
             throw new BadCredentialsException("Invalid username or password");
@@ -49,7 +50,7 @@ public class MinishareAuthenticationProvider  extends AbstractUserDetailsAuthent
         } catch (NonUniqueResultException e) {
             throw new BadCredentialsException("Non-unique user, contact administrator");
         }
-        return new User(userName, password, true, // enabled
+        return new CloudUserPrincipal(cloudUser.getUserId(), userName,password, true, // enabled
                 true, // account not expired
                 true, // credentials not expired
                 true, // account not locked
