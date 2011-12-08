@@ -1,5 +1,6 @@
 package com.sjsu.minishare.model;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import com.sjsu.minishare.model.VirtualMachineDetail;
 
@@ -42,8 +44,27 @@ public class VirtualMachineMonitor {
 
     public static List<VirtualMachineMonitorDto> findVirtualMachineMonitorAggByMachineStatus(Integer userId){
 
-        return (List<VirtualMachineMonitorDto>)entityManager().createNamedQuery("VirtualMachineMonitorInfoByStatus")
-                .setParameter("userId", userId).getResultList();
+        Query query = entityManager().createNamedQuery("VirtualMachineMonitorInfoByStatus");
+        query.setParameter("userId", userId);
+        List result = query.getResultList();
+
+        
+//        Query query = entityManager().createNativeQuery("SELECT machine_name, machine_id,  vmm.machine_status, " +
+//                " AVG(overall_cpu_usage) as avg_cpu_usage, AVG(guest_memory_usage) as avg_memory_usage, SUM(credits_charged) as total_credits " +
+//                " , SUM(monitor_interval) as total_monitor_interval " +
+//                " FROM virtual_machine_monitor vmm " +
+//                " JOIN virtual_machine_detail vmd on (vmm.virtual_machine_detail= vmd.machine_id) " +
+//                " WHERE vmd.user_id = :userId " +
+//                " GROUP BY vmd.machine_name, machine_id, vmm.machine_status ");
+//        query.setParameter("userId", userId);
+//        result = query.getResultList();
+
+        if (!org.springframework.util.CollectionUtils.isEmpty(result)){
+            for (Object obj : result){
+                System.out.println("Obj:"+obj);
+            }
+        }
+        return (List<VirtualMachineMonitorDto>)result;
     }
 
     public static List<VirtualMachineMonitor> findAllVirtualMachineMonitorsByUser(Integer userId) {

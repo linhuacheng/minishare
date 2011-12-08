@@ -13,6 +13,7 @@
   <jsp:directive.attribute name="stop" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'stop' link into table (default false)" />
   <jsp:directive.attribute name="pause" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Include 'pause' link into table (default false)" />
   <jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
+  <jsp:directive.attribute name="show" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
   <jsp:directive.attribute name="z" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
 
   <c:if test="${empty render or render}">
@@ -119,6 +120,7 @@
             </td>
           </c:forTokens>
           <c:set var="itemId"><spring:eval expression="item[typeIdFieldName]"/></c:set>
+          <c:if test="${empty show or show}">
           <td class="utilbox">
             <spring:url value="${path}/${itemId}" var="show_form_url" />
             <spring:url value="/resources/images/show.png" var="show_image_url" />
@@ -127,6 +129,7 @@
               <img alt="${fn:escapeXml(show_label)}" class="image" src="${fn:escapeXml(show_image_url)}" title="${fn:escapeXml(show_label)}" />
             </a>
           </td>
+          </c:if>
           <c:if test="${update}">
             <td class="utilbox">
               <spring:url value="${path}/${itemId}" var="update_form_url">

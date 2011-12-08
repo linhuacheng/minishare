@@ -1,5 +1,6 @@
 package com.sjsu.minishare.web;
 
+import com.sjsu.minishare.model.VirtualMachineMonitorDto;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.support.FormattingConversionServiceFactoryBean;
 import org.springframework.roo.addon.web.mvc.controller.RooConversionService;
@@ -26,7 +27,8 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
         registry.addConverter(new UserCreditConverter());
         registry.addConverter(new VirtualMachineDetailConverter());
         registry.addConverter(new VirtualMachineMonitorConverter());
-        registry.addConverter(new VirtualMachineTemplateConverter());
+         registry.addConverter(new VirtualMachineTemplateConverter());
+        registry.addConverter(new VirtualMachineMonitorDtoIdToString());
     }
     
     static class VirtualMachineTemplateConverter implements Converter<VirtualMachineTemplate, String> {
@@ -40,6 +42,12 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
     static class StringToCloudUserConverter implements Converter<String, CloudUser> {
     	 public CloudUser convert(String userId) {
     	        return CloudUser.findCloudUser(Integer.valueOf(userId));
+    	 }
+    }
+
+    static class VirtualMachineMonitorDtoIdToString implements Converter<VirtualMachineMonitorDto.VirtualMachineMonitorDtoId, String> {
+    	 public String convert(VirtualMachineMonitorDto.VirtualMachineMonitorDtoId dtoId) {
+    	        return new StringBuilder().append("MachineId: ").append(dtoId.getMachineId()).append(" MachineStatus:").append(dtoId.getMachineStatus()).toString();
     	 }
     }
     

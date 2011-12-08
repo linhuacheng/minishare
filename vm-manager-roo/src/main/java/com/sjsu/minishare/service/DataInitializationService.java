@@ -65,6 +65,7 @@ public class DataInitializationService {
 //        vmm.setGuestMemoryUsage(512);
 //        vmm.setCreditsCharged(51);
 //        vmm.setMonitorInterval(1);
+//        vmm.setMachineStatus("On");
 //        vmm.persist();
 //        vmm.flush();
 //
@@ -74,6 +75,7 @@ public class DataInitializationService {
 //        vmm.setGuestMemoryUsage(512);
 //        vmm.setCreditsCharged(60);
 //        vmm.setMonitorInterval(1);
+//        vmm.setMachineStatus("On");
 //        vmm.persist();
 //        vmm.flush();
     }
