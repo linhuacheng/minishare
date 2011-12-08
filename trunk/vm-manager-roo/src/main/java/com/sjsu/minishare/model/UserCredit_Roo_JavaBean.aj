@@ -33,11 +33,11 @@ privileged aspect UserCredit_Roo_JavaBean {
         this.totalCreditsUsed = totalCreditsUsed;
     }
     
-    public Integer UserCredit.getAmount() {
+    public float UserCredit.getAmount() {
         return this.amount;
     }
     
-    public void UserCredit.setAmount(Integer amount) {
+    public void UserCredit.setAmount(float amount) {
         this.amount = amount;
     }
     
