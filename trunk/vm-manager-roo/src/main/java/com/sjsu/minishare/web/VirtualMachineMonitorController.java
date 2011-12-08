@@ -3,6 +3,7 @@ package com.sjsu.minishare.web;
 import com.sjsu.minishare.model.CloudUserPrincipal;
 
 import com.sjsu.minishare.model.VirtualMachineMonitor;
+import com.sjsu.minishare.model.VirtualMachineMonitorDto;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Iterator;
+import java.util.List;
 
 @RooWebScaffold(path = "virtualmachinemonitors", formBackingObject = VirtualMachineMonitor.class)
 @RequestMapping("/virtualmachinemonitors")
@@ -33,14 +36,22 @@ public class VirtualMachineMonitorController {
         }
         return "virtualmachinemonitors/list";
     }
+
     @RequestMapping(value = "/viewUsageByStatus")
     public String listMonitorByStatus(Model uiModel) {
         Object details = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println("Get principal" + details.getClass());
-        Integer userId = ((CloudUserPrincipal)details).getUserId();
-        //Integer userId = ((CloudUserPrincipal)principal).getUserId();
-
-            uiModel.addAttribute("virtualmachinemonitordtos", VirtualMachineMonitor.findVirtualMachineMonitorAggByMachineStatus(userId));
+        Integer userId = ((CloudUserPrincipal) details).getUserId();
+        List<VirtualMachineMonitorDto> virtualMachineMonitorDtoList = VirtualMachineMonitor.findVirtualMachineMonitorAggByMachineStatus(userId);
+        Iterator<VirtualMachineMonitorDto> dtoItr = virtualMachineMonitorDtoList.iterator();
+        //Remove null values if any
+        while (dtoItr.hasNext()){
+            VirtualMachineMonitorDto monitorDto = dtoItr.next();
+            if (monitorDto == null){
+                dtoItr.remove();
+            }
+        }
+        uiModel.addAttribute("virtualmachinemonitordtos", virtualMachineMonitorDtoList);
 
         return "virtualmachinemonitors/usageReportByStatus";
     }

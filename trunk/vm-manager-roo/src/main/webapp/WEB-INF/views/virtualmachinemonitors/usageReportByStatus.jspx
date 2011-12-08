@@ -3,16 +3,13 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_com_sjsu_minishare_model_VirtualMachineMonitorDto" items="${virtualmachinemonitordtos}" z="6eX7tVaqlle6uPpmTG33JShwmX8=">
-        <table:table data="${virtualmachinemonitordtos}" id="l_com_sjsu_minishare_model_virtualmachinemonitorDto" delete="false" update="false" path="/virtualmachinemonitors/viewUsageByStatus" typeIdFieldName="virtualMachineMonitorDtoId" z="DM477hP7I6hce4jcPAMZr5Dosyc=">
-            <!--<table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_monitorInterval" property="monitorInterval" z="ej85jaIptpOlH1ntOEJQpKeGSto=" />-->
+        <table:table data="${virtualmachinemonitordtos}" id="l_com_sjsu_minishare_model_virtualmachinemonitorDto" delete="false" update="false" show="false" path="/virtualmachinemonitors/viewUsageByStatus" typeIdFieldName="id" z="DM477hP7I6hce4jcPAMZr5Dosyc=">
             <table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_machineName" property="machineName" z="Mw7jnetuj8zVR3gwIyzfvaPQSvk="/>
+            <table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_machineStatus" property="machineStatus" z="Mw7jnetuj8zVR3gwIyzfvaPQSvk="/>
             <table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_avgCpuUsed" property="avgCpuUsed" z="Mw7jnetuj8zVR3gwIyzfvaPQSvk="/>
-            <!--<table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_guestMemoryUsage" property="guestMemoryUsage" z="theZpHniXJpfkiZUTdqA9UVtzVE="/>-->
-            <!--<table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_overallCpuUsage" property="overallCpuUsage" z="HcrBzFF6Tba1Rl59jt1fjfFFSTI="/>-->
-            <!--<table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_machineStatus" property="machineStatus" z="BMxzoi69HvPvBanDsLR0ZVRjB/s="/>-->
-            <!--<table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_creditsCharged" property="creditsCharged" z="0fW5s1E57xT7Co4xro3lr/66T/U="/>-->
-            <!--<table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_startTime" property="startTime" z="Tf7nLSCsLxcikZeJVaOB5JWjxvM="/>-->
-            <!--<table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_endTime" property="endTime" z="Tf7nLSCsLxcikZeJVaOB5JWjxvM="/>-->
+            <table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_avgMemoryUsed" property="avgMemoryUsed" z="Mw7jnetuj8zVR3gwIyzfvaPQSvk="/>
+            <table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_totalCreditsCharged" property="totalCreditsCharged" z="Mw7jnetuj8zVR3gwIyzfvaPQSvk="/>
+            <table:column id="c_com_sjsu_minishare_model_virtualmachinemonitorDto_monitorInterval" property="monitorInterval" z="Mw7jnetuj8zVR3gwIyzfvaPQSvk="/>
         </table:table>
     </page:list>
 </div>

@@ -1,5 +1,7 @@
 package com.sjsu.minishare.model;
 
+import org.springframework.roo.addon.entity.RooEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,7 +14,7 @@ import java.io.Serializable;
  */
 @NamedNativeQuery(name="VirtualMachineMonitorInfoByStatus",
         query= " SELECT machine_name, machine_id,  vmm.machine_status, " +
-                " MAX(memory),  AVG(overall_cpu_usage) as avg_cpu_usage, AVG(guest_memory_usage) as avg_memory_usage, SUM(credits_charged) as total_credits " +
+                " cast(AVG(overall_cpu_usage) as integer) as avg_cpu_usage, cast(AVG(guest_memory_usage) as integer) as avg_memory_usage, SUM(credits_charged) as total_credits " +
                 ", SUM(monitor_interval) as total_monitor_interval " +
                 " FROM virtual_machine_monitor vmm " +
                 " JOIN virtual_machine_detail vmd on (vmm.virtual_machine_detail= vmd.machine_id) " +
@@ -25,8 +27,8 @@ import java.io.Serializable;
         entities = @EntityResult(entityClass = VirtualMachineMonitorDto.class,
                 fields = {
                         @FieldResult(name = "machineName", column = "machine_name")
-                        ,@FieldResult(name = "virtualMachineMonitorDtoId.machineId", column = "machine_id")
-                        ,@FieldResult(name = "virtualMachineMonitorDtoId.machineStatus", column = "machine_status")
+                        ,@FieldResult(name = "id.machineId", column = "machine_id")
+                        ,@FieldResult(name = "id.machineStatus", column = "machine_status")
                         ,@FieldResult(name = "monitorInterval", column = "total_monitor_interval")
                         ,@FieldResult(name = "avgMemoryUsed", column = "avg_memory_usage")
                         ,@FieldResult(name = "avgCpuUsed", column = "avg_cpu_usage")
@@ -39,21 +41,21 @@ import java.io.Serializable;
 @Entity
 public class VirtualMachineMonitorDto {
 
-
-    private VirtualMachineMonitorDtoId virtualMachineMonitorDtoId;
+    @EmbeddedId
+    private VirtualMachineMonitorDtoId id;
     private String machineName;
     private Integer avgCpuUsed;
     private Integer avgMemoryUsed;
     private Integer totalCreditsCharged;
     private Integer monitorInterval;
 
-    @EmbeddedId
-    public VirtualMachineMonitorDtoId getVirtualMachineMonitorDtoId() {
-        return virtualMachineMonitorDtoId;
+
+    public VirtualMachineMonitorDtoId getId() {
+        return id;
     }
 
-    public void setVirtualMachineMonitorDtoId(VirtualMachineMonitorDtoId virtualMachineMonitorDtoId) {
-        this.virtualMachineMonitorDtoId = virtualMachineMonitorDtoId;
+    public void setId(VirtualMachineMonitorDtoId id) {
+        this.id = id;
     }
 
     public String getMachineName() {
@@ -95,6 +97,10 @@ public class VirtualMachineMonitorDto {
 
     public void setMonitorInterval(Integer monitorInterval) {
         this.monitorInterval = monitorInterval;
+    }
+
+    public String getMachineStatus(){
+        return id != null ? id.getMachineStatus(): null;
     }
 
     @Embeddable
