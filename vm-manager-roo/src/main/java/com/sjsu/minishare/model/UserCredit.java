@@ -26,7 +26,7 @@ public class UserCredit {
 
     private Integer totalCreditsUsed;
     
-    private Integer amount;
+    private float amount;
     
     private String paymentTransaction;
 
