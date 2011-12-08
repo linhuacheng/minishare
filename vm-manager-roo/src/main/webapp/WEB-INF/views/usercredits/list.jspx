@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:list id="pl_com_sjsu_minishare_model_UserCredit" items="${usercredits}" z="fN0tnLsPgH/7UPhrRQkL7D0Zr4U=">
-        <table:table data="${usercredits}" id="l_com_sjsu_minishare_model_UserCredit" update="false" path="/usercredits" typeIdFieldName="creditId" z="jg40vyNr+fMvQtA+ToAAMnWnTS4=">
+        <table:table data="${usercredits}" id="l_com_sjsu_minishare_model_UserCredit" delete="false" update="false" path="/usercredits" typeIdFieldName="creditId" z="jg40vyNr+fMvQtA+ToAAMnWnTS4=">
             <table:column id="c_com_sjsu_minishare_model_UserCredit_totalCredits" property="totalCredits" z="odvEvhBJFFLpnWdfasapzjpkSAA="/>
             <table:column id="c_com_sjsu_minishare_model_UserCredit_totalCreditsUsed" property="totalCreditsUsed" z="hMQxE3reDrwDmlk+afzxGQ/Oo2c="/>
             <table:column id="c_com_sjsu_minishare_model_UserCredit_cloudUser" render="false" property="cloudUser" z="ZgRmV/PeJ4IbrBS02NF2D2HI1ck="/>
