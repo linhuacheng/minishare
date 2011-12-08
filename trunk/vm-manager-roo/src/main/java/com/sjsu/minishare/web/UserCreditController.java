@@ -21,9 +21,9 @@ public class UserCreditController {
 	
 	  @RequestMapping(method = RequestMethod.POST)
 	    public String create(@Valid UserCredit userCredit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-	      int amount;
+	      float amount, amt;
 	      int totalCredits;
-	      int tc, amt;
+	      int tc;
 		  if (bindingResult.hasErrors()) {
 	            uiModel.addAttribute("userCredit", userCredit);
 	            return "usercredits/create";
@@ -36,7 +36,8 @@ public class UserCreditController {
 	      }
 	      else{
 	    	  userCredit.setPaymentTransaction("TRANSACTION ACCEPTED");
-	    	  totalCredits = amount * 100000; 
+	    	  totalCredits = (int) (((float)(Math.round(amount * 100.0) / 100.0)) * 100000);
+	    	  userCredit.setAmount((float)(Math.round(amount * 100.0) / 100.0));
 	      }
 	    	  
 	      userCredit.setTotalCredits(totalCredits);
@@ -63,11 +64,13 @@ public class UserCreditController {
 		      }
 		      else{
 		    	  ucredit.setPaymentTransaction("TRANSACTION ACCEPTED");
-		    	  totalCredits = amount * 100000; 
+		    	  amount = (float)(Math.round(amount * 100.0) / 100.0);
+		    	  totalCredits = (int) (amount * 100000); 
 		      }
 			  
 			  totalCredits = totalCredits+tc; // 200 + 0
 			  ucredit.setTotalCredits(totalCredits);
+			  amt = (float)(Math.round(amt * 100.0) / 100.0);
 			  ucredit.setAmount(amt);
 			  
 		      uiModel.asMap().clear();
@@ -80,3 +83,5 @@ public class UserCreditController {
 	    }
 	
 }
+
+
