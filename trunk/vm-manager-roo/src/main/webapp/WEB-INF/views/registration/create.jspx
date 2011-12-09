@@ -20,7 +20,7 @@
         <field:input field="country" id="c_com_sjsu_minishare_model_CloudUser_country" z="alMycFM0CaE7P+BFzZg39LDdvuE="/>
         <h2>User Credit Card Information:</h2>
         <br/>
-        <field:input field="cardNumber" id="c_com_sjsu_minishare_model_CloudUser_cardNumber" z="wbV3RJT18ZTX8dno3CvxEXlKGIM="/>
+        <field:input field="cardNumber" id="c_com_sjsu_minishare_model_CloudUser_cardNumber" min="13" max="16" required="true" z="wbV3RJT18ZTX8dno3CvxEXlKGIM="/>
         <field:input field="cardExpirationMonth" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationMonth" validationMessageCode="field_invalid_integer" z="zwkaWm4NgQx2MhsIgiLdCgP42Wk="/>
         <field:input field="cardExpirationYear" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationYear" validationMessageCode="field_invalid_integer" z="6JGpYnO86cPz6HdRoTyyDiZ8/TM="/>
         <field:input field="cardCvvNumber" id="c_com_sjsu_minishare_model_CloudUser_cardCvvNumber" validationMessageCode="field_invalid_integer" z="XEjbqtig+DYu3/FZj4KnRLpS1T4="/>
