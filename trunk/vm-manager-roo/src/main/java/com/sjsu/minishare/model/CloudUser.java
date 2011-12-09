@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @RooJavaBean
 @RooToString
@@ -49,6 +50,8 @@ public class CloudUser {
 
     private String country;
 
+    @NotNull
+    @Size(min = 13, max = 16)
     private String cardNumber;
 
     private Integer cardExpirationMonth;
