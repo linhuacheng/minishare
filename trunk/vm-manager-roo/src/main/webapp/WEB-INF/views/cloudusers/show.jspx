@@ -6,7 +6,7 @@
         <field:display field="userName" id="s_com_sjsu_minishare_model_CloudUser_userName" object="${clouduser}" z="6tb6458xxZ3h6YO2psoCA001TUA="/>
         <field:display field="firstName" id="s_com_sjsu_minishare_model_CloudUser_firstName" object="${clouduser}" z="rgaT4Vpv+Gk2wc7PS9wXXC9dwkc="/>
         <field:display field="lastName" id="s_com_sjsu_minishare_model_CloudUser_lastName" object="${clouduser}" z="FUS3eeMulotePpBVa8Ol8crpj7I="/>
-        <field:display field="active" id="s_com_sjsu_minishare_model_CloudUser_active" object="${clouduser}" z="nh0grLlqGLIzRxM1qJ1Kh3tB89c="/>
+        <field:display field="active" id="s_com_sjsu_minishare_model_CloudUser_active" object="${clouduser}" render="false" z="nh0grLlqGLIzRxM1qJ1Kh3tB89c="/>
         <field:display field="addressLine1" id="s_com_sjsu_minishare_model_CloudUser_addressLine1" object="${clouduser}" z="qskjC03Wv5O+pZCYIu8U7sSS6dY="/>
         <field:display field="addressLine2" id="s_com_sjsu_minishare_model_CloudUser_addressLine2" object="${clouduser}" z="fjG0MfploAkbXWyvRKnZFLyw2EA="/>
         <field:display field="city" id="s_com_sjsu_minishare_model_CloudUser_city" object="${clouduser}" z="JterWMmCojgj9jWxar/YWF1H5e0="/>
