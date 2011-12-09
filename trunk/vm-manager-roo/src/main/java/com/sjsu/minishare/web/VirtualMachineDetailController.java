@@ -82,20 +82,32 @@ public class VirtualMachineDetailController {
 			addDateTimeFormatPatterns(uiModel);
 			return "virtualmachinedetails/create";
 		}
-		uiModel.asMap().clear();
+
 		
 		//Create the virtual Machine
 		String templateId = httpServletRequest.getParameter("templateId");
 		VirtualMachineTemplate template = VirtualMachineConstants.getVirtualMachineTemplateById(templateId);
 						
-		virtualMachineDetail.setUserId(ApplicationUtil.getLogonCloudUser());
-		virtualMachineDetail.setDefaultUsername(template.getDefaultUsername());
-		virtualMachineDetail.setDefaultPassword(template.getDefaultPassword());
-		virtualMachineDetail.setIpAddress(template.getDefaultIpAddress());
-		
-		virtualMachineDetail.persist();
-		
-		processVirtualMachineRequest(virtualMachineDetail, "CREATE", template.getTemplateName());
+		try {
+			virtualMachineDetail.setUserId(ApplicationUtil.getLogonCloudUser());
+			virtualMachineDetail.setDefaultUsername(template.getDefaultUsername());
+			virtualMachineDetail.setDefaultPassword(template.getDefaultPassword());
+			virtualMachineDetail.setIpAddress(template.getDefaultIpAddress());
+			
+			processVirtualMachineRequest(virtualMachineDetail, "CREATE", template.getTemplateName());
+			
+			
+			virtualMachineDetail.persist();
+			
+		} catch (Exception e) {
+			uiModel.addAttribute("errorMessage", "Error while creating virtual machine. " + e.getMessage());
+			log.debug("Error while creating virtual machine. " + e.getMessage());
+			uiModel.addAttribute("virtualMachineDetail", virtualMachineDetail);
+			addDateTimeFormatPatterns(uiModel);
+			return "virtualmachinedetails/create";
+		}
+
+		uiModel.asMap().clear();
 		
 		return "redirect:/virtualmachinedetails/"
 				+ encodeUrlPathSegment(virtualMachineDetail.getMachineId()

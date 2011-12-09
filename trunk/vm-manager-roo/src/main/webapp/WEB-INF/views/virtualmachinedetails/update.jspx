@@ -12,12 +12,12 @@
         <field:hidden field="operatingSystem" id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" z="PedpGgExJ5T09zoT+4QxyT8q7UI=" /> 
          <field:simple field="usageInMinutes" id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" text="${virtualMachineDetail.usageInMinutes}"  z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/>
         <field:hidden field="usageInMinutes"  id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" z="NSccMPbXQz+EJKv0k6fFrHUsB4o="/> 
-        <field:datetime dateTimePattern="${virtualMachineDetail_lastlogin_date_format}" field="lastLogin" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogin" z="HMVA3epOYKwKYonG5ttfX8QxHHg="/>
-        <field:datetime dateTimePattern="${virtualMachineDetail_lastlogout_date_format}" field="lastLogout" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogout" z="Rpek0kOrYvWoQEPmsBzAPIOfpmQ="/>
-        <field:simple field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" text="${virtualMachineDetail.creditsUsed}"  z="LaT9PTQ8OHt30w+b6+NAB9gBm8A="/>
+        <!-- <field:datetime dateTimePattern="${virtualMachineDetail_lastlogin_date_format}" field="lastLogin" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogin" z="HMVA3epOYKwKYonG5ttfX8QxHHg="/>  -->
+        <!-- <field:datetime dateTimePattern="${virtualMachineDetail_lastlogout_date_format}" field="lastLogout" id="c_com_sjsu_minishare_model_VirtualMachineDetail_lastLogout" z="Rpek0kOrYvWoQEPmsBzAPIOfpmQ="/>  -->
+        <!-- <field:simple field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" text="${virtualMachineDetail.creditsUsed}"  z="LaT9PTQ8OHt30w+b6+NAB9gBm8A="/>  -->
+        <!-- <field:simple field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost" text="${virtualMachineDetail.totalCost}" z="4AMqBgSWEbNhHEwSOIL7aCIsLyo="/>   -->
         <field:hidden field="creditsUsed" id="c_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" z="LaT9PTQ8OHt30w+b6+NAB9gBm8A=" />
-        <field:hidden field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost"/>      
-        <field:simple field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost" text="${virtualMachineDetail.totalCost}" z="4AMqBgSWEbNhHEwSOIL7aCIsLyo="/>
+        <field:hidden field="totalCost" id="c_com_sjsu_minishare_model_VirtualMachineDetail_totalCost"/>    
         <field:select field="userId" id="c_com_sjsu_minishare_model_VirtualMachineDetail_userId" itemValue="userId" items="${cloudusers}" path="/cloudusers" z="aqw+qhgFWbKL7n9XnXUoJIkaMZ4="/>
        	<field:hidden field="defaultUsername" id="c_com_sjsu_minishare_model_VirtualMachineDetail_defaultUsername"/> 
         <field:hidden field="defaultPassword" id="c_com_sjsu_minishare_model_VirtualMachineDetail_defaultPassword"  /> 
