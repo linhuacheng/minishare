@@ -46,12 +46,23 @@ public class VirtualMachineConstants {
 		template3.setDefaultIpAddress("130.65.150.201");
 		template3.setOperatingSystem("Ubuntu");
 		
+		VirtualMachineTemplate template4 = new VirtualMachineTemplate();
+		template4.setId(4);
+		template4.setMemory("512");
+		template4.setNumberCPUs(1);
+		template4.setTemplateName("Group1 - Fedora Template1");
+		template4.setDefaultUsername(DEFAULT_USERNAME);
+		template4.setDefaultPassword(DEFAULT_PASSWORD);
+		template4.setDefaultIpAddress("130.65.150.203");
+		template4.setOperatingSystem("Fedora");
+		
 		virtualMachineTemplates.add(template1);
 		virtualMachineTemplates.add(template2);
 		virtualMachineTemplates.add(template3);
+		virtualMachineTemplates.add(template4);
 		
 		//Chandu - 130.65.150.201 - Group1 - Ubuntu Template2
-		// Priyanka - 130.65.150.203 - 
+		// Priyanka - 130.65.150.203 - Fedora
 		// Nikitha - 130.65.150.222 - Group1 - Debian Template1
 		// Cheng - 130.65.150.223 - Group1 - Ubuntu Template1
 		
@@ -61,6 +72,7 @@ public class VirtualMachineConstants {
 		numCPUs.add(Integer.valueOf(3));
 		
 		memories = new ArrayList<Integer>();
+		memories.add(Integer.valueOf(256));
 		memories.add(Integer.valueOf(512));
 		memories.add(Integer.valueOf(1024));
 		memories.add(Integer.valueOf(1536));
