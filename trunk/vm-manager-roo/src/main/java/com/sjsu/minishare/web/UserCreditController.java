@@ -21,7 +21,7 @@ public class UserCreditController {
 	
 	  @RequestMapping(method = RequestMethod.POST)
 	    public String create(@Valid UserCredit userCredit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
-	      float amount, amt;
+	      float amount, amt, amt_existing;
 	      int totalCredits;
 	      int tc;
 		  if (bindingResult.hasErrors()) {
@@ -50,17 +50,20 @@ public class UserCreditController {
 		  if(ucredit == null){
 		      uiModel.asMap().clear();
 			  userCredit.persist();
-			  return "redirect:/usercredits/" + encodeUrlPathSegment(userCredit.getCreditId().toString(), httpServletRequest);
+			  uiModel.addAttribute("usercredit",userCredit);
+			  return "usercredits/showcredits";
+//			  return "redirect:/usercredits/" + encodeUrlPathSegment(userCredit.getCreditId().toString(), httpServletRequest);
 		  }
 		  
 		  else{
 			  tc = ucredit.getTotalCredits();  //tc = 200
-			  amt = ucredit.getAmount();
-			  amt = amt + amount;
+			  amt_existing = ucredit.getAmount();
+			  amt_existing = (float)(Math.round((tc/100000.0)*100.0)/100.0);
+			  amt = amt_existing + amount;
 			  if(amt >= 1000){
 		    	  ucredit.setPaymentTransaction("TRANSACTION REJECTED");
 		    	  totalCredits = 0;
-		    	  amt = amt - amount;
+		    	  amt = amt_existing;
 		      }
 		      else{
 		    	  ucredit.setPaymentTransaction("TRANSACTION ACCEPTED");
@@ -76,7 +79,9 @@ public class UserCreditController {
 		      uiModel.asMap().clear();
 		      ucredit.merge();
 		      
-		      return "redirect:/usercredits/" + encodeUrlPathSegment(ucredit.getCreditId().toString(), httpServletRequest);
+		      uiModel.addAttribute("usercredit",ucredit);
+			  return "usercredits/showcredits";
+//		      return "redirect:/usercredits/" + encodeUrlPathSegment(ucredit.getCreditId().toString(), httpServletRequest);
 		  }
 		  
 //	      return "redirect:/usercredits/" + encodeUrlPathSegment(ucredit.getCreditId().toString(), httpServletRequest);
