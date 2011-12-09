@@ -7,6 +7,9 @@
 <definition extends="default" name="usercredits/show">
         <put-attribute name="body" value="/WEB-INF/views/usercredits/show.jspx"/>
     </definition>
+<definition extends="default" name="usercredits/showcredits">
+        <put-attribute name="body" value="/WEB-INF/views/usercredits/showcredits.jspx"/>
+    </definition>
 <definition extends="default" name="usercredits/create">
         <put-attribute name="body" value="/WEB-INF/views/usercredits/create.jspx"/>
     </definition>
