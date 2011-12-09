@@ -13,7 +13,7 @@
         <field:input field="zip" id="c_com_sjsu_minishare_model_CloudUser_zip" z="75/PU8oO576mZ6W5YgXIOhhQMoU="/>
         <field:input field="userState" id="c_com_sjsu_minishare_model_CloudUser_userState" z="K/u6Nt0kyi4raZ6rt5uDBSiPQAs="/>
         <field:input field="country" id="c_com_sjsu_minishare_model_CloudUser_country" z="alMycFM0CaE7P+BFzZg39LDdvuE="/>
-        <field:input field="cardNumber" id="c_com_sjsu_minishare_model_CloudUser_cardNumber" z="wbV3RJT18ZTX8dno3CvxEXlKGIM="/>
+        <field:input field="cardNumber" id="c_com_sjsu_minishare_model_CloudUser_cardNumber" max="16" min="13" required="true" z="wbV3RJT18ZTX8dno3CvxEXlKGIM="/>
         <field:input field="cardExpirationMonth" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationMonth" validationMessageCode="field_invalid_integer" z="zwkaWm4NgQx2MhsIgiLdCgP42Wk="/>
         <field:input field="cardExpirationYear" id="c_com_sjsu_minishare_model_CloudUser_cardExpirationYear" validationMessageCode="field_invalid_integer" z="6JGpYnO86cPz6HdRoTyyDiZ8/TM="/>
         <field:input field="cardCvvNumber" id="c_com_sjsu_minishare_model_CloudUser_cardCvvNumber" validationMessageCode="field_invalid_integer" z="XEjbqtig+DYu3/FZj4KnRLpS1T4="/>
