@@ -25,7 +25,7 @@ public class DataInitializationService {
         cu.setCardCvvNumber(777);
         cu.setCardExpirationMonth(10);
         cu.setCardExpirationYear(2014);
-        cu.setCardNumber("12345678123456789");
+        cu.setCardNumber("1234567812345678");
         cu.setCity("San Francisco");
         cu.setCountry("USA");
         cu.setFirstName("test");
