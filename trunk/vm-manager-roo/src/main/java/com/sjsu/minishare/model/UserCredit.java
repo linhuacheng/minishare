@@ -56,4 +56,38 @@ public class UserCredit {
 
     }
 
+    /**
+     * finds all user credits for given user
+     * @param userId
+     * @return
+     */
+    public static List<UserCredit> findAllUserCreditsByUserId(int userId) {
+        return entityManager().createQuery("SELECT o FROM UserCredit o where o.cloudUser.userId=:userId", UserCredit.class)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
+
+    /**
+     * finds user credit entries by user id
+     * @param firstResult
+     * @param maxResults
+     * @param userId
+     * @return
+     */
+    public static List<UserCredit> findUserCreditEntriesByUserId(int firstResult, int maxResults, int userId) {
+        return entityManager().createQuery("SELECT o FROM UserCredit o where o.cloudUser.userId=:userId", UserCredit.class)
+                .setParameter("userId", userId)
+                .setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+
+    /**
+     * count user credits by user id
+     * @param userId
+     * @return
+     */
+    public static long countUserCreditsByUserId(int userId) {
+        return entityManager().createQuery("SELECT COUNT(o) FROM UserCredit o where o.cloudUser.userId=:userId", Long.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+    }
 }

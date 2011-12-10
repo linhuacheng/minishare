@@ -24,7 +24,7 @@ public class VirtualMachineMonitorController {
     @RequestMapping(method = RequestMethod.GET)
     public String list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
         Object details = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("Get principal" + details.getClass());
+        //System.out.println("Get principal" + details.getClass());
         Integer userId = ((CloudUserPrincipal)details).getUserId();
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
@@ -40,7 +40,7 @@ public class VirtualMachineMonitorController {
     @RequestMapping(value = "/viewUsageByStatus")
     public String listMonitorByStatus(Model uiModel) {
         Object details = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("Get principal" + details.getClass());
+
         Integer userId = ((CloudUserPrincipal) details).getUserId();
         List<VirtualMachineMonitorDto> virtualMachineMonitorDtoList = VirtualMachineMonitor.findVirtualMachineMonitorAggByMachineStatus(userId);
         Iterator<VirtualMachineMonitorDto> dtoItr = virtualMachineMonitorDtoList.iterator();

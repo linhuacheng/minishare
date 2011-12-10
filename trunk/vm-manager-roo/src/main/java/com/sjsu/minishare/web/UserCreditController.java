@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.sjsu.minishare.model.CloudUser;
+import com.sjsu.minishare.model.CloudUserPrincipal;
 import com.sjsu.minishare.model.UserCredit;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RooWebScaffold(path = "usercredits", formBackingObject = UserCredit.class)
 @RequestMapping("/usercredits")
@@ -86,6 +88,23 @@ public class UserCreditController {
 		  
 //	      return "redirect:/usercredits/" + encodeUrlPathSegment(ucredit.getCreditId().toString(), httpServletRequest);
 	    }
+
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+        Object details = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //System.out.println("Get principal" + details.getClass());
+        Integer userId = ((CloudUserPrincipal) details).getUserId();
+        if (page != null || size != null) {
+            int sizeNo = size == null ? 10 : size.intValue();
+            uiModel.addAttribute("usercredits", UserCredit.findUserCreditEntriesByUserId(userId, page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            float nrOfPages = (float) UserCredit.countUserCreditsByUserId(userId) / sizeNo;
+            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
+        } else {
+            uiModel.addAttribute("usercredits", UserCredit.findAllUserCreditsByUserId(userId));
+        }
+        return "usercredits/list";
+    }
 	
 }
 
