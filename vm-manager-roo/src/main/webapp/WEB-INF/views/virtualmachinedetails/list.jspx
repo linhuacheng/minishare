@@ -9,7 +9,6 @@
             <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" property="numberCPUs" z="WfKma3SGGFIRQfHmz/TakZjExDE="/>
             <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_memory" property="memory" z="aEme+nhguqrWBCrQetOLf8SZoDE="/>
             <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" property="operatingSystem" z="m7/KuspCLglRkk9+AX/XYCZLa3I="/>
-            <vmtable:column id="c_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" property="usageInMinutes" z="jMg8XDJRdpISvP6yTvL9eFan2xo="/>
         </vmtable:vmtable>
     </page:list>
 </div>
