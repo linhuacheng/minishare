@@ -8,11 +8,6 @@
         <field:display field="numberCPUs" id="s_com_sjsu_minishare_model_VirtualMachineDetail_numberCPUs" object="${virtualmachinedetail}" z="xFwH21OqDZeusvvLdYqev8iE3nU="/>
         <field:display field="memory" id="s_com_sjsu_minishare_model_VirtualMachineDetail_memory" object="${virtualmachinedetail}" z="qxEuGA3xOlfScORHABknh9lGDYQ="/>
         <field:display field="operatingSystem" id="s_com_sjsu_minishare_model_VirtualMachineDetail_operatingSystem" object="${virtualmachinedetail}" z="3R5lx0hEm0h0b8lYzEAMn41Q4Rk="/>
-        <field:display field="usageInMinutes" id="s_com_sjsu_minishare_model_VirtualMachineDetail_usageInMinutes" object="${virtualmachinedetail}" z="PE+sg1BZVY4+v2YqGsshpMG9UmA="/>
-        <field:display date="true" dateTimePattern="${virtualMachineDetail_lastlogin_date_format}" field="lastLogin" id="s_com_sjsu_minishare_model_VirtualMachineDetail_lastLogin" object="${virtualmachinedetail}" z="N6CQFj1qhIOfFhVIWFl97JXYslc="/>
-        <field:display date="true" dateTimePattern="${virtualMachineDetail_lastlogout_date_format}" field="lastLogout" id="s_com_sjsu_minishare_model_VirtualMachineDetail_lastLogout" object="${virtualmachinedetail}" z="OvruxXKbBOtQyrGx9cBlgr8Bh84="/>
-        <field:display field="creditsUsed" id="s_com_sjsu_minishare_model_VirtualMachineDetail_creditsUsed" object="${virtualmachinedetail}" z="hnmmrFfoRuxr5JKFHxWVOJ3Nr/Y="/>
-        <field:display field="totalCost" id="s_com_sjsu_minishare_model_VirtualMachineDetail_totalCost" object="${virtualmachinedetail}" z="TLesSkyWBJYn/nLtZ2u4MieanTc="/>
         <field:display field="userId" id="s_com_sjsu_minishare_model_VirtualMachineDetail_userId" object="${virtualmachinedetail}" z="lu5ES+kkR0IW2wJNGtLhGvpOJkQ="/>
     </page:show>
 </div>
