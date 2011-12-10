@@ -17,13 +17,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         installLabelConverters(getObject());
     }
     
-    static class com.sjsu.minishare.web.ApplicationConversionServiceFactoryBean.CloudUserConverter implements Converter<CloudUser, String> {
-        public String convert(CloudUser cloudUser) {
-            return new StringBuilder().append(cloudUser.getUserName()).append(" ").append(cloudUser.getFirstName()).append(" ").append(cloudUser.getLastName()).append(" ").append(cloudUser.getPassword()).toString();
-        }
-        
-    }
-    
+
     static class com.sjsu.minishare.web.ApplicationConversionServiceFactoryBean.UserCreditConverter implements Converter<UserCredit, String> {
         public String convert(UserCredit userCredit) {
             return new StringBuilder().append(userCredit.getTotalCredits()).append(" ").append(userCredit.getTotalCreditsUsed()).append(" ").append(userCredit.getAmount()).append(" ").append(userCredit.getPaymentTransaction()).toString();

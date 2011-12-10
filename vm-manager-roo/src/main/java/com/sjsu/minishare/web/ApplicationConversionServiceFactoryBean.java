@@ -47,8 +47,16 @@ public class ApplicationConversionServiceFactoryBean extends FormattingConversio
 
     static class VirtualMachineMonitorDtoIdToString implements Converter<VirtualMachineMonitorDto.VirtualMachineMonitorDtoId, String> {
     	 public String convert(VirtualMachineMonitorDto.VirtualMachineMonitorDtoId dtoId) {
-    	        return new StringBuilder().append("MachineId: ").append(dtoId.getMachineId()).append(" MachineStatus:").append(dtoId.getMachineStatus()).toString();
+    	        return new StringBuilder().append(dtoId.getMachineId()).append(" ").append(dtoId.getMachineStatus()).toString();
     	 }
     }
+
+    static class CloudUserConverter implements Converter<CloudUser, String> {
+        public String convert(CloudUser cloudUser) {
+            return new StringBuilder().append(cloudUser.getUserName()).append(" ").append(cloudUser.getFirstName()).append(" ").append(cloudUser.getLastName()).append(" ").toString();
+        }
+
+    }
+
     
 }

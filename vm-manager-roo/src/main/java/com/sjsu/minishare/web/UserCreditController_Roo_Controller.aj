@@ -36,18 +36,7 @@ privileged aspect UserCreditController_Roo_Controller {
         return "usercredits/show";
     }
     
-    @RequestMapping(method = RequestMethod.GET)
-    public String UserCreditController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            uiModel.addAttribute("usercredits", UserCredit.findUserCreditEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) UserCredit.countUserCredits() / sizeNo;
-            uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            uiModel.addAttribute("usercredits", UserCredit.findAllUserCredits());
-        }
-        return "usercredits/list";
-    }
+
     
     @RequestMapping(method = RequestMethod.PUT)
     public String UserCreditController.update(@Valid UserCredit userCredit, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {

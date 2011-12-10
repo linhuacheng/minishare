@@ -11,7 +11,7 @@
         </menu:category>
         <menu:category id="c_usercredit" z="3PCLYij+RI5yRvKxvdGMhHtIrOw=">
             <menu:item id="i_usercredit_new" messageCode="menu_buy_credit" url="/usercredits?form" z="as6j/DaVUfjwc84t4XyryzRSN3Y="/>
-            <menu:item id="i_usercredit_list" messageCode="menu_view_credit" url="/usercredits?page=1&amp;size=${empty param.size ? 10 : param.size}" z="ZaTv0zj8bpDyAXuHo1IZcF9hg9w="/>
+            <menu:item id="i_usercredit_list" messageCode="menu_view_credit" url="/usercredits" z="ZaTv0zj8bpDyAXuHo1IZcF9hg9w="/>
         </menu:category>
         <menu:category id="c_virtualmachinedetail" z="ZeQGcKratqKihdid9p6IA9zCTF8=">
             <menu:item id="i_virtualmachinedetail_new" messageCode="global_menu_new" url="/virtualmachinedetails?form" z="+GBIuxdvkjgYVWEn46wc9LbQUrY="/>

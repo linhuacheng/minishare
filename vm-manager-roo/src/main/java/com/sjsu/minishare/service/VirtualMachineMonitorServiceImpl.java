@@ -143,6 +143,9 @@ public class VirtualMachineMonitorServiceImpl implements VirtualMachineMonitorSe
         }
         vmr.setMachineRequest(MachineRequest.Stop);
         virtualMachineService.processRequest(vmr);
+        virtualMachineDetail.setMachineStatus(MachineStatus.Off.name());
+        virtualMachineDetail.merge();
+        virtualMachineDetail.flush();
     }
 
 

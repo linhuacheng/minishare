@@ -18,8 +18,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserCreditsServiceImpl implements UserCreditsService {
     private static final Log log = LogFactory.getLog(UserCreditsServiceImpl.class);
-    public static final float MEMORY_USAGE_CHARGE_PER_MB_PER_MINUTE_IN_CREDIT_UNITS = (0.5f) / 512;
-    public static final float CPU_USAGE_CHARGE_PER_MGHZ_PER_MINUTE_IN_CREDIT_UNITS = 0.5f;
+    public static final float MEMORY_USAGE_CHARGE_PER_MB_PER_MINUTE_IN_CREDIT_UNITS = (1f) / 512;
+    public static final float CPU_USAGE_CHARGE_PER_MGHZ_PER_MINUTE_IN_CREDIT_UNITS = 1f;
 
     @Override
     public int calculateMemoryCreditUsage(Integer memoryUsageMbs, Integer minutesUsed) {

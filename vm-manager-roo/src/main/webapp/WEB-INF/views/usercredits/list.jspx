@@ -5,10 +5,10 @@
     <page:list id="pl_com_sjsu_minishare_model_UserCredit" items="${usercredits}" z="fN0tnLsPgH/7UPhrRQkL7D0Zr4U=">
         <table:table data="${usercredits}" id="l_com_sjsu_minishare_model_UserCredit" delete="false" update="false" path="/usercredits" typeIdFieldName="creditId" z="jg40vyNr+fMvQtA+ToAAMnWnTS4=">
             <table:column id="c_com_sjsu_minishare_model_UserCredit_totalCredits" property="totalCredits" z="odvEvhBJFFLpnWdfasapzjpkSAA="/>
-            <table:column id="c_com_sjsu_minishare_model_UserCredit_totalCreditsUsed" property="totalCreditsUsed" z="hMQxE3reDrwDmlk+afzxGQ/Oo2c="/>
+            <!--<table:column id="c_com_sjsu_minishare_model_UserCredit_totalCreditsUsed" property="totalCreditsUsed" z="hMQxE3reDrwDmlk+afzxGQ/Oo2c="/>-->
             <table:column id="c_com_sjsu_minishare_model_UserCredit_cloudUser" render="false" property="cloudUser" z="ZgRmV/PeJ4IbrBS02NF2D2HI1ck="/>
-            <table:column id="c_com_sjsu_minishare_model_UserCredit_amount" property="amount" z="SeqW3vRL0K9NtSW+dRTPeFER8Os="/>
-            <table:column id="c_com_sjsu_minishare_model_UserCredit_paymentTransaction" property="paymentTransaction" z="yaoNKDStLXUnADxQ1Awg+pcUhqE="/>
+            <!--<table:column id="c_com_sjsu_minishare_model_UserCredit_amount" property="amount" z="SeqW3vRL0K9NtSW+dRTPeFER8Os="/>-->
+            <table:column id="c_com_sjsu_minishare_model_UserCredit_paymentTransaction" property="paymentTransaction" maxLength="20" z="yaoNKDStLXUnADxQ1Awg+pcUhqE="/>
         </table:table>
     </page:list>
 </div>
